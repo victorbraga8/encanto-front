@@ -47,18 +47,6 @@ const SideMenu = () => {
             >
               Cadastrar
             </Link>
-            {/* <Link
-              href="/usuario/opcao2"
-              className="text-white block mb-2 hover:bg-slate-200 hover:text-slate-400"
-            >
-              Opção 2
-            </Link>
-            <Link
-              href="/usuario/opcao4"
-              className="text-white block mb-2 hover:bg-slate-200 hover:text-slate-400"
-            >
-              Opção 4
-            </Link> */}
           </div>
         )}
       </div>
