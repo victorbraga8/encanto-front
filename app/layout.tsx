@@ -4,6 +4,9 @@ import "./globals.css";
 import HomeScreen from "./components/home/home";
 import Header from "./components/header/page";
 import Sidebar from "./components/sidebar/page";
+import AuthProvider from "./_providers/auth";
+import { useSession } from "next-auth/react";
+import helpers from "@/lib/helpers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,14 +20,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = helpers.fazerSolicitacao();
+  const programas = helpers.getProgramaFidelidade(token);
+  // console.log(token);
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Sidebar />
-        <Header />
-        <HomeScreen />
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          {/* <Sidebar/> */}
+          <Header />
+          <HomeScreen />
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

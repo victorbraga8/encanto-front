@@ -1,94 +1,88 @@
-"use client";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Alert Dialog",
+    href: "/docs/primitives/alert-dialog",
+    description:
+      "A modal dialog that interrupts the user with important content and expects a response.",
+  },
+  {
+    title: "Hover Card",
+    href: "/docs/primitives/hover-card",
+    description:
+      "For sighted users to preview content available behind a link.",
+  },
+  {
+    title: "Progress",
+    href: "/docs/primitives/progress",
+    description:
+      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  },
+  {
+    title: "Scroll-area",
+    href: "/docs/primitives/scroll-area",
+    description: "Visually or semantically separates content.",
+  },
+  {
+    title: "Tabs",
+    href: "/docs/primitives/tabs",
+    description:
+      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  },
+  {
+    title: "Tooltip",
+    href: "/docs/primitives/tooltip",
+    description:
+      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  },
+];
 
-const SideMenu = () => {
-  const router = useRouter();
-  const handleBookingClick = () => {
-    router.push("/usuario-logado/adm/clientes/novo/");
-  };
-
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isDropdownOpen2, setDropdownOpen2] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-  const toggleDropdown2 = () => {
-    setDropdownOpen2(!isDropdownOpen2);
-  };
+export function SideMenu() {
   return (
-    <div className="sidebar mt-4 text-center w-full">
-      <div className="dropdown">
-        <Button className=" py-2 px-7 rounded" variant="link">
-          <Link href="/" className=" text-indigo-600 py-2 px-4 rounded">
-            Home
-          </Link>
-        </Button>
-      </div>
-      <div className="dropdown">
-        <Button
-          className="text-indigo-600 py-2 px-7 rounded"
-          variant="link"
-          onClick={toggleDropdown}
-        >
-          Clientes
-        </Button>
-        {isDropdownOpen && (
-          <div className="dropdown-content bg-slate-400 p-4 mt-2 rounded shadow-xl">
-            <Link
-              href="/usuario-logado/adm/clientes/novo"
-              className="text-white block mb-2 hover:bg-slate-200 hover:text-slate-400"
-              onClick={toggleDropdown}
-            >
-              Cadastrar
-            </Link>
-          </div>
-        )}
-      </div>
+    <NavigationMenu>
+      <NavigationMenuList>
+        {/* ... (código existente) */}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              {/* ... (código existente) */}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
 
-      <div className="dropdown">
-        <Button
-          onClick={toggleDropdown2}
-          className="text-indigo-600 py-2 px-7 rounded"
-          variant="link"
-        >
-          Programas
-        </Button>
-        {isDropdownOpen2 && (
-          <div className="dropdown-content bg-slate-400 p-4 mt-2 rounded shadow-xl">
-            <Link
-              href="/programas/cadastrar"
-              className="text-white block mb-2 hover:bg-slate-200 hover:text-slate-400"
-              onClick={toggleDropdown2}
-            >
-              Cadastrar
-            </Link>
-            <Link
-              href="/programas/listar"
-              className="text-white block mb-2 hover:bg-slate-200 hover:text-slate-400"
-              onClick={toggleDropdown2}
-            >
-              Listar
-            </Link>
-          </div>
-        )}
-      </div>
-      <div className="dropdown">
-        <Button
-          className=" text-indigo-600 py-2 px-7 rounded"
-          variant="link"
-          onClick={() => signOut()}
-        >
-          Logout
-        </Button>
-      </div>
-    </div>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {components.map((component) => (
+                <li key={component.title} title={component.title}>
+                  {component.description}
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Documentation</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              {/* ... (código existente) */}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
-};
-
-export default SideMenu;
+}
