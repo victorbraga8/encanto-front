@@ -4,6 +4,7 @@ import { join } from "path";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
+  await console.log(data);
   const file: File | null = data.get("file") as unknown as File;
 
   if (!file) {
