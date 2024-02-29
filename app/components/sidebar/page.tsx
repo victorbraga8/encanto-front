@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { SideMenu } from "../sidemenu/page";
+import SideMenu from "../sidemenu/page";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 const Sidebar = (token: any) => {
   const { data } = useSession();
   const sessionData = data;
-  console.log(token);
+
   // const sessionData = data;
   // const { data } = useSWR("/api/session", {
   //   revalidateOnFocus: true,
@@ -23,7 +23,7 @@ const Sidebar = (token: any) => {
       <Card className="fixed left-0 top-0 h-screen z-50 bg-white text-white rounded-none drop-shadow-2xl shadow-blue-500/20 border-r-[6px] border-r-emerald-400">
         <CardContent className="flex flex-col items-center justify-between h-full">
           <div className="mt-8">
-            <Button
+            {/* <Button
               className=" text-indigo-600 py-2 px-7 rounded"
               variant="link"
               onClick={() => signIn("azure-ad")}
@@ -36,7 +36,7 @@ const Sidebar = (token: any) => {
               onClick={() => signOut()}
             >
               Logout
-            </Button>
+            </Button> */}
             <Image
               src="/assets/profile-pic-new.jpg"
               width={148}
@@ -48,9 +48,9 @@ const Sidebar = (token: any) => {
               {/* {data?.user?.name} */}
             </h2>
           </div>
-          {/* <div id="testeMenu">
+          <div id="testeMenu">
             <SideMenu />
-          </div> */}
+          </div>
           <div className="mt-auto">
             <Image
               className="mt-auto"

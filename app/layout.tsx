@@ -20,14 +20,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const token = helpers.fazerSolicitacao();
-  const programas = helpers.getProgramaFidelidade(token);
+  // const token = helpers.fazerSolicitacao();
+  // const programas = helpers.getProgramaFidelidade(token);
   // console.log(token);
   return (
     <AuthProvider>
       <html lang="en">
         <body className={inter.className}>
-          {/* <Sidebar/> */}
+          <Sidebar />
           <Header />
           <HomeScreen />
           {children}
