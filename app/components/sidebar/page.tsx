@@ -1,69 +1,102 @@
 "use client";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import SideMenu from "../sidemenu/page";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-// import { SessionProps } from "./types/sessionType";
-// import useSWR from "swr";
+import {
+  ChevronDown,
+  ChevronFirst,
+  ChevronLeft,
+  Cog,
+  MoreVertical,
+  ShoppingBag,
+  User,
+  Users,
+} from "lucide-react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-const Sidebar = (token: any) => {
-  const { data } = useSession();
-  const sessionData = data;
+const Sidebar = () => {
+  //   const router = useRouter();
+  const [collapsed, setCollapsed] = useState(false);
 
-  // const sessionData = data;
-  // const { data } = useSWR("/api/session", {
-  //   revalidateOnFocus: true,
-  // });
-  console.log(sessionData);
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+    setAdminCollapsed(false);
+  };
+
+  const [adminCollapsed, setAdminCollapsed] = useState(false);
+  const [programasCollapsed, setProgramasCollapsed] = useState(true);
+
+  const toggleCollapsed = () => {
+    setCollapsed((prevCollapsed) => !prevCollapsed);
+  };
+
+  const toggleAdminCollapsed = () => {
+    setAdminCollapsed((prevAdminCollapsed) => !prevAdminCollapsed);
+  };
+
+  const toggleProgramasCollapsed = () => {
+    setProgramasCollapsed((prevProgramasCollapsed) => !prevProgramasCollapsed);
+  };
+
   return (
-    <>
-      {/* {data?.user ? ( */}
-      <Card className="fixed left-0 top-0 h-screen z-50 bg-white text-white rounded-none drop-shadow-2xl shadow-blue-500/20 border-r-[6px] border-r-emerald-400">
-        <CardContent className="flex flex-col items-center justify-between h-full">
-          <div className="mt-8">
-            {/* <Button
-              className=" text-indigo-600 py-2 px-7 rounded"
-              variant="link"
-              onClick={() => signIn("azure-ad")}
-            >
-              Login
-            </Button>
-            <Button
-              className=" text-indigo-600 py-2 px-7 rounded"
-              variant="link"
-              onClick={() => signOut()}
-            >
-              Logout
-            </Button> */}
-            <Image
-              src="/assets/profile-pic-new.jpg"
-              width={148}
-              height={148}
-              alt="Profile"
-              className="rounded-full mb-4 border-4 border-solid border-purple-500"
-            />
-            <h2 className="text-purple-500 text-center uppercase font-semibold">
-              {/* {data?.user?.name} */}
-            </h2>
-          </div>
-          <div id="testeMenu">
-            <SideMenu />
-          </div>
-          <div className="mt-auto">
-            <Image
-              className="mt-auto"
-              alt="encantologo"
-              width={150}
-              height={150}
-              src="/assets/encanto-footer.png"
-            />
-          </div>
-        </CardContent>
-      </Card>
-      {/* ) : null} */}
-    </>
+    <aside
+      className={`bg-gray-800 text-white h-screen ${
+        collapsed ? "w-16" : "w-56"
+      } transition-width duration-300 ease-in-out`}
+    >
+      <div className="flex items-center justify-between p-4">
+        <div className="flex items-center space-x-2">
+          <img
+            src="assets/profile-pic-new.jpg"
+            alt="Logo"
+            className={`w-8 h-8 ${collapsed ? "hidden" : "block"}`}
+          />
+          <span className={`font-semibold ${collapsed ? "hidden" : "block"}`}>
+            MyApp
+          </span>
+        </div>
+        <button
+          onClick={toggleCollapse}
+          className="text-white focus:outline-none"
+        >
+          {collapsed ? <ChevronLeft size={20} /> : <ChevronDown size={20} />}
+        </button>
+      </div>
+      <nav>
+        <ul>
+          <li
+            className={`p-4 ${
+              !collapsed && adminCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
+            } cursor-pointer`}
+            onClick={toggleAdminCollapsed}
+          >
+            <span className="mr-2">
+              {collapsed ? <Cog size={20} /> : "Admin"}
+            </span>
+            {!collapsed && adminCollapsed && (
+              <ul className="pl-4">
+                <li className="py-2 px-3 text-center hover:bg-gray-200 cursor-pointer flex items-center">
+                  <Users size={16} className="mr-2" />
+                  Programas
+                </li>
+                <li className="py-2  px-3 text-center hover:bg-gray-200 cursor-pointer flex items-center">
+                  <ShoppingBag size={16} className="mr-2" />
+                  Shopping
+                </li>
+              </ul>
+            )}
+          </li>
+          <li className="p-4 hover:bg-gray-700 cursor-pointer">
+            <span className="mr-2">
+              {collapsed ? <User size={20} /> : "Users"}
+            </span>
+          </li>
+          <li className="p-4 hover:bg-gray-700 cursor-pointer">
+            <span className="mr-2">
+              {collapsed ? <Cog size={20} /> : "Config"}
+            </span>
+          </li>
+        </ul>
+      </nav>
+    </aside>
   );
 };
 

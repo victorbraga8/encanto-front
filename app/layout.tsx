@@ -7,6 +7,7 @@ import Sidebar from "./components/sidebar/page";
 import AuthProvider from "./_providers/auth";
 import { useSession } from "next-auth/react";
 import helpers from "@/lib/helpers";
+import { BarChart3 } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Sidebar />
+          {/* <Sidebar /> */}
           <Header />
           <HomeScreen />
           {children}

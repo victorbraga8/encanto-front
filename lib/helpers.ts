@@ -76,27 +76,25 @@ class Helpers {
   //   }
   // };
 
-  // getProgramaFidelidade = async (token: any) => {
-  //   // Incluir Etapa de verificador de validade do Token ou criar helper para isso
-  //   const url =
-  //     "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
-  //   console.log("Token no Programa Fidelidade" + token);
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     console.log("Token no Programa Fidelidade" + token);
-  //     // Lide com a resposta conforme necessário
-  //     console.log("Resposta da API:", response.data);
-  //     return response.data;
-  //   } catch (error) {
-  //     // Lide com os erros aqui
-  //     console.error("Erro na requisição:", error);
-  //     throw error;
-  //   }
-  // };
+  getProgramaFidelidade = async (token: any) => {
+    // Incluir Etapa de verificador de validade do Token ou criar helper para isso
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";    
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });      
+      // Lide com a resposta conforme necessário
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      // Lide com os erros aqui
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  };
 }
 
 const helpers = new Helpers();

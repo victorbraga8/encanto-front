@@ -2,7 +2,9 @@
 import { useSession } from "next-auth/react";
 import TabelaInicial from "../tabela/page";
 import helpers from "@/lib/helpers";
+import SideBar from "../sidebar/page";
 import CadastrarPrograma from "../programa/novo/page";
+import { BarChart3 } from "lucide-react";
 // import { SessionProps } from "./types/sessionType";
 // import UsuarioDeslogado from "@/app/usuario-deslogado/page";
 // import useSWR from "swr";
@@ -15,6 +17,7 @@ const HomeScreen = async () => {
   // const { data } = useSession();
   return (
     <>
+      <SideBar />
       <CadastrarPrograma />
       {/* <TabelaInicial /> */}
     </>
