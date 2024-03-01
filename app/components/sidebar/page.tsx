@@ -1,12 +1,8 @@
-import {
-  ChevronDown,
-  ChevronLeft,
-  Cog,
-  ShoppingBag,
-  User,
-  Users,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, Cog, LogOutIcon, Users } from "lucide-react";
 import { useState } from "react";
+import OpcoesAdm from "./menu-itens/adm/page";
+import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -40,7 +36,7 @@ const Sidebar = () => {
             className={`w-8 h-8 ${collapsed ? "hidden" : "block"}`}
           />
           <span className={`font-semibold ${collapsed ? "hidden" : "block"}`}>
-            MyApp
+            Sistema Encanto
           </span>
         </div>
         <button
@@ -51,64 +47,24 @@ const Sidebar = () => {
         </button>
       </div>
       <nav>
-        <ul>
+        <OpcoesAdm
+          collapsed={collapsed}
+          adminCollapsed={adminCollapsed}
+          programasCollapsed={programasCollapsed}
+          onToggleAdmin={toggleAdminCollapsed}
+          onToggleProgramas={toggleProgramasCollapsed}
+        />
+        <ul
+          className={`text-center flex items-center flex-col bg-gray-800 text-white ${
+            collapsed ? "w-16" : "w-56"
+          } transition-width duration-300 ease-in-out`}
+        >
           <li
-            className={`py-5 px-5 text-center ${
-              !collapsed && adminCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-            } cursor-pointer flex items-center`}
-            onClick={toggleAdminCollapsed}
+            className="py-5 px-3.5 text-center cursor-pointer flex items-center hover:text-red-600"
+            onClick={() => signOut()}
           >
-            <span className="mr-2">
-              {collapsed ? <Cog size={20} /> : "Admin"}
-            </span>
-          </li>
-          {!collapsed && adminCollapsed && (
-            <ul>
-              <li
-                className={`pl-8 py-2 px-3 text-center ${
-                  !programasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
-                } cursor-pointer flex items-center`}
-                onClick={toggleProgramasCollapsed}
-              >
-                <Users size={16} className="mr-2" />
-                Programas
-              </li>
-              {!programasCollapsed && (
-                <ul>
-                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                    Cadastrar
-                  </li>
-                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                    Listar
-                  </li>
-                </ul>
-              )}
-              <li
-                className={`py-2 pl-8 px-3 text-center ${
-                  collapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-                } cursor-pointer flex items-center`}
-              >
-                <ShoppingBag size={16} className="mr-2" />
-                Shopping
-              </li>
-            </ul>
-          )}
-
-          <li
-            className={`py-5 px-5 text-center  ${
-              collapsed ? "bg-gray-800 hover:bg-gray-700" : "hover:bg-gray-700"
-            } cursor-pointer flex items-center`}
-          >
-            <span className="mr-2">
-              {collapsed ? <User size={20} /> : "Users"}
-            </span>
-          </li>
-          <li
-            className={`py-5 px-5 text-center ${
-              collapsed ? "bg-gray-800 hover:bg-gray-700" : "hover:bg-gray-700"
-            } cursor-pointer flex items-center`}
-          >
-            <span>{collapsed ? <Cog size={20} /> : "Config"}</span>
+            <LogOutIcon size={20} className="mr-2" />
+            {collapsed ? "" : "Logout"}
           </li>
         </ul>
       </nav>
