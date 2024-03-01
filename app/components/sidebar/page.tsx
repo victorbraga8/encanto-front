@@ -45,7 +45,7 @@ const Sidebar = () => {
         </div>
         <button
           onClick={toggleCollapse}
-          className="text-white focus:outline-none"
+          className="text-white focus:outline-none ml-6"
         >
           {collapsed ? <ChevronLeft size={20} /> : <ChevronDown size={20} />}
         </button>
@@ -53,9 +53,9 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li
-            className={`p-4 ${
+            className={`py-5 px-5 text-center ${
               !collapsed && adminCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-            } cursor-pointer`}
+            } cursor-pointer flex items-center`}
             onClick={toggleAdminCollapsed}
           >
             <span className="mr-2">
@@ -66,7 +66,7 @@ const Sidebar = () => {
             <ul className="pl-4">
               <li
                 className={`py-2 px-3 text-center ${
-                  programasCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
+                  !programasCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
                 } cursor-pointer flex items-center`}
                 onClick={toggleProgramasCollapsed}
               >
@@ -88,29 +88,27 @@ const Sidebar = () => {
                   collapsed ? "bg-cyan-700" : "hover:bg-gray-700"
                 } cursor-pointer flex items-center`}
               >
-                <ShoppingBag size={16} className="mr-2" />
+                <ShoppingBag size={16} />
                 Shopping
               </li>
             </ul>
           )}
 
           <li
-            className={`p-4 ${
-              collapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-            } cursor-pointer`}
+            className={`py-5 px-5 text-center  ${
+              collapsed ? "bg-gray-800 hover:bg-gray-700" : "hover:bg-gray-700"
+            } cursor-pointer flex items-center`}
           >
             <span className="mr-2">
               {collapsed ? <User size={20} /> : "Users"}
             </span>
           </li>
           <li
-            className={`p-4 ${
-              collapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-            } cursor-pointer`}
+            className={`py-5 px-5 text-center ${
+              collapsed ? "bg-gray-800 hover:bg-gray-700" : "hover:bg-gray-700"
+            } cursor-pointer flex items-center`}
           >
-            <span className="mr-2">
-              {collapsed ? <Cog size={20} /> : "Config"}
-            </span>
+            <span>{collapsed ? <Cog size={20} /> : "Config"}</span>
           </li>
         </ul>
       </nav>
