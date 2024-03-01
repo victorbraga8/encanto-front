@@ -63,10 +63,10 @@ const Sidebar = () => {
             </span>
           </li>
           {!collapsed && adminCollapsed && (
-            <ul className="pl-4">
+            <ul>
               <li
-                className={`py-2 px-3 text-center ${
-                  !programasCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
+                className={`pl-8 py-2 px-3 text-center ${
+                  !programasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
                 } cursor-pointer flex items-center`}
                 onClick={toggleProgramasCollapsed}
               >
@@ -74,21 +74,21 @@ const Sidebar = () => {
                 Programas
               </li>
               {!programasCollapsed && (
-                <ul className="pl-4">
-                  <li className="py-2 px-3 text-center hover:bg-cyan-700 cursor-pointer flex items-center">
+                <ul>
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
                     Cadastrar
                   </li>
-                  <li className="py-2 px-3 text-center hover:bg-cyan-700 cursor-pointer flex items-center">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
                     Listar
                   </li>
                 </ul>
               )}
               <li
-                className={`py-2  px-3 text-center ${
+                className={`py-2 pl-8 px-3 text-center ${
                   collapsed ? "bg-cyan-700" : "hover:bg-gray-700"
                 } cursor-pointer flex items-center`}
               >
-                <ShoppingBag size={16} />
+                <ShoppingBag size={16} className="mr-2" />
                 Shopping
               </li>
             </ul>
