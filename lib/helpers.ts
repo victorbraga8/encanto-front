@@ -26,7 +26,23 @@ class Helpers {
     return badgeColor;
   }
 
-  handlePath(path: string) {}
+  async getProgragramas() {
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
+    const tokenBearer = "SEU_TOKEN_AQUI"; // Substitua pelo seu token Bearer
+
+    try {
+      const resposta = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${tokenBearer}`,
+        },
+      });
+
+      console.log("Resposta da API:", resposta.data);
+    } catch (erro: any) {
+      console.error("Erro na requisição:", erro.message);
+    }
+  }
 
   // fazerSolicitacao = async (): Promise<string> => {
   //   interface TokenResponse {

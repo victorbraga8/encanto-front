@@ -75,11 +75,6 @@ async function getData(): Promise<DataRow[]> {
 }
 
 const ListarPrograma = () => {
-  const [dados, setDados] = useState<DadosItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const [token, setToken] = useState<string | null>(null);
-
   const [data, setData] = useState<DataRow[]>([]);
 
   useEffect(() => {
@@ -91,9 +86,23 @@ const ListarPrograma = () => {
     fetchData();
   }, []);
 
+  // const fazerRequisicao = async () => {
+  //   const url = "https://swapi.dev/api/people/";
+
+  //   try {
+  //     const resposta = await axios.get(url);
+
+  //     console.log("Resposta da API:", resposta.data);
+  //   } catch (erro: any) {
+  //     console.error("Erro na requisição:", erro.message);
+  //   }
+  // };
+
+  // fazerRequisicao();
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
+        <h1>Listagem de Programas</h1>
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>
