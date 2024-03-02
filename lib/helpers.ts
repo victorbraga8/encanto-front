@@ -13,16 +13,16 @@ class Helpers {
   }
 
   handleStatus(status: string) {
-    let badgeColor = "";
-    if (status == "pendente") {
-      badgeColor = "bg-amber-500";
+    let badgeColor: any = "";
+    if (status === "pendente") {
+      badgeColor = { backgroundColor: "rgb(231 176 19)", color: "white" };
+    } else if (status === "concluido") {
+      badgeColor = { backgroundColor: "rgb(42 157 14)", color: "white" };
+    } else if (status === "cancelado") {
+      badgeColor = { backgroundColor: "rgb(213 5 5)", color: "white" };
     }
-    if (status == "concluido") {
-      badgeColor = "bg-green-500";
-    }
-    if (status == "cancelado") {
-      badgeColor = "bg-red-500";
-    }
+
+    // Adiciona outras classes conforme necessário
     return badgeColor;
   }
 

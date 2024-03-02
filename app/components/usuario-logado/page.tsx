@@ -7,8 +7,10 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@radix-ui/react-tooltip";
-import { Badge, Pencil } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Pencil } from "lucide-react";
 import { useState, useEffect } from "react";
+import helpers from "@/lib/helpers";
 
 interface DataRow {
   id: string;
@@ -164,9 +166,12 @@ const UsuarioLogado = () => {
                   <td className="py-2 px-4 border-b">{row.telefone}</td>
                   <td className="py-2 px-4 border-b">{row.email}</td>
                   <td className="py-2 px-4 border-b">
-                    <div>
-                      {/* <Badge className={helpers.handleStatus(row.status)}></Badge> */}
-                      <Badge className="bg-indigo-700">{row.status}</Badge>
+                    <div
+                      style={helpers.handleStatus(row.status)}
+                      className="px-5 rounded-xl hover:opacity-70 transition-colors"
+                    >
+                      <div>{row.status}</div>
+                      {/* {helpers.handleStatus(row.status)} */}
                     </div>
                   </td>
                   <td className="py-2 px-4 border-b">
