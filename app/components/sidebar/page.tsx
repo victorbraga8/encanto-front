@@ -7,6 +7,7 @@ import {
   LogOutIcon,
   Users,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import OpcoesAdm from "./menu-itens/adm/page";
 import { Button } from "@/components/ui/button";
@@ -64,6 +65,18 @@ const Sidebar = () => {
             </button>
           </div>
           <nav className="flex-1 overflow-y-auto">
+            <ul>
+              <Link href="/">
+                <li
+                  className="py-5 px-5 text-center 
+                     hover:bg-gray-700 cursor-pointer flex items-center flex-col"
+                >
+                  <span className="mr-2">
+                    {collapsed ? <Cog size={20} /> : "Home"}
+                  </span>
+                </li>
+              </Link>
+            </ul>
             <OpcoesAdm
               collapsed={collapsed}
               adminCollapsed={adminCollapsed}
