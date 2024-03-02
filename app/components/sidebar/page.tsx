@@ -33,6 +33,11 @@ const Sidebar = () => {
   const toggleProgramasCollapsed = () => {
     setProgramasCollapsed((prevProgramasCollapsed) => !prevProgramasCollapsed);
   };
+
+  const toggleAll = () => {
+    setAdminCollapsed(false);
+    setProgramasCollapsed(true);
+  };
   const { data } = useSession();
   return (
     <>
@@ -66,7 +71,7 @@ const Sidebar = () => {
           </div>
           <nav className="flex-1 overflow-y-auto">
             <ul>
-              <Link href="/">
+              <Link href="/" onClick={toggleAll}>
                 <li
                   className="py-5 px-5 text-center 
                      hover:bg-gray-700 cursor-pointer flex items-center flex-col"
