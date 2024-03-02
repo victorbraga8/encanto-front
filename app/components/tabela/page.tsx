@@ -152,7 +152,7 @@ const TabelaInicial = () => {
           placeholder="Digite aqui..."
         />
       </form> */}
-      <div className="py-10 lg:pl-[226px] max-w-fit">
+      <div className="py-10 lg:pl-[268px] max-w-fit">
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>
