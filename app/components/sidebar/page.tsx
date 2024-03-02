@@ -7,6 +7,7 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 
 const Sidebar = () => {
+  const [sidebarWidth, setSidebarWidth] = useState("w-56");
   const [collapsed, setCollapsed] = useState(false);
   const [adminCollapsed, setAdminCollapsed] = useState(false);
   const [programasCollapsed, setProgramasCollapsed] = useState(true);
@@ -14,6 +15,7 @@ const Sidebar = () => {
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
     setAdminCollapsed(false);
+    setSidebarWidth(collapsed ? "w-56" : "w-16");
   };
 
   const toggleAdminCollapsed = () => {
@@ -27,9 +29,7 @@ const Sidebar = () => {
   return (
     <>
       <aside
-        className={`bg-gray-800 text-white ${
-          collapsed ? "w-16" : "w-56"
-        } transition-width duration-300 ease-in-out flex flex-col absolute inset-y-0 top-0`}
+        className={`bg-gray-800 text-white ${sidebarWidth} transition-width duration-300 ease-in-out flex flex-col absolute inset-y-0 top-0`}
       >
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-2">
