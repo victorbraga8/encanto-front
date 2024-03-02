@@ -8,6 +8,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { signIn, useSession } from "next-auth/react";
+import helpers from "@/lib/helpers";
 // import { SessionProps } from "./types/sessionType";
 // import useSWR from "swr";
 // import sessionData from "@/lib/helpers";
@@ -20,9 +21,12 @@ const Header = () => {
   const handleBackClick = () => {
     router.back();
   };
-  useEffect(() => {
-    console.log(pathName);
-  }, []);
+
+  const pathParts = helpers.handblePathHeader(pathName);
+  console.log(pathParts);
+  // useEffect(() => {
+  //   console.log(pathName);
+  // }, []);
 
   return (
     <Card>
@@ -32,7 +36,7 @@ const Header = () => {
           <div className="flex-grow">
             <h2 className="ml-[220px] text-white">
               <p className="uppercase">
-                <span className="font-semibold">Clientes</span> / Busca
+                <span className="font-semibold">{pathParts}</span>
               </p>
             </h2>
           </div>

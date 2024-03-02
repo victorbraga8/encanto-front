@@ -3,6 +3,15 @@ import { Badge as BadgeComponent } from "@/components/ui/badge";
 import axios, { AxiosResponse } from "axios";
 
 class Helpers {
+  handblePathHeader(path: string) {
+    const partes = path.split("/").filter(Boolean);
+    if (path == "/") {
+      return "Home";
+    }
+    const completePath = partes[0] + " / " + partes[1];
+    return completePath;
+  }
+
   handleStatus(status: string) {
     let badgeColor = "";
     if (status == "pendente") {
@@ -79,13 +88,13 @@ class Helpers {
   getProgramaFidelidade = async (token: any) => {
     // Incluir Etapa de verificador de validade do Token ou criar helper para isso
     const url =
-      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";    
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
     try {
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });      
+      });
       // Lide com a resposta conforme necessário
       console.log("Resposta da API:", response.data);
       return response.data;
