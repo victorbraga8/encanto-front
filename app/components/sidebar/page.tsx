@@ -64,7 +64,10 @@ const Sidebar = () => {
               collapsed ? "w-16" : "w-56"
             } transition-width duration-300 ease-in-out`}
           >
-            <li className="py-5 px-3.5 text-center cursor-pointer flex items-center hover:text-red-600">
+            <li
+              onClick={() => signOut()}
+              className="py-5 px-3.5 text-center cursor-pointer flex items-center hover:text-red-600"
+            >
               <LogOutIcon size={20} className="mr-2" />
               {collapsed ? "" : "Logout"}
             </li>

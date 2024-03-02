@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import HomeScreen from "./components/home/page";
+import HomeScreen from "./(home)/page";
 import Header from "./components/header/page";
 import Sidebar from "./components/sidebar/page";
 import AuthProvider from "./_providers/auth";
@@ -20,11 +20,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Header />
-          <div className="flex overflow-hidden">
-            <Sidebar />
-            <HomeScreen />
-            {children}
-          </div>
+          <div className="flex overflow-hidden">{children}</div>
         </body>
       </html>
     </AuthProvider>

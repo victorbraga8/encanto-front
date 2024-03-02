@@ -140,18 +140,16 @@ const TabelaInicial = () => {
   }, []);
   return (
     <>
-      {/* <form className="mb-4">
+      <form className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Pesquisar:
         </label>
         <input
           type="text"
-          // value={searchTerm}
-          // onChange={(e) => setSearchTerm(e.target.value)}
           className=" appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Digite aqui..."
         />
-      </form> */}
+      </form>
       <div className="py-10 lg:pl-[268px] max-w-fit">
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
@@ -178,7 +176,6 @@ const TabelaInicial = () => {
                   <td className="py-2 px-4 border-b">{row.email}</td>
                   <td className="py-2 px-4 border-b">
                     <div>
-                      {/* <Badge className={helpers.handleStatus(row.status)}></Badge> */}
                       <Badge className="bg-indigo-700">{row.status}</Badge>
                     </div>
                   </td>
