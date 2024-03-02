@@ -1,3 +1,4 @@
+"use client";
 import TabelaInicial from "@/app/components/tabela/page";
 import helpers from "@/lib/helpers";
 import SideBar from "@/app/components/sidebar/page";
