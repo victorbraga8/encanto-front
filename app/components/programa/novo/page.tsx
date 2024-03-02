@@ -70,7 +70,7 @@ const tempUpload = () => {
 
   return (
     <>
-      <div className="py-10 lg:pl-[226px] max-w-fit">
+      <div className="lg:pl-[268px] max-w-fit pt-10">
         <form onSubmit={onSubmit} action="">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">

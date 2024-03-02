@@ -5,6 +5,7 @@ import helpers from "@/lib/helpers";
 import SideBar from "../sidebar/page";
 import CadastrarPrograma from "../programa/novo/page";
 import { BarChart3 } from "lucide-react";
+import Sidebar from "../sidebar/page";
 // import { SessionProps } from "./types/sessionType";
 // import UsuarioDeslogado from "@/app/usuario-deslogado/page";
 // import useSWR from "swr";
@@ -17,8 +18,9 @@ const HomeScreen = async () => {
   // const { data } = useSession();
   return (
     <>
-      <SideBar />
-      <CadastrarPrograma />
+      <div className="">
+        <CadastrarPrograma />
+      </div>
       {/* <TabelaInicial /> */}
     </>
   );
