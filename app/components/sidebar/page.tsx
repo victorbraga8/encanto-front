@@ -47,9 +47,12 @@ const Sidebar = () => {
         >
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-2">
-              <img
-                src="assets/profile-pic-new.jpg"
+              <Image
+                src="/assets/profile-pic-new.jpg"
                 alt="Logo"
+                width={20}
+                height={20}
+                loading="eager"
                 className={`w-8 h-8 ${collapsed ? "hidden" : "block"}`}
               />
               <span
@@ -110,6 +113,8 @@ const Sidebar = () => {
                 alt="encantologo"
                 width={150}
                 height={150}
+                priority={true}
+                loading="eager"
                 src="/assets/encanto-footer.png"
               />
             )}

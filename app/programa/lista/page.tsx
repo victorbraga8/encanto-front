@@ -10,6 +10,7 @@ import {
 
 import { Pencil } from "lucide-react";
 import Image from "next/image";
+import helpers from "@/lib/helpers";
 
 interface DadosItem {
   id: number;
@@ -75,81 +76,77 @@ async function getData(): Promise<DataRow[]> {
 }
 
 const ListarPrograma = () => {
-  const [data, setData] = useState<DataRow[]>([]);
+  const [programas, setProgramas] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getData();
-      setData(result);
+      try {
+        const resposta = await helpers.getProgramas();
+        setProgramas(resposta);
+
+        // Mova o console.log para dentro do bloco try para garantir que seja chamado apenas uma vez
+        console.log(resposta);
+      } catch (erro: any) {
+        console.error("Erro ao obter programas:", erro.message);
+      }
     };
 
     fetchData();
   }, []);
-
-  // const fazerRequisicao = async () => {
-  //   const url = "https://swapi.dev/api/people/";
-
-  //   try {
-  //     const resposta = await axios.get(url);
-
-  //     console.log("Resposta da API:", resposta.data);
-  //   } catch (erro: any) {
-  //     console.error("Erro na requisição:", erro.message);
-  //   }
-  // };
-
-  // fazerRequisicao();
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
-        <h1>Listagem de Programas</h1>
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>
               <tr className="text-left">
                 <th className="py-2 px-4 border-b">ID</th>
-                <th className="py-2 px-4 border-b">Nome Programa</th>
-                <th className="py-2 px-4 border-b">Descritivo Programa</th>
+                <th className="py-2 px-4 border-b">Nome</th>
+                <th className="py-2 px-4 border-b">Descrição</th>
                 <th className="py-2 px-4 border-b">Imagem</th>
-                <th className="py-2 px-4 border-b">Data Cadastro</th>
                 <th className="py-2 px-4 border-b">Ações</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((row: any, index: any) => (
-                <tr
-                  key={row.id}
-                  className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}
-                >
-                  <td className="py-2 px-4 border-b">{row.id}</td>
-                  <td className="py-2 px-4 border-b">{row.dataCadastro}</td>
-                  <td className="py-2 px-4 border-b">{row.telefone}</td>
-                  <td className="py-2 px-4 border-b">
-                    <Image alt="" width={70} height={70} src={row.img} />
-                  </td>
-                  <td className="py-2 px-4 border-b">
-                    {row.ultimaAtualizacao}
-                  </td>
-                  <td className="py-2 px-4 border-b">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="default"
-                            size="icon"
-                            className="mr-2 bg-green-600 hover:bg-green-400"
-                          >
-                            <Pencil />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
-                          <p>Editar Programa</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </td>
-                </tr>
-              ))}
+              {programas &&
+                (programas as any[]).map((row: any, index: any) => (
+                  <tr
+                    key={row.id}
+                    className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}
+                  >
+                    <td className="py-2 px-4 border-b">{index + 1}</td>
+                    <td className="py-2 px-4 border-b">{row.name}</td>
+                    <td className="py-2 px-4 border-b">{row.description}</td>
+                    <td className="py-2 px-4 border-b">
+                      <Image
+                        width={60}
+                        height={60}
+                        alt="imageprograma"
+                        src="/assets/gol.jpg"
+                        loading="eager"
+                        style={{ width: "auto", height: "auto" }}
+                      />
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="default"
+                              size="icon"
+                              className="mr-2 bg-green-600 hover:bg-green-400"
+                            >
+                              <Pencil />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
+                            <p>Editar Usuário</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
