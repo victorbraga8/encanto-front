@@ -138,6 +138,45 @@ const UsuarioLogado = () => {
 
     fetchData();
   }, []);
+
+  const bearerToken =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NDM4NjU3LCJuYmYiOjE3MDk0Mzg2NTcsImV4cCI6MTcwOTQ0MjU1NywiYWlvIjoiRTJOZ1lDaGMvU1I2a3RHdTBxN0VzTFZUSitvOEFBQT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImRhMDkwMTVkLTMzODAtNGNkYi04ZTkwLTg4ZTBiZTVhN2FmMSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IjAxd01Cb2M3UVVLemF0Uk02Z2lqQUEiLCJ2ZXIiOiIxLjAifQ.UBcuReTsCFhcmtonu4FW8rf-YJxAKs3q83zX7-nbuFKqidXFirAsdubYlqGG5w5hiz3fSDpjCOK0kXtB_w5wXqBYKv1-_G7wx7fd4xgVhppMFSm0PuDa7PmjgGLygxSFfZ4aM-hIHnduvdey_jcwM9tnAEEKv7VjPt6zWv6oEeHknP1hNKx7F5seaem1G36afpkkmtHInSYeX3cq4Q5NlaxIJZRyP2qsRbBBtWkbbnIUlJozEN3Ejgoxyq8JzEJKbY5r4xUeHVxfyzYWWPYMfUoKaFEOQHFkcAuhLlOvAWFKFyMxWe7bpCtYXe42b1k5mo4ktPZOv8fncMHxXVxv9w";
+
+  const apiUrl =
+    "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
+
+  // Configuração do cabeçalho da requisição
+  const headers = new Headers({
+    Authorization: `Bearer ${bearerToken}`,
+  });
+
+  // Configuração do objeto de opções para a requisição
+  const requestOptions = {
+    method: "GET",
+    headers: headers,
+    // Pode adicionar outros parâmetros, como body, mode, etc., conforme necessário
+  };
+
+  // Faz a requisição usando fetch
+  fetch(apiUrl, requestOptions)
+    .then((response) => {
+      // Verifica se a requisição foi bem-sucedida (código 200)
+      if (!response.ok) {
+        throw new Error(
+          `Erro na requisição. Código de status: ${response.status}`
+        );
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Trate a resposta da API
+      console.log("Resposta da API:", data);
+    })
+    .catch((error) => {
+      // Trata erros
+      console.error("Erro na requisição:", error);
+    });
+
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
