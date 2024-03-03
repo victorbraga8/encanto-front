@@ -1,17 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@radix-ui/react-tooltip";
 import DemoDialog from "@/app/components/modal/page";
-
+import ConfirmationModal from "@/app/components/modal-confirmacao/page";
 import Image from "next/image";
 import helpers from "@/lib/helpers";
 import Link from "next/link";
+import { Delete, DeleteIcon, X } from "lucide-react";
 
 interface DadosItem {
   id: number;
@@ -77,7 +72,65 @@ async function getData(): Promise<DataRow[]> {
 }
 
 const ListarPrograma = () => {
-  const [programas, setProgramas] = useState(null);
+  const [programas, setProgramas] = useState<DadosItem[] | null>(null);
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedName, setNameSelected] = useState(null);
+  const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Lógica para excluir o registro na API usando selectedItemId
+      await helpers.deleteProgramaFidelidade(selectedItemId, "");
+
+      // Atualizar a lista após a exclusão
+      if (programas) {
+        const updatedProgramas = programas.filter(
+          (programa: DadosItem) => programa.id !== selectedItemId
+        );
+        setProgramas(updatedProgramas);
+      }
+
+      // Exibir toast de sucesso após a exclusão
+      showToast("Registro excluído com sucesso!");
+
+      // Fechar o modal de confirmação
+      setConfirmationOpen(false);
+    } catch (error: any) {
+      console.error("Erro ao excluir o registro:", error.message);
+      showToast("Erro ao excluir o registro. Tente novamente mais tarde.");
+      setConfirmationOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (deleteStatus) {
+      const timer = setTimeout(() => {
+        setDeleteStatus(null);
+      }, 5000); // 5000 milissegundos (5 segundos)
+
+      return () => clearTimeout(timer);
+    }
+  }, [deleteStatus]);
+
+  const showToast = (message: any, type = "success") => {
+    // Lógica para exibir o toast usando o ToastProvider
+    // Implemente isso conforme a biblioteca que você está usando para toasts
+    // Exemplo de uso com shadcn-ui:
+    // toast.show(message, { type });
+    setDeleteStatus(type);
+  };
+
+  const handleCancelDelete = () => {
+    // Cancelar a exclusão, se necessário
+    setConfirmationOpen(false);
+  };
+
+  const handleDeleteClick = (id: any, name: any) => {
+    setNameSelected(name);
+    setSelectedItemId(id);
+    setConfirmationOpen(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,17 +182,19 @@ const ListarPrograma = () => {
                       />
                     </td>
                     <td className="py-2 px-4 border-b">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Link href={row.id}></Link>
-                            <DemoDialog />
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
-                            <p>Editar Usuário</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <DemoDialog
+                        name={row.name}
+                        description={row.description}
+                        id={row.id}
+                      />
+                      <Button
+                        variant="default"
+                        size="icon"
+                        className="mr-2 bg-red-600 hover:bg-red-400"
+                        onClick={() => handleDeleteClick(row.id, row.name)}
+                      >
+                        <X />
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -147,6 +202,19 @@ const ListarPrograma = () => {
           </table>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isConfirmationOpen}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+        name={selectedName}
+      />
+      {deleteStatus && (
+        <div className={`toast ${deleteStatus}`}>
+          {deleteStatus === "success"
+            ? "Operação concluída com sucesso!"
+            : "Erro na operação. Tente novamente."}
+        </div>
+      )}
     </>
   );
 };

@@ -13,7 +13,13 @@ import {
 import { Pencil } from "lucide-react";
 import React from "react";
 
-const DemoDialog = () => {
+export type ProgramaProps = {
+  name: string;
+  description: string;
+  id: string;
+};
+
+const DemoDialog = ({ name, description, id }: ProgramaProps) => {
   return (
     <>
       <Dialog>
@@ -30,7 +36,7 @@ const DemoDialog = () => {
           <DialogHeader>
             <DialogTitle>Editar Programa de Fidelidade</DialogTitle>
             <DialogDescription>
-              Exclua ou Edite informações do programa abaixo.
+              Exclua ou edite informações do programa abaixo.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -40,7 +46,7 @@ const DemoDialog = () => {
               </Label>
               <Input
                 id="nomePrograma"
-                defaultValue="Pedro Duarte"
+                defaultValue={name}
                 className="col-span-3"
               />
             </div>
@@ -50,7 +56,7 @@ const DemoDialog = () => {
               </Label>
               <Input
                 id="username"
-                defaultValue="@peduarte"
+                defaultValue={description}
                 className="col-span-3"
               />
             </div>
