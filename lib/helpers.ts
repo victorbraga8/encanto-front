@@ -30,7 +30,39 @@ class Helpers {
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NDc3MDkyLCJuYmYiOjE3MDk0NzcwOTIsImV4cCI6MTcwOTQ4MDk5MiwiYWlvIjoiRTJOZ1lMZ1VXeHRsL3lqNjdlRWUzaDkvUHVYRkFRQT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjM4OTc3YzBkLTJiOWQtNDI4NC05ODExLWM5NjBhZjYwNjBlYyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IkppZnFpaGRFbUVLWUlHTkU0cFVIQVEiLCJ2ZXIiOiIxLjAifQ.RpLoKtk_8w1FDoatZYRGcnqs56-Q7uXTB9UphchuBP8Y5MScFqy8-zz1QOp-kimgj4qk2HFyzPIGvT76DiqSLOLjiXbzDsj2VJ04tt5kjF3NehmTKNKigyMAXHCZig1lHMXN6DavbbBqcIq96MqUU5fiaCdOD-Zuwrwn25ow3g51qTfkFp3rHNSCzoYLW-4dtwXGJ_EJlHbaZz3dXBLVUi0G9qoj1BHsCrH05rJgNVTr9WJQXl4UOF1e28j3FSM8BqCdNXq7G_aLHKzvSz7OFt_0zaocz5ZW_c2Vf1QtzMS_KGMpUMoCUpNnq0NYDh3-pMiY-oaMadS-aV19TjLn2A";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NDk2ODU2LCJuYmYiOjE3MDk0OTY4NTYsImV4cCI6MTcwOTUwMDc1NiwiYWlvIjoiRTJOZ1lEZzlzZHA3Qlh1MGwvZmpqNmUyTEZydkFBQT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImQwZDc3MmVmLWM3NDctNDg1Yi04MTVkLTkzZTU0OWI0OTA3NSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6ImRERzlZUW90RVVtNjdrUTVoUndyQUEiLCJ2ZXIiOiIxLjAifQ.VVBHVR-Kl1WOkL85fs3QY4WhJ1byTFlw8qIRGwthDf6EXJmiar4D365U1aeZppqYL3d32O5Ufb54R8EBvtUZ9pSO8rLDGHI12a2wah0f_pAhZ4ZLG-M6yW-GdlIvGRf9ZsZ3f2_rCaaz9LxAnfjUL2aq-9cUzEzVGILPejKRSmlkoClpVVRhrFLFH9amFgqFMA_i9CskdC1eShCfmQw2Wc-KUIxLLyEUnMdeCIybmhWSa5HdWPvaOR5R2vJisKPOVdNZAJikoTlm28z4UjsbNepnsnkoZX72kJHSKmRtEqSsAvVIJNXZP9vgvSPsi8Kd7OJ_X9djkSb6fsU9FmqqxA";
+
+    try {
+      const resposta = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          // Inclua headers adicionais conforme necessário para a sua aplicação
+        },
+        mode: "cors", // Configuração CORS
+      });
+
+      if (!resposta.ok) {
+        throw new Error(
+          `Erro na requisição: ${resposta.status} - ${resposta.statusText}`
+        );
+      }
+
+      const dados = await resposta.json();
+      // console.log("Dados recebidos:", dados);
+
+      return dados;
+    } catch (erro: any) {
+      console.error("Erro na requisição:", erro.message);
+      throw erro;
+    }
+  }
+
+  async getProgramaPorId(id: string) {
+    const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${id}`;
+    const token =
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NDk2ODU2LCJuYmYiOjE3MDk0OTY4NTYsImV4cCI6MTcwOTUwMDc1NiwiYWlvIjoiRTJOZ1lEZzlzZHA3Qlh1MGwvZmpqNmUyTEZydkFBQT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImQwZDc3MmVmLWM3NDctNDg1Yi04MTVkLTkzZTU0OWI0OTA3NSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6ImRERzlZUW90RVVtNjdrUTVoUndyQUEiLCJ2ZXIiOiIxLjAifQ.VVBHVR-Kl1WOkL85fs3QY4WhJ1byTFlw8qIRGwthDf6EXJmiar4D365U1aeZppqYL3d32O5Ufb54R8EBvtUZ9pSO8rLDGHI12a2wah0f_pAhZ4ZLG-M6yW-GdlIvGRf9ZsZ3f2_rCaaz9LxAnfjUL2aq-9cUzEzVGILPejKRSmlkoClpVVRhrFLFH9amFgqFMA_i9CskdC1eShCfmQw2Wc-KUIxLLyEUnMdeCIybmhWSa5HdWPvaOR5R2vJisKPOVdNZAJikoTlm28z4UjsbNepnsnkoZX72kJHSKmRtEqSsAvVIJNXZP9vgvSPsi8Kd7OJ_X9djkSb6fsU9FmqqxA";
 
     try {
       const resposta = await fetch(url, {

@@ -11,6 +11,7 @@ import {
 import { Pencil } from "lucide-react";
 import Image from "next/image";
 import helpers from "@/lib/helpers";
+import Link from "next/link";
 
 interface DadosItem {
   id: number;
@@ -131,13 +132,15 @@ const ListarPrograma = () => {
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button
-                              variant="default"
-                              size="icon"
-                              className="mr-2 bg-green-600 hover:bg-green-400"
-                            >
-                              <Pencil />
-                            </Button>
+                            <Link href={row.id}>
+                              <Button
+                                variant="default"
+                                size="icon"
+                                className="mr-2 bg-green-600 hover:bg-green-400"
+                              >
+                                <Pencil />
+                              </Button>
+                            </Link>
                           </TooltipTrigger>
                           <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
                             <p>Editar Usuário</p>
