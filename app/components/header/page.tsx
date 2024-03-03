@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   const pathParts = helpers.handblePathHeader(pathName);
-  console.log(pathParts);
+  // console.log(pathParts);
   // useEffect(() => {
   //   console.log(pathName);
   // }, []);
