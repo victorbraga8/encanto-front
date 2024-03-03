@@ -7,8 +7,8 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@radix-ui/react-tooltip";
+import DemoDialog from "@/app/components/modal/page";
 
-import { Pencil } from "lucide-react";
 import Image from "next/image";
 import helpers from "@/lib/helpers";
 import Link from "next/link";
@@ -131,16 +131,9 @@ const ListarPrograma = () => {
                     <td className="py-2 px-4 border-b">
                       <TooltipProvider>
                         <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Link href={row.id}>
-                              <Button
-                                variant="default"
-                                size="icon"
-                                className="mr-2 bg-green-600 hover:bg-green-400"
-                              >
-                                <Pencil />
-                              </Button>
-                            </Link>
+                          <TooltipTrigger>
+                            <Link href={row.id}></Link>
+                            <DemoDialog />
                           </TooltipTrigger>
                           <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
                             <p>Editar Usuário</p>

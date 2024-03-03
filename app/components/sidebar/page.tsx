@@ -43,7 +43,7 @@ const Sidebar = () => {
     <>
       {data?.user ? (
         <aside
-          className={`bg-gray-800 text-white ${sidebarWidth} transition-width duration-300 ease-in-out flex flex-col absolute inset-y-0 top-0`}
+          className={`bg-gray-800 text-white ${sidebarWidth} transition-width duration-300 ease-in-out flex flex-col absolute h-screen inset-y-0 top-0 z-40`}
         >
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center space-x-2">
