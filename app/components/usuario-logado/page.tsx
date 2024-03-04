@@ -15,9 +15,9 @@ const UsuarioLogado = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resposta = await helpers.getProgramas();
-        setProgramas(resposta);
-        console.log(resposta);
+        // const resposta = await helpers.getProgramas();
+        // setProgramas(resposta);
+        // console.log(resposta);
       } catch (erro: any) {
         console.error("Erro ao obter programas:", erro.message);
       }

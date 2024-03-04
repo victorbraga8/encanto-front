@@ -1,6 +1,8 @@
 import React from "react";
 import { Badge as BadgeComponent } from "@/components/ui/badge";
 import axios, { AxiosResponse } from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 class Helpers {
   handblePathHeader(path: string) {
@@ -30,7 +32,7 @@ class Helpers {
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTA1MDQzLCJuYmYiOjE3MDk1MDUwNDMsImV4cCI6MTcwOTUwODk0MywiYWlvIjoiRTJOZ1lGaW45K0VkMjlUK0F0dXJtVEdYNDJwMEFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjllZTU1ZGY2LTY5MWItNDhlMi05Y2M0LWE4MmI5MWViNGYyNSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IjA5UWJvVXFPc2tPVXlaNjdoVkhwQUEiLCJ2ZXIiOiIxLjAifQ.Pyd-1ZNHJBUBiQxvGIKOFkyTj05vC0Kej-Mrf6UERn67TYV0dqedzWuMrVz7jTm-kmRTzSenzgAnBkD0buTjtuAT4K35RNDKk6IJjj2Cx6gaY1FTjtwxfYzDUOSqELa6CSFP1rYcReHL8ctlGql1n7aO7Eb1a7EL9fVMBZDEkRK1ge9N1UjT4nMJ3TLE900zhpeD3pSICwuaabXRb3cbzre74wrNMmqOJADQA2PCTEa1DijCu-g4zfnJyHN6w3jsI5FhfajYOpZu7jP3xNkXd9turcZ4-MFUruBtzUt1QGLTsTf5kf1u1Q_gGPnosL9-lnb1Hqhfd4oad0wCitI1Ug";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTg2OTE5LCJuYmYiOjE3MDk1ODY5MTksImV4cCI6MTcwOTU5MDgxOSwiYWlvIjoiRTJOZ1lLajdtM0p6MStORWpWbU15VUp4ZHZkREFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImY1MDAyZGMxLTgzMWMtNDJhZS04ODAzLWIwMWE0YTM5ODAzNyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IkhLWkUxVWRoVWstVlVKajFEQjhnQVEiLCJ2ZXIiOiIxLjAifQ.Nt2q6UpDVE20b61Lu441nQwRK9_B8-Lm4NAvFmUY6iQXtVHAP8uOiXrNuShh3RcrMCxCLlN6js69C2FXQnQwVgC_-JThKdjhPj031TEKBbBqiWb-VtrosKvV1i2skSRy4Xn5r4MRHw9NCdufjkWlUAyfdAWVE16Ou38Xqmu2rc2kaRImeeFwVCndWjLJj6KdOgtlPMzP1oomiV7pTqvxkziS-URh95_xM9b2WL00sNT2KJfaJOFZAKmjZcPwwRhkCOYciNe0UTxKoP27BqISZCj-MKWpnzMueVryXUa5vdkHD8TvZb_UzkW8iWj4cSFYKOb70UIMPLdVL0ese97oeg";
 
     try {
       const resposta = await fetch(url, {
@@ -62,7 +64,7 @@ class Helpers {
   async getProgramaPorId(id: string) {
     const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${id}`;
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTA1MDQzLCJuYmYiOjE3MDk1MDUwNDMsImV4cCI6MTcwOTUwODk0MywiYWlvIjoiRTJOZ1lGaW45K0VkMjlUK0F0dXJtVEdYNDJwMEFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjllZTU1ZGY2LTY5MWItNDhlMi05Y2M0LWE4MmI5MWViNGYyNSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IjA5UWJvVXFPc2tPVXlaNjdoVkhwQUEiLCJ2ZXIiOiIxLjAifQ.Pyd-1ZNHJBUBiQxvGIKOFkyTj05vC0Kej-Mrf6UERn67TYV0dqedzWuMrVz7jTm-kmRTzSenzgAnBkD0buTjtuAT4K35RNDKk6IJjj2Cx6gaY1FTjtwxfYzDUOSqELa6CSFP1rYcReHL8ctlGql1n7aO7Eb1a7EL9fVMBZDEkRK1ge9N1UjT4nMJ3TLE900zhpeD3pSICwuaabXRb3cbzre74wrNMmqOJADQA2PCTEa1DijCu-g4zfnJyHN6w3jsI5FhfajYOpZu7jP3xNkXd9turcZ4-MFUruBtzUt1QGLTsTf5kf1u1Q_gGPnosL9-lnb1Hqhfd4oad0wCitI1Ug";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTg2OTE5LCJuYmYiOjE3MDk1ODY5MTksImV4cCI6MTcwOTU5MDgxOSwiYWlvIjoiRTJOZ1lLajdtM0p6MStORWpWbU15VUp4ZHZkREFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImY1MDAyZGMxLTgzMWMtNDJhZS04ODAzLWIwMWE0YTM5ODAzNyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IkhLWkUxVWRoVWstVlVKajFEQjhnQVEiLCJ2ZXIiOiIxLjAifQ.Nt2q6UpDVE20b61Lu441nQwRK9_B8-Lm4NAvFmUY6iQXtVHAP8uOiXrNuShh3RcrMCxCLlN6js69C2FXQnQwVgC_-JThKdjhPj031TEKBbBqiWb-VtrosKvV1i2skSRy4Xn5r4MRHw9NCdufjkWlUAyfdAWVE16Ou38Xqmu2rc2kaRImeeFwVCndWjLJj6KdOgtlPMzP1oomiV7pTqvxkziS-URh95_xM9b2WL00sNT2KJfaJOFZAKmjZcPwwRhkCOYciNe0UTxKoP27BqISZCj-MKWpnzMueVryXUa5vdkHD8TvZb_UzkW8iWj4cSFYKOb70UIMPLdVL0ese97oeg";
 
     try {
       const resposta = await fetch(url, {
@@ -91,62 +93,100 @@ class Helpers {
     }
   }
 
-  // fazerSolicitacao = async (): Promise<string> => {
-  //   interface TokenResponse {
-  //     access_token: string;
-  //     // Adicione outros campos conforme necessário
-  //   }
-  //   let tokenNaSessao = null;
+  async getTokenAndSetCookies() {
+    console.log("funcao gera token");
+    try {
+      const clientId = "c69c5892-8501-4622-955f-2cb696dca018";
+      const clientSecret = "FPV8Q~izBHxLzhGx7iQszV046J1c3Vw~Cwi4nb2i";
+      const scope = "api://c69c5892-8501-4622-955f-2cb696dca018/.default";
+      const grantType = "client_credentials";
+      const tokenUrl =
+        "https://login.microsoftonline.com/7ef724cb-3c77-4b44-90bd-1a48e265ad86/oauth2/v2.0/token";
 
-  //   // Verifica se há um token na sessão (apenas se estiver no ambiente do navegador)
-  //   if (typeof sessionStorage !== "undefined") {
-  //     tokenNaSessao = sessionStorage.getItem("token");
-  //   }
+      const body = new URLSearchParams();
+      body.append("client_id", clientId);
+      body.append("client_secret", clientSecret);
+      body.append("scope", scope);
+      body.append("grant_type", grantType);
 
-  //   if (tokenNaSessao) {
-  //     console.log("Token encontrado na sessão:", tokenNaSessao);
-  //     return tokenNaSessao;
-  //   }
+      const response = await fetch(tokenUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        mode: "cors",
+        body: body.toString(),
+      });
 
-  //   // Se não houver token na sessão, faça a solicitação
-  //   const url =
-  //     "https://login.microsoftonline.com/7ef724cb-3c77-4b44-90bd-1a48e265ad86/oauth2/v2.0/token";
+      if (!response.ok) {
+        throw new Error(`Erro na requisição: ${response.statusText}`);
+      }
 
-  //   // Parâmetros da solicitação
-  //   const data = new URLSearchParams();
-  //   data.append("client_id", "c69c5892-8501-4622-955f-2cb696dca018");
-  //   data.append("client_secret", "FPV8Q~izBHxLzhGx7iQszV046J1c3Vw~Cwi4nb2i");
-  //   data.append("scope", "api://c69c5892-8501-4622-955f-2cb696dca018/.default");
-  //   data.append("grant_type", "client_credentials");
+      const result = await response.json();
+      const { expires_in, access_token } = result;
+      return { expires_in, access_token };
+    } catch (error: any) {
+      console.error("Erro ao fazer a requisição:", error.message);
+      return null;
+    }
+  }
 
-  //   try {
-  //     // Faça a solicitação POST
-  //     const response: AxiosResponse<TokenResponse> = await axios.post(
-  //       url,
-  //       data,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/x-www-form-urlencoded",
-  //         },
-  //       }
-  //     );
+  fazerSolicitacao = async (): Promise<string> => {
+    interface TokenResponse {
+      access_token: string;
+      // Adicione outros campos conforme necessário
+    }
+    let tokenNaSessao = null;
 
-  //     const tokenObtido = response.data.access_token;
+    // Verifica se há um token na sessão (apenas se estiver no ambiente do navegador)
+    if (typeof sessionStorage !== "undefined") {
+      tokenNaSessao = sessionStorage.getItem("token");
+    }
 
-  //     // Armazene o token na sessão (apenas se estiver no ambiente do navegador)
-  //     if (typeof sessionStorage !== "undefined") {
-  //       sessionStorage.setItem("token", tokenObtido);
-  //     }
+    if (tokenNaSessao) {
+      console.log("Token encontrado na sessão:", tokenNaSessao);
+      return tokenNaSessao;
+    }
 
-  //     // Retorna o token
-  //     console.log("Token obtido com sucesso:", tokenObtido);
-  //     return tokenObtido;
-  //   } catch (error) {
-  //     // Manipule os erros aqui
-  //     console.error("Erro ao obter o token:", error);
-  //     throw error; // Você pode querer lançar o erro para que o componente que chamou a função também possa lidar com ele
-  //   }
-  // };
+    // Se não houver token na sessão, faça a solicitação
+    const url =
+      "https://login.microsoftonline.com/7ef724cb-3c77-4b44-90bd-1a48e265ad86/oauth2/v2.0/token";
+
+    // Parâmetros da solicitação
+    const data = new URLSearchParams();
+    data.append("client_id", "c69c5892-8501-4622-955f-2cb696dca018");
+    data.append("client_secret", "FPV8Q~izBHxLzhGx7iQszV046J1c3Vw~Cwi4nb2i");
+    data.append("scope", "api://c69c5892-8501-4622-955f-2cb696dca018/.default");
+    data.append("grant_type", "client_credentials");
+
+    try {
+      // Faça a solicitação POST
+      const response: AxiosResponse<TokenResponse> = await axios.post(
+        url,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      const tokenObtido = response.data.access_token;
+
+      // Armazene o token na sessão (apenas se estiver no ambiente do navegador)
+      if (typeof sessionStorage !== "undefined") {
+        sessionStorage.setItem("token", tokenObtido);
+      }
+
+      // Retorna o token
+      console.log("Token obtido com sucesso:", tokenObtido);
+      return tokenObtido;
+    } catch (error) {
+      // Manipule os erros aqui
+      console.error("Erro ao obter o token:", error);
+      throw error; // Você pode querer lançar o erro para que o componente que chamou a função também possa lidar com ele
+    }
+  };
 
   getProgramaFidelidade = async (token: any) => {
     // Incluir Etapa de verificador de validade do Token ou criar helper para isso
@@ -171,7 +211,7 @@ class Helpers {
 
   deleteProgramaFidelidade = async (id: any, token2: any) => {
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTA1MDQzLCJuYmYiOjE3MDk1MDUwNDMsImV4cCI6MTcwOTUwODk0MywiYWlvIjoiRTJOZ1lGaW45K0VkMjlUK0F0dXJtVEdYNDJwMEFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjllZTU1ZGY2LTY5MWItNDhlMi05Y2M0LWE4MmI5MWViNGYyNSIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IjA5UWJvVXFPc2tPVXlaNjdoVkhwQUEiLCJ2ZXIiOiIxLjAifQ.Pyd-1ZNHJBUBiQxvGIKOFkyTj05vC0Kej-Mrf6UERn67TYV0dqedzWuMrVz7jTm-kmRTzSenzgAnBkD0buTjtuAT4K35RNDKk6IJjj2Cx6gaY1FTjtwxfYzDUOSqELa6CSFP1rYcReHL8ctlGql1n7aO7Eb1a7EL9fVMBZDEkRK1ge9N1UjT4nMJ3TLE900zhpeD3pSICwuaabXRb3cbzre74wrNMmqOJADQA2PCTEa1DijCu-g4zfnJyHN6w3jsI5FhfajYOpZu7jP3xNkXd9turcZ4-MFUruBtzUt1QGLTsTf5kf1u1Q_gGPnosL9-lnb1Hqhfd4oad0wCitI1Ug";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5NTg2OTE5LCJuYmYiOjE3MDk1ODY5MTksImV4cCI6MTcwOTU5MDgxOSwiYWlvIjoiRTJOZ1lLajdtM0p6MStORWpWbU15VUp4ZHZkREFRPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6ImY1MDAyZGMxLTgzMWMtNDJhZS04ODAzLWIwMWE0YTM5ODAzNyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6IkhLWkUxVWRoVWstVlVKajFEQjhnQVEiLCJ2ZXIiOiIxLjAifQ.Nt2q6UpDVE20b61Lu441nQwRK9_B8-Lm4NAvFmUY6iQXtVHAP8uOiXrNuShh3RcrMCxCLlN6js69C2FXQnQwVgC_-JThKdjhPj031TEKBbBqiWb-VtrosKvV1i2skSRy4Xn5r4MRHw9NCdufjkWlUAyfdAWVE16Ou38Xqmu2rc2kaRImeeFwVCndWjLJj6KdOgtlPMzP1oomiV7pTqvxkziS-URh95_xM9b2WL00sNT2KJfaJOFZAKmjZcPwwRhkCOYciNe0UTxKoP27BqISZCj-MKWpnzMueVryXUa5vdkHD8TvZb_UzkW8iWj4cSFYKOb70UIMPLdVL0ese97oeg";
 
     const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${id}`;
 
