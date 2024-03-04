@@ -1,8 +1,4 @@
 "use client";
-import TabelaInicial from "@/app/components/tabela/page";
-import helpers from "@/lib/helpers";
-import SideBar from "@/app/components/sidebar/page";
-import { BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -70,13 +66,6 @@ const UsuarioDeslogado = () => {
                 <Button className="w-full" onClick={() => signIn("azure-ad")}>
                   Acessar
                 </Button>
-                {/* <p className="mt-2 text-xs text-center text-gray-700">
-                  {" "}
-                  Don't have an account?{" "}
-                  <span className=" text-blue-600 hover:underline">
-                    Sign up
-                  </span>
-                </p> */}
               </CardFooter>
             </Card>
           </div>

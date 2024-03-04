@@ -15,7 +15,6 @@ interface DadosItem {
   id: number;
   nome: string;
   descricao: string;
-  // Adicione outros campos conforme necessário
 }
 
 interface DataRow {
@@ -127,15 +126,10 @@ const ListarPrograma = () => {
   }, [deleteStatus]);
 
   const showToast = (message: any, type = "success") => {
-    // Lógica para exibir o toast usando o ToastProvider
-    // Implemente isso conforme a biblioteca que você está usando para toasts
-    // Exemplo de uso com shadcn-ui:
-    // toast.show(message, { type });
     setDeleteStatus(type);
   };
 
   const handleCancelDelete = () => {
-    // Cancelar a exclusão, se necessário
     setConfirmationOpen(false);
   };
 
@@ -150,8 +144,6 @@ const ListarPrograma = () => {
       try {
         const resposta = await helpers.getProgramas();
         setProgramas(resposta);
-
-        // Mova o console.log para dentro do bloco try para garantir que seja chamado apenas uma vez
         console.log(resposta);
       } catch (erro: any) {
         console.error("Erro ao obter programas:", erro.message);

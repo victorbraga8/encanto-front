@@ -1,32 +1,16 @@
 "use client";
 
-import { ChevronLeftIcon, MessageCircle, Settings } from "lucide-react";
-// import SideMenu from "./sidemenu";
+import { MessageCircle, Settings } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { signIn, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { useSession } from "next-auth/react";
 import helpers from "@/lib/helpers";
-// import { SessionProps } from "./types/sessionType";
-// import useSWR from "swr";
-// import sessionData from "@/lib/helpers";
 
 const Header = () => {
   const { data } = useSession();
-  const router = useRouter();
   const pathName = usePathname();
-
-  const handleBackClick = () => {
-    router.back();
-  };
-
   const pathParts = helpers.handblePathHeader(pathName);
-  // console.log(pathParts);
-  // useEffect(() => {
-  //   console.log(pathName);
-  // }, []);
 
   return (
     <Card>

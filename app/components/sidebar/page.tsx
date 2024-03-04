@@ -1,16 +1,8 @@
 "use client";
-import {
-  ChevronDown,
-  ChevronLeft,
-  Cog,
-  Heading1,
-  LogOutIcon,
-  Users,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, Cog, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import OpcoesAdm from "./menu-itens/adm/page";
-import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 

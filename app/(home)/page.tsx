@@ -6,11 +6,5 @@ import UsuarioLogado from "../components/usuario-logado/page";
 export default function Home() {
   const { data } = useSession();
 
-  return (
-    <>
-      {/* INJETAR O SIDEBAR NO COMPONENTE LOGADO */}
-      {/* <Sidebar /> */}
-      {data?.user ? <UsuarioLogado /> : <UsuarioDeslogado />}
-    </>
-  );
+  return <>{data?.user ? <UsuarioLogado /> : <UsuarioDeslogado />}</>;
 }
