@@ -7,6 +7,9 @@ import Image from "next/image";
 import helpers from "@/lib/helpers";
 import Link from "next/link";
 import { Delete, DeleteIcon, X } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 interface DadosItem {
   id: number;
@@ -78,6 +81,16 @@ const ListarPrograma = () => {
   const [selectedName, setNameSelected] = useState(null);
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
 
+  const [showToast2, setShowToast] = useState(false);
+
+  const showToastMessage = () => {
+    setShowToast(true);
+
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
+  };
+
   const handleConfirmDelete = async () => {
     try {
       // Lógica para excluir o registro na API usando selectedItemId
@@ -147,9 +160,25 @@ const ListarPrograma = () => {
 
     fetchData();
   }, []);
+
+  const { toast } = useToast();
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
+        <Button
+          variant="outline"
+          onClick={() => {
+            toast({
+              className: cn(
+                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+              ),
+              description: "Your message has been sent.",
+              duration: 3000,
+            });
+          }}
+        >
+          Show Toast
+        </Button>
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>
