@@ -28,51 +28,6 @@ interface DataRow {
   amount: number;
 }
 
-async function getData(): Promise<DataRow[]> {
-  return [
-    {
-      id: "728ed52f",
-      dataCadastro: "GOL",
-      telefone: "Programa aviação GOL",
-      img: "/assets/gol.jpg",
-      status: "pendente",
-      ultimaAtualizacao: "20/02/2024",
-      acoes: "",
-      amount: 100,
-    },
-    {
-      id: "2a1b3c4d",
-      dataCadastro: "LATAM",
-      telefone: "Programa fidelidade LATAM",
-      img: "/assets/latam.jpg",
-      status: "concluido",
-      ultimaAtualizacao: "22/02/2024",
-      acoes: "",
-      amount: 150,
-    },
-    {
-      id: "5e6f7a8b",
-      dataCadastro: "American Airline",
-      telefone: "Programa Internacional American Airline",
-      img: "/assets/american.jpg",
-      status: "cancelado",
-      ultimaAtualizacao: "25/02/2024",
-      acoes: "",
-      amount: 75,
-    },
-    {
-      id: "9c8b7a6f",
-      dataCadastro: "AZUL",
-      telefone: "Programa da Azul",
-      img: "/assets/azul.jpg",
-      status: "pendente",
-      ultimaAtualizacao: "28/02/2024",
-      acoes: "",
-      amount: 120,
-    },
-  ];
-}
-
 const ListarPrograma = () => {
   const [programas, setProgramas] = useState<DadosItem[] | null>(null);
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
@@ -139,14 +94,17 @@ const ListarPrograma = () => {
     setConfirmationOpen(true);
   };
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const resposta = await helpers.getProgramas();
         setProgramas(resposta);
-        console.log(resposta);
+        setLoading(false);
       } catch (erro: any) {
         console.error("Erro ao obter programas:", erro.message);
+        setLoading(false);
       }
     };
 
@@ -172,57 +130,73 @@ const ListarPrograma = () => {
           Show Toast
         </Button>
         <div className="overflow-x-auto mt-4">
-          <table className=" bg-white border border-gray-300">
-            <thead>
-              <tr className="text-left">
-                <th className="py-2 px-4 border-b">ID</th>
-                <th className="py-2 px-4 border-b">Nome</th>
-                <th className="py-2 px-4 border-b">Descrição</th>
-                <th className="py-2 px-4 border-b">Imagem</th>
-                <th className="py-2 px-4 border-b">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {programas &&
-                (programas as any[]).map((row: any, index: any) => (
-                  <tr
-                    key={row.id}
-                    className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}
-                  >
-                    <td className="py-2 px-4 border-b">{index + 1}</td>
-                    <td className="py-2 px-4 border-b">{row.name}</td>
-                    <td className="py-2 px-4 border-b">{row.description}</td>
-                    <td className="py-2 px-4 border-b">
-                      <Image
-                        width={60}
-                        height={60}
-                        alt="imageprograma"
-                        src="/assets/gol.jpg"
-                        loading="eager"
-                        style={{ width: "auto", height: "auto" }}
-                      />
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      <DemoDialog
-                        name={row.name}
-                        description={row.description}
-                        id={row.id}
-                      />
-                      <Button
-                        variant="default"
-                        size="icon"
-                        className="mr-2 bg-red-600 hover:bg-red-400"
-                        onClick={() => handleDeleteClick(row.id, row.name)}
-                      >
-                        <X />
-                      </Button>
-                    </td>
+          {loading ? (
+            <>
+              <div className="loader lg:pl-[268px] max-w-fit flex items-center pt-10 gap-2 overflow-hidden">
+                <div className="animate-spin border-t-4 border-blue-500 border-solid rounded-full h-12 w-12"></div>
+                Carregando...
+              </div>
+            </>
+          ) : (
+            <>
+              <table className=" bg-white border border-gray-300">
+                <thead>
+                  <tr className="text-left">
+                    <th className="py-2 px-4 border-b">ID</th>
+                    <th className="py-2 px-4 border-b">Nome</th>
+                    <th className="py-2 px-4 border-b">Descrição</th>
+                    <th className="py-2 px-4 border-b">Imagem</th>
+                    <th className="py-2 px-4 border-b">Ações</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {programas &&
+                    (programas as any[]).map((row: any, index: any) => (
+                      <tr
+                        key={row.id}
+                        className={
+                          index % 2 === 0 ? "bg-indigo-50" : "bg-white"
+                        }
+                      >
+                        <td className="py-2 px-4 border-b">{index + 1}</td>
+                        <td className="py-2 px-4 border-b">{row.name}</td>
+                        <td className="py-2 px-4 border-b">
+                          {row.description}
+                        </td>
+                        <td className="py-2 px-4 border-b">
+                          <Image
+                            width={60}
+                            height={60}
+                            alt="imageprograma"
+                            src="/assets/gol.jpg"
+                            loading="eager"
+                            style={{ width: "auto", height: "auto" }}
+                          />
+                        </td>
+                        <td className="py-2 px-4 border-b">
+                          <DemoDialog
+                            name={row.name}
+                            description={row.description}
+                            id={row.id}
+                          />
+                          <Button
+                            variant="default"
+                            size="icon"
+                            className="mr-2 bg-red-600 hover:bg-red-400"
+                            onClick={() => handleDeleteClick(row.id, row.name)}
+                          >
+                            <X />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </>
+          )}
         </div>
       </div>
+
       <ConfirmationModal
         isOpen={isConfirmationOpen}
         onConfirm={handleConfirmDelete}
