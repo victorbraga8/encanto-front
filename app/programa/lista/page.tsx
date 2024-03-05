@@ -48,7 +48,7 @@ const ListarPrograma = () => {
   const handleConfirmDelete = async () => {
     try {
       // Lógica para excluir o registro na API usando selectedItemId
-      await helpers.deleteProgramaFidelidade(selectedItemId, "");
+      await helpers.deleteProgramaFidelidade(selectedItemId);
 
       // Atualizar a lista após a exclusão
       if (programas) {
@@ -59,12 +59,33 @@ const ListarPrograma = () => {
       }
 
       // Exibir toast de sucesso após a exclusão
+      (() => {
+        toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
+          description: "Registro excluído com sucesso!",
+          duration: 3000,
+        });
+      })();
+
       showToast("Registro excluído com sucesso!");
 
       // Fechar o modal de confirmação
       setConfirmationOpen(false);
     } catch (error: any) {
       console.error("Erro ao excluir o registro:", error.message);
+      (() => {
+        toast({
+          className: cn(
+            "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+          ),
+          description:
+            "Erro ao excluir o registro. Tente novamente mais tarde.",
+          duration: 3000,
+        });
+      })();
+
       showToast("Erro ao excluir o registro. Tente novamente mais tarde.");
       setConfirmationOpen(false);
     }
@@ -120,10 +141,13 @@ const ListarPrograma = () => {
           onClick={() => {
             toast({
               className: cn(
-                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-400 text-xl"
               ),
-              description: "Your message has been sent.",
-              duration: 3000,
+
+              description: (
+                <span className="text-xl">Your message has been sent.</span>
+              ),
+              duration: 30000,
             });
           }}
         >
@@ -203,13 +227,6 @@ const ListarPrograma = () => {
         onCancel={handleCancelDelete}
         name={selectedName}
       />
-      {deleteStatus && (
-        <div className={`toast ${deleteStatus}`}>
-          {deleteStatus === "success"
-            ? "Operação concluída com sucesso!"
-            : "Erro na operação. Tente novamente."}
-        </div>
-      )}
     </>
   );
 };
