@@ -187,12 +187,12 @@ const ListarPrograma = () => {
                         <td className="py-2 px-4 border-b">
                           {row.description}
                         </td>
-                        <td className="py-2 px-4 border-b">
+                        <td className="py-2 px-4 border-b w-[60px] h-[60px]">
                           <Image
-                            width={60}
-                            height={60}
+                            width={80}
+                            height={80}
                             alt="imageprograma"
-                            src="/assets/gol.jpg"
+                            src={`data:image/png;base64,${row.logomarca}`}
                             loading="eager"
                             style={{ width: "auto", height: "auto" }}
                           />
@@ -201,6 +201,7 @@ const ListarPrograma = () => {
                           <DemoDialog
                             name={row.name}
                             description={row.description}
+                            logomarca={row.logomarca}
                             id={row.id}
                           />
                           <Button
