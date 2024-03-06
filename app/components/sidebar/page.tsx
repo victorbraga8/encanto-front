@@ -11,16 +11,22 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [adminCollapsed, setAdminCollapsed] = useState(false);
   const [programasCollapsed, setProgramasCollapsed] = useState(true);
+  const [documentosCollapsed, setDocumentosCollapsed] = useState(true);
   const [clientesCollapsed, setclientesCollapsed] = useState(true);
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
     setAdminCollapsed(false);
+
     setSidebarWidth(collapsed ? "w-56" : "w-16");
   };
 
   const toggleAdminCollapsed = () => {
     setAdminCollapsed((prevAdminCollapsed) => !prevAdminCollapsed);
+  };
+
+  const toggleDocumentosCollapsed = () => {
+    setDocumentosCollapsed((documentosCollapsed) => !documentosCollapsed);
   };
 
   const toggleProgramasCollapsed = () => {
@@ -35,6 +41,7 @@ const Sidebar = () => {
     setAdminCollapsed(false);
     setclientesCollapsed(true);
     setProgramasCollapsed(true);
+    setDocumentosCollapsed(true);
   };
   const { data } = useSession();
   return (
@@ -88,9 +95,11 @@ const Sidebar = () => {
               adminCollapsed={adminCollapsed}
               programasCollapsed={programasCollapsed}
               clientesCollapsed={clientesCollapsed}
+              documentosCollapsed={documentosCollapsed}
               onToggleAdmin={toggleAdminCollapsed}
               onToggleProgramas={toggleProgramasCollapsed}
               onToggleClientes={toggleClientesCollapsed}
+              onToggleDocumentos={toggleDocumentosCollapsed}
             />
           </nav>
           <div className="mt-auto">

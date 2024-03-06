@@ -328,6 +328,132 @@ class Helpers {
       throw error;
     }
   };
+
+  async cadastraCliente(values: any) {
+    console.log(values);
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
+
+    const temp = {
+      Nome: values.name,
+      Sobrenome: "",
+      Ocupacao: "Corporate Paradigm Assistant",
+      CPF: values.cpf,
+      RG: values.rg,
+      Celular: values.celuar,
+      PossuiWhatsApp: false,
+      NumeroCriancasParticipantes: 3,
+      AceitaReceberMensagem: true,
+      EstadoCivil: values.estadoCivil.value,
+      EndereçoPrincial: {
+        CEP: "89858115",
+        Logradouro: "Gutmann Junctions",
+        Numero: 811,
+        Complemento: "do",
+        Bairro: "cillum amet",
+        Cidade: {
+          Id: "3d389a51eee847b5bd85c3d790d21c35",
+        },
+      },
+      TipoServicos: [
+        {
+          TipoServico: {
+            Id: "57b7bd1ff4d940d2b264223af55e825a",
+          },
+        },
+      ],
+      ProgramasFidelidade: [
+        {
+          Numero: "30126DJ0",
+          Validade: "2023-08-21",
+          ProgramaFidelidade: {
+            Id: "420631bee7cd45c1940b72022e59237f",
+          },
+        },
+        {
+          Numero: "774985SS",
+          Validade: "2023-07-21",
+          ProgramaFidelidade: {
+            Id: "a84af8d01062422cae97039a021aa045",
+          },
+        },
+        {
+          Numero: "47131DGI",
+          Validade: "2024-02-13",
+          ProgramaFidelidade: {
+            Id: "8f2d3dce705f49d2b394108a97c72ea2",
+          },
+        },
+      ],
+      Documentos: [
+        {
+          Numero: "84143P2C",
+          PendenteEmissao: true,
+          DataEmissao: "1994-10-02",
+          DataValidade: "2023-12-25",
+          TipoDocumento: {
+            Id: "81b44b05-67fc-4a2d-a2bb-c0601d7dbc90",
+          },
+        },
+        {
+          Numero: "9123655I",
+          PendenteEmissao: false,
+          DataEmissao: "2017-02-04",
+          DataValidade: "2023-10-03",
+          TipoDocumento: {
+            Id: "4e01ff66-1568-4fee-bda6-c31567b004a7",
+          },
+        },
+      ],
+      Alergia: false,
+      AlergiaDetalhe: "",
+      RestricaoAlimentar: false,
+      RestricaoAlimentarDetalhe:
+        "pariatur ut excepteur veniam quis deserunt magna dolore exercitation aliquip duis elit ea amet et dolor in sint",
+      Sexo: 4,
+      Classificacao: 3,
+      Filhos: [
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 20,
+          Sexo: 4,
+        },
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 20,
+          Sexo: 1,
+        },
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 49,
+          Sexo: 1,
+        },
+      ],
+    };
+
+    console.log(temp);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors" as RequestMode, // Definindo o modo como 'cors'
+      body: JSON.stringify(temp),
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erro HTTP! Status NOVO: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => console.log("Resposta NOVA:", data))
+      .catch((error) => console.error("Erro NOVO:", error.message));
+  }
 }
 
 const helpers = new Helpers();

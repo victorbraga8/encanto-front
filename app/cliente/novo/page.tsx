@@ -159,6 +159,7 @@ const ClienteNovo = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    const cadastraCliente = helpers.cadastraCliente(formData);
     e.preventDefault();
     console.log("Dados do formulário:", formData);
   };
