@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "./utils";
+import { AnyARecord } from "dns";
 
 class Helpers {
   handblePathHeader(path: string) {
@@ -38,6 +39,48 @@ class Helpers {
     const token = tokenADCookie?.split("=")[1];
 
     return token;
+  }
+
+  formataHora() {
+    const horaAtualString = new Date().toLocaleTimeString();
+    const horaAtual = new Date("1970-01-01 " + horaAtualString);
+    const opcoesFormatacao = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    } as Intl.DateTimeFormatOptions;
+
+    if (horaAtual) {
+      const horaAtualFormatada = horaAtual.toLocaleTimeString(
+        undefined,
+        opcoesFormatacao
+      );
+      const horaFuturaFormatada = new Date(
+        horaAtual.getTime() + 50 * 60 * 1000
+      ).toLocaleTimeString(undefined, opcoesFormatacao);
+
+      return { horaAtualFormatada, horaFuturaFormatada };
+    }
+  }
+
+  validaExpiracaoToken(validadeToken: any) {
+    const horaAtualString = new Date().toLocaleTimeString();
+    const horaAtual = new Date("1970-01-01 " + horaAtualString);
+
+    horaAtual.setMinutes(horaAtual.getMinutes() + 50);
+
+    const [validadeHoras, validadeMinutos] = validadeToken.split(":");
+    const minutosHoraFutura =
+      parseInt(validadeHoras) * 60 + parseInt(validadeMinutos);
+
+    // Convertendo a hora atual para minutos
+    const [horaAtualHoras, horaAtualMinutos] = horaAtualString.split(":");
+    const minutosHoraAtual =
+      parseInt(horaAtualHoras) * 60 + parseInt(horaAtualMinutos);
+
+    // Calculando a diferença em minutos
+    const diferencaEmMinutos = minutosHoraFutura - minutosHoraAtual;
+    return diferencaEmMinutos;
   }
 
   async getProgramas() {
@@ -104,7 +147,6 @@ class Helpers {
   }
 
   async getTokenAndSetCookies() {
-    console.log("funcao gera token");
     try {
       const clientId = "c69c5892-8501-4622-955f-2cb696dca018";
       const clientSecret = "FPV8Q~izBHxLzhGx7iQszV046J1c3Vw~Cwi4nb2i";
