@@ -17,8 +17,8 @@ export async function middleware(request: NextRequest) {
   const horaAtual = horarios!!!.horaAtualFormatada;
   const horaFutura = horarios!!!.horaFuturaFormatada;
 
-  console.log(tokenCookie);
-  console.log(Number(validaExpiracaoToken));
+  // console.log(tokenCookie);
+  // console.log(Number(validaExpiracaoToken));
 
   if (!tokenCookie || Number(validaExpiracaoToken) <= 10) {
     console.log("Caiu no IF");
@@ -66,7 +66,7 @@ export async function middleware(request: NextRequest) {
 
     return response;
   } else {
-    console.log("Caiu no else");
+    // console.log("Caiu no else");
     return;
   }
 }

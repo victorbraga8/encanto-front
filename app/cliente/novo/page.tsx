@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,31 +7,87 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 
 import Select from "react-select";
+import helpers from "@/lib/helpers";
 
 const options = [
-  { value: "1", label: "Opção 1" },
-  { value: "2", label: "Opção 2" },
-  { value: "3", label: "Opção 3" },
-  { value: "4", label: "Opção 4" },
+  { value: "us", label: "Americano" },
+  { value: "it", label: "Italiano" },
+  { value: "cn", label: "Canadense" },
+  { value: "al", label: "Alemão" },
+];
+
+const optionsEstados = [
+  { value: "AC", label: "Acre" },
+  { value: "AL", label: "Alagoas" },
+  { value: "AP", label: "Amapá" },
+  { value: "AM", label: "Amazonas" },
+  { value: "BA", label: "Bahia" },
+  { value: "CE", label: "Ceará" },
+  { value: "DF", label: "Distrito Federal" },
+  { value: "ES", label: "Espírito Santo" },
+  { value: "GO", label: "Goiás" },
+  { value: "MA", label: "Maranhão" },
+  { value: "MT", label: "Mato Grosso" },
+  { value: "MS", label: "Mato Grosso do Sul" },
+  { value: "MG", label: "Minas Gerais" },
+  { value: "PA", label: "Pará" },
+  { value: "PB", label: "Paraíba" },
+  { value: "PR", label: "Paraná" },
+  { value: "PE", label: "Pernambuco" },
+  { value: "PI", label: "Piauí" },
+  { value: "RJ", label: "Rio de Janeiro" },
+  { value: "RN", label: "Rio Grande do Norte" },
+  { value: "RS", label: "Rio Grande do Sul" },
+  { value: "RO", label: "Rondônia" },
+  { value: "RR", label: "Roraima" },
+  { value: "SC", label: "Santa Catarina" },
+  { value: "SP", label: "São Paulo" },
+  { value: "SE", label: "Sergipe" },
+  { value: "TO", label: "Tocantins" },
 ];
 
 const optionsEstadoCivil = [
-  { value: "1", label: "Opção 1" },
-  { value: "2", label: "Opção 2" },
-  { value: "3", label: "Opção 3" },
-  { value: "4", label: "Opção 4" },
+  { value: "1", label: "Casado(a)" },
+  { value: "2", label: "Solteiro(a)" },
+  { value: "3", label: "Divorciado(a)" },
+  { value: "4", label: "Viuvo(a)" },
 ];
 
 const optionsGenero = [
-  { value: "1", label: "Opção 1" },
-  { value: "2", label: "Opção 2" },
+  { value: "1", label: "Masculino" },
+  { value: "2", label: "Feminino" },
 ];
 
 const ClienteNovo = () => {
   const handleChange = (selectedOptions: any) => {
-    // Faça algo com as opções selecionadas
     console.log(selectedOptions);
   };
+  const [programas, setProgramas] = useState([]);
+  const [estado, setEstados] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const programasFidelidade = await helpers.getProgramaFidelidade();
+        const listaProgramas = programasFidelidade.map((item: any) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setProgramas(listaProgramas);
+      } catch (error) {
+        // Lidar com erros, se necessário
+        console.error("Erro ao obter os programas de fidelidade:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(programas);
+  // (async () => {
+  //   const programasFidelidade = await helpers.getProgramaFidelidade();
+  //   console.log(programasFidelidade);
+  // })();
 
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -188,7 +244,7 @@ const ClienteNovo = () => {
                 <Select
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
-                  options={optionsGenero}
+                  options={optionsEstados}
                 />
               </div>
             </div>
@@ -328,7 +384,7 @@ const ClienteNovo = () => {
                 <Select
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
-                  options={optionsGenero}
+                  options={programas}
                 />
               </div>
             </div>

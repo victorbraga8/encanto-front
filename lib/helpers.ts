@@ -285,8 +285,8 @@ class Helpers {
     }
   };
 
-  getProgramaFidelidade = async (token: any) => {
-    // Incluir Etapa de verificador de validade do Token ou criar helper para isso
+  getProgramaFidelidade = async () => {
+    const token = this.validaToken();
 
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
