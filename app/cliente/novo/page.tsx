@@ -9,7 +9,7 @@ import { useState } from "react";
 import Select from "react-select";
 import helpers from "@/lib/helpers";
 
-const options = [
+const options: { value: string; label: string }[] = [
   { value: "us", label: "Americano" },
   { value: "it", label: "Italiano" },
   { value: "cn", label: "Canadense" },
@@ -46,14 +46,14 @@ const optionsEstados = [
   { value: "TO", label: "Tocantins" },
 ];
 
-const optionsEstadoCivil = [
+const optionsEstadoCivil: { value: string; label: string }[] = [
   { value: "1", label: "Casado(a)" },
   { value: "2", label: "Solteiro(a)" },
   { value: "3", label: "Divorciado(a)" },
   { value: "4", label: "Viuvo(a)" },
 ];
 
-const optionsGenero = [
+const optionsGenero: { value: string; label: string }[] = [
   { value: "1", label: "Masculino" },
   { value: "2", label: "Feminino" },
 ];
@@ -62,19 +62,24 @@ const ClienteNovo = () => {
   const handleChange = (selectedOptions: any) => {
     console.log(selectedOptions);
   };
-  const [programas, setProgramas] = useState([]);
+  const [programas, setProgramas] = useState<
+    { value: string; label: string }[]
+  >([]);
   const [estado, setEstados] = useState([]);
   const [outrosPassaportes, setOutrosPassaportes] = useState(true);
-  const [selectedOption, setSelectedOption] = useState(Boolean);
+  const [selectedOption, setSelectedOption] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
 
   const handleRadioChange = (value: any) => {
     console.log(value);
     if (value === "sim") {
       setOutrosPassaportes(false);
-      setSelectedOption(value == "sim");
+      setSelectedOption(value === "sim" ? { value: "1", label: "Sim" } : null);
     } else {
       setOutrosPassaportes(true);
-      setSelectedOption(value == "não");
+      setSelectedOption(value === "não" ? { value: "2", label: "Não" } : null);
     }
   };
 
@@ -120,8 +125,10 @@ const ClienteNovo = () => {
                 <Label htmlFor="email">Sexo</Label>
                 <Select
                   defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  options={optionsGenero}
+                  onChange={(selectedOptions) =>
+                    setSelectedOption(selectedOptions)
+                  }
+                  options={optionsGenero as any}
                 />
               </div>
             </div>
