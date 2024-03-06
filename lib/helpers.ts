@@ -186,19 +186,17 @@ class Helpers {
       return "Erro, tente atualizar novamente.";
     }
     if (msg == "success") {
-      return "Erro, tente atualizar novamente.";
+      return "Registro atualizado com sucesso.";
     } else {
       return "Erro, desconhecido.";
     }
   }
 
-  updateRecord = async (values: any, token: any) => {
+  updateRecord = async (values: any) => {
     console.log(values);
+    const token = this.validaToken();
     try {
       const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${values.id}`;
-
-      const token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5Njc3MzQyLCJuYmYiOjE3MDk2NzczNDIsImV4cCI6MTcwOTY4MTI0MiwiYWlvIjoiRTJOZ1lFaStmcGhYVFBPNjBCYlpkTUZkeFR3ekFBPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjAzNmYzMzg0LTc3NGItNGFjOS1hMGI4LTA0MWM0OTNjZjJjMyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6Im0wLVJla3VrRjA2aFhtVkYyYjZtQVEiLCJ2ZXIiOiIxLjAifQ.H2Cz5aEm9HhsYl04PxRKe31rN7qyCuImjlM7o1AN7T_IYq0Mpn-ubRwfbGZkxkBJYL1Ce8d3QDSEtCPGoEblhncemYPgu75IRiVoQvqNRVlur26MCDkk1LRhwxiVNSR6u2OUIeu_A5JwRZMI7-7OVrDb1kZ9uAJogIKcFhgcs8P7_gQmRxWVd3FQeahKQ43sPRI1y5jAEIEwZOGFGxJuxFHJkyg9hni2h7BlifbQ9gERw1ENeI9NPg8Vq-KnGi4lwxOqGE7OVJBQ8EcFcdd6FWnQAT4sNpV2Xw6gqgEFM1xlYU5lX00yXtFpnw7P3I_UqELRuOIiIfbUaXRsjztBHA";
 
       const response = await axios.put(
         url,

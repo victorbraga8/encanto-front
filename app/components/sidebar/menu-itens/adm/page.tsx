@@ -6,8 +6,10 @@ const OpcoesAdm = ({
   collapsed,
   adminCollapsed,
   programasCollapsed,
+  clientesCollapsed,
   onToggleAdmin,
   onToggleProgramas,
+  onToggleClientes,
 }: any) => {
   return (
     <ul>
@@ -22,31 +24,58 @@ const OpcoesAdm = ({
         </span>
       </li>
       {!collapsed && adminCollapsed && (
-        <ul>
-          <li
-            className={`pl-8 py-2 px-3 text-center ${
-              !programasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
-            } cursor-pointer flex items-center`}
-            onClick={onToggleProgramas}
-          >
-            <Users size={16} className="mr-2" />
-            Programas
-          </li>
-          {!programasCollapsed && (
-            <ul>
-              <Link href="/programa/novo">
-                <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                  Cadastrar
-                </li>
-              </Link>
-              <Link href="/programa/lista">
-                <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                  Listar
-                </li>
-              </Link>
-            </ul>
-          )}
-        </ul>
+        <>
+          <ul>
+            <li
+              className={`pl-8 py-2 px-3 text-center ${
+                !programasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
+              } cursor-pointer flex items-center`}
+              onClick={onToggleProgramas}
+            >
+              <Users size={16} className="mr-2" />
+              Programas
+            </li>
+            {!programasCollapsed && (
+              <ul>
+                <Link href="/programa/novo">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Cadastrar
+                  </li>
+                </Link>
+                <Link href="/programa/lista">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Listar
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </ul>
+          <ul>
+            <li
+              className={`pl-8 py-2 px-3 text-center ${
+                !clientesCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
+              } cursor-pointer flex items-center`}
+              onClick={onToggleClientes}
+            >
+              <Users size={16} className="mr-2" />
+              Clientes
+            </li>
+            {!clientesCollapsed && (
+              <ul>
+                <Link href="/cliente/novo">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Cadastrar
+                  </li>
+                </Link>
+                {/* <Link href="/programa/lista">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Listar
+                  </li>
+                </Link> */}
+              </ul>
+            )}
+          </ul>
+        </>
       )}
     </ul>
   );

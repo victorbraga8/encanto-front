@@ -17,12 +17,37 @@ export async function middleware(request: NextRequest) {
   const horaAtual = horarios!!!.horaAtualFormatada;
   const horaFutura = horarios!!!.horaFuturaFormatada;
 
-  if (!tokenCookie || Number(validaExpiracaoToken) < 10) {
+  console.log(tokenCookie);
+  console.log(Number(validaExpiracaoToken));
+
+  if (!tokenCookie || Number(validaExpiracaoToken) <= 10) {
+    console.log("Caiu no IF");
     const token = await helpers.getTokenAndSetCookies();
     const response = NextResponse.next();
 
+    response.cookies.delete({
+      name: "tokenAD",
+      path: "/",
+    });
+
+    response.cookies.delete({
+      name: "gerado",
+      path: "/",
+    });
+
+    response.cookies.delete({
+      name: "validade",
+      path: "/",
+    });
+
     response.cookies.set({
       name: "tokenAD",
+      value: token!!.access_token,
+      path: "/",
+    });
+
+    response.cookies.set({
+      name: "novo",
       value: token!!.access_token,
       path: "/",
     });
@@ -41,6 +66,7 @@ export async function middleware(request: NextRequest) {
 
     return response;
   } else {
+    console.log("Caiu no else");
     return;
   }
 }
