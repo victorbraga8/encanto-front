@@ -6,9 +6,12 @@ export async function middleware(request: NextRequest) {
   const validadeCookie = request.cookies.get("validade");
   const tokenCookie = request.cookies.get("tokenAD");
 
-  const validaExpiracaoToken = helpers.validaExpiracaoToken(
-    validadeCookie!!!.value
-  );
+  let validaExpiracaoToken;
+
+  if (validadeCookie && tokenCookie) {
+    validaExpiracaoToken = helpers.validaExpiracaoToken(validadeCookie.value);
+  }
+
   const horarios = helpers.formataHora();
 
   const horaAtual = horarios!!!.horaAtualFormatada;
