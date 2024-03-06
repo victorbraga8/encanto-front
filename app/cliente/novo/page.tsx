@@ -72,14 +72,23 @@ const ClienteNovo = () => {
     label: string;
   } | null>(null);
 
+  const [validadeVistoAmericano, setValidadeVistoAmericano] = useState(false);
+
   const handleRadioChange = (value: any) => {
-    console.log(value);
     if (value === "sim") {
       setOutrosPassaportes(false);
       setSelectedOption(value === "sim" ? { value: "1", label: "Sim" } : null);
     } else {
       setOutrosPassaportes(true);
       setSelectedOption(value === "não" ? { value: "2", label: "Não" } : null);
+    }
+  };
+
+  const handleRadioChangeVisto = (value: any) => {
+    if (value === "sim") {
+      setValidadeVistoAmericano(true);
+    } else {
+      setValidadeVistoAmericano(false);
     }
   };
 
@@ -100,158 +109,288 @@ const ClienteNovo = () => {
     fetchData();
   }, []);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    dataNascimento: "",
+    genero: null,
+    rg: "",
+    cpf: "",
+    celular: "",
+    email: "",
+    passaporte: "",
+    dataValidadePassaporte: "",
+    outrosPassaportes: "nao",
+    nacionalidadePassaporte: [],
+    vistoAmericano: "",
+    validadeVistoAmericano: "",
+    estadoCivil: "",
+  });
+
+  const handleChangeField = (fieldName: any, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+    // if (value === "nao") {
+    //   setValidadeVistoAmericano(false);
+    //   setValidadeVistoAmericano(false);
+    // } else {
+    //   if (fieldName === "validadeVistoAmericano") {
+    //     setValidadeVistoAmericano(value);
+    //   }
+    //   setValidadeVistoAmericano(true);
+    // }
+  };
+
+  const handleGeneroChange = (selectedOption: any) => {
+    handleChangeField("genero", selectedOption);
+  };
+
+  const handleEstadoCivilChange = (selectedOption: any) => {
+    handleChangeField("estadoCivil", selectedOption);
+  };
+
+  const handlevistoAmericanoChange = (selectedOption: any) => {
+    handleChangeField("vistoAmericano", selectedOption);
+  };
+
+  const handleNacionalidadePassaporteChange = (selectedOption: any) => {
+    handleChangeField("nacionalidadePassaporte", selectedOption);
+  };
+
+  const handleProgramaFidelidadeChange = (selectedOption: any) => {
+    handleChangeField("programaFidelidade", selectedOption);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Dados do formulário:", formData);
+  };
+
   return (
     <>
       <div className="flex justify-between lg:pl-[268px] max-w-fit pt-10">
-        {/* Container 1 */}
-        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-full">
-              <div className="flex-grow">
-                <Label htmlFor="email">Nome</Label>
-                <Input type="nome" placeholder="Nome" />
+        <form action="">
+          {/* Container 1 */}
+          <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
+            <Button type="submit" onClick={handleSubmit}>
+              Confirmar
+            </Button>
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-full">
+                <div className="flex-grow">
+                  <Label htmlFor="name">Nome</Label>
+                  <Input
+                    type="nome"
+                    placeholder="Nome"
+                    name="name"
+                    onChange={(e) => handleChangeField("name", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Data de Nascimento:</Label>
-                <Input type="date" />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="email">Data de Nascimento:</Label>
+                  <Input
+                    type="date"
+                    name="dataNascimento"
+                    onChange={(e) =>
+                      handleChangeField("dataNascimento", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="email">Sexo</Label>
+                  <Select
+                    name="genero"
+                    defaultValue={formData.genero}
+                    onChange={handleGeneroChange}
+                    options={optionsGenero as any}
+                  />
+                </div>
               </div>
             </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Sexo</Label>
-                <Select
-                  defaultValue={selectedOption}
-                  onChange={(selectedOptions) =>
-                    setSelectedOption(selectedOptions)
-                  }
-                  options={optionsGenero as any}
-                />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="rg">RG:</Label>
+                  <Input
+                    type="text"
+                    name="rg"
+                    onChange={(e) => handleChangeField("rg", e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="cpf">CPF:</Label>
+                  <Input
+                    type="text"
+                    name="cpf"
+                    onChange={(e) => handleChangeField("cpf", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="rg">RG:</Label>
-                <Input type="text" />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="celular">Celular:</Label>
+                  <Input
+                    type="text"
+                    name="celular"
+                    onChange={(e) =>
+                      handleChangeField("celular", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="estadoCivil">Estado Civil:</Label>
+                  <Select
+                    name="estadoCivil"
+                    defaultValue={formData.estadoCivil}
+                    onChange={handleEstadoCivilChange}
+                    options={optionsEstadoCivil as any}
+                  />
+                </div>
               </div>
             </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="cpf">CPF:</Label>
-                <Input type="text" />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-full">
+                <div className="flex-grow">
+                  <Label htmlFor="email">Email:</Label>
+                  <Input
+                    type="email"
+                    placeholder="E-mail"
+                    name="email"
+                    onChange={(e) => handleChangeField("email", e.target.value)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Celular:</Label>
-                <Input type="text" />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="passaporte">Passaporte:</Label>
+                  <Input
+                    type="text"
+                    name="passaporte"
+                    onChange={(e) =>
+                      handleChangeField("passaporte", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="dataValidadePassaporte">
+                    Validade Passaporte:
+                  </Label>
+                  <Input
+                    type="date"
+                    name="dataValidadePassaporte"
+                    onChange={(e) =>
+                      handleChangeField(
+                        "dataValidadePassaporte",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
               </div>
             </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Estado Civil:</Label>
-                <Select
-                  defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  options={optionsEstadoCivil}
-                />
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="outrosPassaportes">Outros Passaportes:</Label>
+                  <RadioGroup defaultValue="nao">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="sim"
+                        id="r1"
+                        onClick={() => handleRadioChange("sim")}
+                      />
+                      <Label htmlFor="sim">Sim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="nao"
+                        id="r2"
+                        onClick={() => handleRadioChange("não")}
+                      />
+                      <Label htmlFor="nao">Não</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-full">
-              <div className="flex-grow">
-                <Label htmlFor="email">Email:</Label>
-                <Input type="email" placeholder="E-mail" />
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="nacionalidadePassaporte">
+                    Nacionalidade Passaporte:
+                  </Label>
+                  <Select
+                    name="nacionalidadePassaporte"
+                    isMulti
+                    defaultValue={formData.nacionalidadePassaporte}
+                    onChange={handleNacionalidadePassaporteChange}
+                    isDisabled={outrosPassaportes}
+                    options={options as any}
+                  />
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="passaportes">Passaporte:</Label>
-                <Input type="text" />
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="dataValidadePassaporte">
-                  Validade Passaporte:
-                </Label>
-                <Input type="date" />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Outros Passaportes:</Label>
-                <RadioGroup defaultValue="nao">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="sim"
-                      id="r1"
-                      onClick={() => handleRadioChange("sim")}
+              <div className="flex flex-row space-x-4 justify-start mb-6">
+                <div className="w-1/2">
+                  <div className="">
+                    <Label htmlFor="vistoAmericano">Visto Americano:</Label>
+                    <RadioGroup defaultValue="nao" name="vistoAmericano">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="sim"
+                          id="r1"
+                          onClick={() => handleRadioChangeVisto("nao")}
+                        />
+                        <Label htmlFor="sim">Sim</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="nao"
+                          id="r2"
+                          onClick={() => handleRadioChangeVisto("sim")}
+                        />
+                        <Label htmlFor="nao">Não</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+                <div className="w-1/2">
+                  <div className="">
+                    <Label htmlFor="validadeVistoAmericano">
+                      Validade Visto:
+                    </Label>
+                    <Input
+                      disabled={validadeVistoAmericano}
+                      type="date"
+                      name="validadeVistoAmericano"
+                      onChange={(e) =>
+                        handleChangeField(
+                          "validadeVistoAmericano",
+                          e.target.value
+                        )
+                      }
                     />
-                    <Label htmlFor="sim">Sim</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="nao"
-                      id="r2"
-                      onClick={() => handleRadioChange("não")}
-                    />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Nacionalidade Passaporte:</Label>
-                <Select
-                  isMulti
-                  defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  isDisabled={outrosPassaportes}
-                  options={options}
-                />
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Visto Americano:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Validade Visto:</Label>
-                <Input type="date" />
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Container 2 */}
-        {/* <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
+          {/* Container 2 */}
+          {/* <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
@@ -411,8 +550,8 @@ const ClienteNovo = () => {
             </div>
           </div>
         </div> */}
-        {/* Container 3 */}
-        {/* <div className="container flex flex-col">
+          {/* Container 3 */}
+          {/* <div className="container flex flex-col">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <div className="flex-grow">
@@ -438,6 +577,7 @@ const ClienteNovo = () => {
             </div>
           </div>
         </div> */}
+        </form>
       </div>
     </>
   );
