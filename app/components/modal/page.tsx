@@ -15,14 +15,14 @@ import { Pencil } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import helpers from "@/lib/helpers";
 
-type ProgramaProps = {
-  name: string;
-  description: string;
-  logomarca: string;
-  id: string;
-};
+// type ProgramaProps = {
+//   name: string;
+//   description: string;
+//   logomarca: string;
+//   id: string;
+// };
 
-const DemoDialog = ({ name, description, logomarca, id }: ProgramaProps) => {
+const DemoDialog = ({ name, description, logomarca, id }: any) => {
   const [formValues, setFormValues] = useState({
     nomePrograma: name,
     descricaoPrograma: description,
