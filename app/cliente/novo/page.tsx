@@ -64,6 +64,19 @@ const ClienteNovo = () => {
   };
   const [programas, setProgramas] = useState([]);
   const [estado, setEstados] = useState([]);
+  const [outrosPassaportes, setOutrosPassaportes] = useState(true);
+  const [selectedOption, setSelectedOption] = useState(Boolean);
+
+  const handleRadioChange = (value: any) => {
+    console.log(value);
+    if (value === "sim") {
+      setOutrosPassaportes(false);
+      setSelectedOption(value == "sim");
+    } else {
+      setOutrosPassaportes(true);
+      setSelectedOption(value == "não");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,21 +88,12 @@ const ClienteNovo = () => {
         }));
         setProgramas(listaProgramas);
       } catch (error) {
-        // Lidar com erros, se necessário
         console.error("Erro ao obter os programas de fidelidade:", error);
       }
     };
 
     fetchData();
   }, []);
-
-  console.log(programas);
-  // (async () => {
-  //   const programasFidelidade = await helpers.getProgramaFidelidade();
-  //   console.log(programasFidelidade);
-  // })();
-
-  const [selectedOption, setSelectedOption] = useState(null);
 
   return (
     <>
@@ -182,13 +186,21 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="celular">Outros Passaportes:</Label>
-                <RadioGroup defaultValue="comfortable">
+                <RadioGroup defaultValue="nao">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
+                    <RadioGroupItem
+                      value="sim"
+                      id="r1"
+                      onClick={() => handleRadioChange("sim")}
+                    />
                     <Label htmlFor="sim">Sim</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
+                    <RadioGroupItem
+                      value="nao"
+                      id="r2"
+                      onClick={() => handleRadioChange("não")}
+                    />
                     <Label htmlFor="nao">Não</Label>
                   </div>
                 </RadioGroup>
@@ -201,6 +213,7 @@ const ClienteNovo = () => {
                   isMulti
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
+                  isDisabled={outrosPassaportes}
                   options={options}
                 />
               </div>
@@ -230,7 +243,8 @@ const ClienteNovo = () => {
             </div>
           </div>
         </div>
-        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
+        {/* Container 2 */}
+        {/* <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
@@ -389,8 +403,9 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="container flex flex-col">
+        </div> */}
+        {/* Container 3 */}
+        {/* <div className="container flex flex-col">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <div className="flex-grow">
@@ -415,7 +430,7 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
