@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import helpers from "../../../home/victorbraga/encanto-front/lib/helpers";
+import helpers from "@/lib/helpers";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
