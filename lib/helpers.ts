@@ -175,43 +175,11 @@ class Helpers {
 
       if (response.status === 200) {
         return { msg: "success" };
-        // (() => {
-        //   toast({
-        //     className: cn(
-        //       "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-400 text-xl"
-        //     ),
-        //     description: (
-        //       "Registro atualizado com sucesso."
-        //     ),
-        //     duration: 3000,
-        //   });
-        // })();
-        // setTimeout(() => {
-        //   setOpen(false);
-        // }, 3000);
       } else {
         return { msg: "erro-client" };
-        // (() => {
-        //   toast({
-        //     className: cn(
-        //       "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-red-400 text-xl"
-        //     ),
-        //     description: "Erro, tente atualizar novamente.",
-        //     duration: 3000,
-        //   });
-        // })();
       }
     } catch (error) {
       return { msg: "erro-api" };
-      // (() => {
-      //   toast({
-      //     className: cn(
-      //       "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-red-400 text-xl"
-      //     ),
-      //     description: "Erro de Servidor.",
-      //     duration: 3000,
-      //   });
-      // })();
     }
   };
 

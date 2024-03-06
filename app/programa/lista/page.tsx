@@ -35,30 +35,15 @@ const ListarPrograma = () => {
   const [selectedName, setNameSelected] = useState(null);
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
 
-  const [showToast2, setShowToast] = useState(false);
-
-  const showToastMessage = () => {
-    setShowToast(true);
-
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
-  };
-
   const handleConfirmDelete = async () => {
     try {
-      // Lógica para excluir o registro na API usando selectedItemId
       await helpers.deleteProgramaFidelidade(selectedItemId);
-
-      // Atualizar a lista após a exclusão
       if (programas) {
         const updatedProgramas = programas.filter(
           (programa: DadosItem) => programa.id !== selectedItemId
         );
         setProgramas(updatedProgramas);
       }
-
-      // Exibir toast de sucesso após a exclusão
       (() => {
         toast({
           className: cn(
@@ -70,8 +55,6 @@ const ListarPrograma = () => {
       })();
 
       showToast("Registro excluído com sucesso!");
-
-      // Fechar o modal de confirmação
       setConfirmationOpen(false);
     } catch (error: any) {
       console.error("Erro ao excluir o registro:", error.message);
@@ -95,7 +78,7 @@ const ListarPrograma = () => {
     if (deleteStatus) {
       const timer = setTimeout(() => {
         setDeleteStatus(null);
-      }, 5000); // 5000 milissegundos (5 segundos)
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
@@ -136,23 +119,6 @@ const ListarPrograma = () => {
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
-        <Button
-          variant="outline"
-          onClick={() => {
-            toast({
-              className: cn(
-                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-400 text-xl"
-              ),
-
-              description: (
-                <span className="text-xl">Your message has been sent.</span>
-              ),
-              duration: 30000,
-            });
-          }}
-        >
-          Show Toast
-        </Button>
         <div className="overflow-x-auto mt-4">
           {loading ? (
             <>
