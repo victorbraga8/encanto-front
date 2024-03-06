@@ -150,10 +150,6 @@ const ClienteNovo = () => {
     handleChangeField("estadoCivil", selectedOption);
   };
 
-  const handlevistoAmericanoChange = (selectedOption: any) => {
-    handleChangeField("vistoAmericano", selectedOption);
-  };
-
   const handleNacionalidadePassaporteChange = (selectedOption: any) => {
     handleChangeField("nacionalidadePassaporte", selectedOption);
   };
