@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 const ConfirmationModal = ({ isOpen, onConfirm, onCancel, name }: any) => {
   if (!isOpen) {
