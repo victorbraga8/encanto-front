@@ -13,12 +13,9 @@ import {
 } from "@/components/ui/dialog";
 import { Pencil } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { toast } from "@/components/ui/use-toast";
-import axios from "axios";
-import { cn } from "@/lib/utils";
 import helpers from "@/lib/helpers";
 
-export type ProgramaProps = {
+type ProgramaProps = {
   name: string;
   description: string;
   logomarca: string;
