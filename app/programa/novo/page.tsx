@@ -9,7 +9,6 @@ const tempUpload = () => {
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
-        <h1>Cadastrar Programa</h1>
         <form action="">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">

@@ -32,7 +32,6 @@ const UsuarioLogado = () => {
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
-        <h1>Home Page</h1>
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>

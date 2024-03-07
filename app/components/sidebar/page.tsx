@@ -13,6 +13,7 @@ const Sidebar = () => {
   const [programasCollapsed, setProgramasCollapsed] = useState(true);
   const [documentosCollapsed, setDocumentosCollapsed] = useState(true);
   const [clientesCollapsed, setclientesCollapsed] = useState(true);
+  const [experienciasCollapsed, setExperienciasCollapsed] = useState(true);
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -37,11 +38,16 @@ const Sidebar = () => {
     setclientesCollapsed((clientesCollapsed) => !clientesCollapsed);
   };
 
+  const toggleExperienciasCollapsed = () => {
+    setExperienciasCollapsed((experienciasCollapsed) => !experienciasCollapsed);
+  };
+
   const toggleAll = () => {
     setAdminCollapsed(false);
     setclientesCollapsed(true);
     setProgramasCollapsed(true);
     setDocumentosCollapsed(true);
+    setExperienciasCollapsed(true);
   };
   const { data } = useSession();
   return (
@@ -96,10 +102,12 @@ const Sidebar = () => {
               programasCollapsed={programasCollapsed}
               clientesCollapsed={clientesCollapsed}
               documentosCollapsed={documentosCollapsed}
+              experienciasCollapsed={experienciasCollapsed}
               onToggleAdmin={toggleAdminCollapsed}
               onToggleProgramas={toggleProgramasCollapsed}
               onToggleClientes={toggleClientesCollapsed}
               onToggleDocumentos={toggleDocumentosCollapsed}
+              onToggleExperiencias={toggleExperienciasCollapsed}
             />
           </nav>
           <div className="mt-auto">

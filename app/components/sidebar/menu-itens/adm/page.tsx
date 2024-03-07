@@ -1,5 +1,5 @@
 // Componente ListaItens.js
-import { Cog, Users } from "lucide-react";
+import { Cog, Users, FileText } from "lucide-react";
 import Link from "next/link";
 
 const OpcoesAdm = ({
@@ -8,10 +8,12 @@ const OpcoesAdm = ({
   programasCollapsed,
   clientesCollapsed,
   documentosCollapsed,
+  experienciasCollapsed,
   onToggleAdmin,
   onToggleProgramas,
   onToggleClientes,
   onToggleDocumentos,
+  onToggleExperiencias,
 }: any) => {
   return (
     <ul>
@@ -69,11 +71,11 @@ const OpcoesAdm = ({
                     Cadastrar
                   </li>
                 </Link>
-                {/* <Link href="/programa/lista">
+                <Link href="/cliente/lista">
                   <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
                     Listar
                   </li>
-                </Link> */}
+                </Link>
               </ul>
             )}
           </ul>
@@ -95,6 +97,31 @@ const OpcoesAdm = ({
                   </li>
                 </Link>
                 <Link href="/documento/lista">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Listar
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </ul>
+          <ul>
+            <li
+              className={`pl-8 py-2 px-3 text-center ${
+                !experienciasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
+              } cursor-pointer flex items-center`}
+              onClick={onToggleExperiencias}
+            >
+              <FileText size={16} className="mr-2" />
+              Experiências
+            </li>
+            {!experienciasCollapsed && (
+              <ul>
+                <Link href="/experiencia/novo">
+                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
+                    Cadastrar
+                  </li>
+                </Link>
+                <Link href="/experiencia/lista">
                   <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
                     Listar
                   </li>

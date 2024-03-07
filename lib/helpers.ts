@@ -488,7 +488,11 @@ class Helpers {
   }
 
   async deleteDocumento(id: any) {}
+
   async getDocumentos() {}
+
+  async deleteExperiencia(id: any) {}
+  async getExperiencias() {}
 }
 
 const helpers = new Helpers();
