@@ -486,6 +486,28 @@ class Helpers {
       .catch((error) => console.error("Erro NOVO:", error.message));
   }
 
+  async cadastraPrograma(values: any) {
+    console.log(values);
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade";
+
+    try {
+      const response = await axios.post(url, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  }
+
   async deleteDocumento(id: any) {}
 
   async getDocumentos() {}
