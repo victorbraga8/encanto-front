@@ -51,7 +51,7 @@ const ClienteLista = () => {
                     key={row.id}
                     className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}
                   >
-                    <td className="py-2 px-4 border-b">{row.id}</td>
+                    <td className="py-2 px-4 border-b">{index + 1}</td>
                     <td className="py-2 px-4 border-b">{row.dataCadastro}</td>
                     <td className="py-2 px-4 border-b">{row.telefone}</td>
                     <td className="py-2 px-4 border-b">{row.email}</td>

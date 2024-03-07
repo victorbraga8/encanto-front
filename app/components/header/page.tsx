@@ -21,7 +21,7 @@ const Header = () => {
               <div className="flex-grow">
                 <h2 className="ml-[220px] text-white">
                   <p className="uppercase">
-                    <span className="font-semibold">{pathParts}</span>
+                    <span className="font-semibold text-3xl">{pathParts}</span>
                   </p>
                 </h2>
               </div>
