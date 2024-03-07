@@ -82,6 +82,34 @@ class Helpers {
     const token = this.validaToken();
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
+
+    try {
+      const resposta = await fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/", // Substitua pela sua origem permitida
+        }),
+        credentials: "same-origin",
+        mode: "cors",
+        cache: "no-cache",
+      });
+      const dados = await resposta.json();
+      console.log("Dados recebidos:", dados);
+
+      return dados;
+      // Restante do código...
+    } catch (erro: any) {
+      console.error("Erro na requisição:", erro.message);
+      throw erro;
+    }
+  }
+
+  async getClientes() {
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/list/1/10";
     try {
       const resposta = await fetch(url, {
         method: "GET",
@@ -90,7 +118,6 @@ class Helpers {
           "Content-Type": "application/json",
           // Inclua headers adicionais conforme necessário para a sua aplicação
         },
-        mode: "cors", // Configuração CORS
       });
 
       if (!resposta.ok) {
@@ -100,7 +127,7 @@ class Helpers {
       }
 
       const dados = await resposta.json();
-      // console.log("Dados recebidos:", dados);
+      console.log("Dados recebidos:", dados);
 
       return dados;
     } catch (erro: any) {
@@ -331,21 +358,26 @@ class Helpers {
 
   async cadastraCliente(values: any) {
     console.log(values);
+    console.log(values.email);
+    console.log(values.name);
+    console.log(values.cpf);
+    console.log(values.rg);
     const token = this.validaToken();
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
 
     const temp = {
       Nome: values.name,
-      Sobrenome: "",
+      Sobrenome: "Rodrigues",
       Ocupacao: "Corporate Paradigm Assistant",
-      CPF: values.cpf,
+      CPF: "14472780702",
       RG: values.rg,
       Celular: values.celuar,
+      Email: "values@email.com.bw",
       PossuiWhatsApp: false,
       NumeroCriancasParticipantes: 3,
       AceitaReceberMensagem: true,
-      EstadoCivil: values.estadoCivil.value,
+      EstadoCivil: 4,
       EndereçoPrincial: {
         CEP: "89858115",
         Logradouro: "Gutmann Junctions",
@@ -440,7 +472,7 @@ class Helpers {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      mode: "cors" as RequestMode, // Definindo o modo como 'cors'
+      mode: "cors" as RequestMode,
       body: JSON.stringify(temp),
     };
 
