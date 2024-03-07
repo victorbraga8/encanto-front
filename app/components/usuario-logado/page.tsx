@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@radix-ui/react-tooltip";
+import { Pencil } from "lucide-react";
 import helpers from "@/lib/helpers";
 import { useEffect, useState } from "react";
 
@@ -37,11 +38,9 @@ const UsuarioLogado = () => {
             <thead>
               <tr className="text-left">
                 <th className="py-2 px-4 border-b">ID</th>
-                <th className="py-2 px-4 border-b">Data Cadastro</th>
+                <th className="py-2 px-4 border-b">Nome</th>
                 <th className="py-2 px-4 border-b">Telefone</th>
                 <th className="py-2 px-4 border-b">E-mail</th>
-                <th className="py-2 px-4 border-b">Status</th>
-                <th className="py-2 px-4 border-b">Última Atualização</th>
                 <th className="py-2 px-4 border-b">Ações</th>
               </tr>
             </thead>
@@ -52,18 +51,10 @@ const UsuarioLogado = () => {
                     key={row.id}
                     className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}
                   >
-                    <td className="py-2 px-4 border-b">{row.id}</td>
-                    <td className="py-2 px-4 border-b">{row.dataCadastro}</td>
-                    <td className="py-2 px-4 border-b">{row.telefone}</td>
+                    <td className="py-2 px-4 border-b">{index + 1}</td>
+                    <td className="py-2 px-4 border-b">{row.nome}</td>
+                    <td className="py-2 px-4 border-b">{row.celular}</td>
                     <td className="py-2 px-4 border-b">{row.email}</td>
-                    <td className="py-2 px-4 border-b">
-                      <div className="px-5 rounded-xl hover:opacity-70 transition-colors">
-                        <div>{row.status}</div>
-                      </div>
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      {row.ultimaAtualizacao}
-                    </td>
                     <td className="py-2 px-4 border-b">
                       <TooltipProvider>
                         <Tooltip>
@@ -73,7 +64,7 @@ const UsuarioLogado = () => {
                               size="icon"
                               className="mr-2 bg-green-600 hover:bg-green-400"
                             >
-                              Pencil
+                              <Pencil />
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">

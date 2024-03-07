@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "./utils";
+import { url } from "inspector";
 
 class Helpers {
   handblePathHeader(path: string) {
@@ -82,6 +83,8 @@ class Helpers {
     const token = this.validaToken();
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
+    // const url =
+    //   "https://roterizadorviagem-cadastro.azurewebsites.net/api/programa-fidelidade/1/10?code=wp/z7g0VCJtRhQIb/jC9QEPPgSstFdZIkkGM0n5qsUlpbGkSiAIokA==&clientId=apim-api-management-encanto-experiencia";
 
     try {
       const resposta = await fetch(url, {
@@ -89,9 +92,7 @@ class Helpers {
         headers: new Headers({
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000/", // Substitua pela sua origem permitida
         }),
-        credentials: "same-origin",
         mode: "cors",
         cache: "no-cache",
       });
@@ -108,28 +109,26 @@ class Helpers {
 
   async getClientes() {
     const token = this.validaToken();
+    // const url =
+    //   "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/list/1/10";
+
     try {
       const resposta = await fetch(url, {
         method: "GET",
-        headers: {
+        headers: new Headers({
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
-          // Inclua headers adicionais conforme necessário para a sua aplicação
-        },
+        }),
+        mode: "cors",
+        cache: "no-cache",
       });
-
-      if (!resposta.ok) {
-        throw new Error(
-          `Erro na requisição: ${resposta.status} - ${resposta.statusText}`
-        );
-      }
-
       const dados = await resposta.json();
       console.log("Dados recebidos:", dados);
 
       return dados;
+      // Restante do código...
     } catch (erro: any) {
       console.error("Erro na requisição:", erro.message);
       throw erro;

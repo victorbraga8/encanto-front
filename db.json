@@ -1,0 +1,10 @@
+{
+  "programas": [
+    { "id": 1, "nome": "Programa 1", "descricao": "Descrição 1" },
+    { "id": 2, "nome": "Programa 2", "descricao": "Descrição 2" }
+  ],
+  "documentos": [
+    { "id": 1, "nome": "Documento 1", "descricao": "Descrição 1" },
+    { "id": 2, "nome": "Documento 2", "descricao": "Descrição 2" }
+  ]
+}
