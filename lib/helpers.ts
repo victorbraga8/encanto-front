@@ -486,6 +486,9 @@ class Helpers {
       .then((data) => console.log("Resposta NOVA:", data))
       .catch((error) => console.error("Erro NOVO:", error.message));
   }
+
+  async deleteDocumento(id: any) {}
+  async getDocumentos() {}
 }
 
 const helpers = new Helpers();

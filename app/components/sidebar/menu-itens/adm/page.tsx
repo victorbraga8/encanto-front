@@ -94,11 +94,11 @@ const OpcoesAdm = ({
                     Cadastrar
                   </li>
                 </Link>
-                {/* <Link href="/programa/lista">
+                <Link href="/documento/lista">
                   <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
                     Listar
                   </li>
-                </Link> */}
+                </Link>
               </ul>
             )}
           </ul>
