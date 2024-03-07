@@ -22,7 +22,13 @@ import helpers from "@/lib/helpers";
 //   id: string;
 // };
 
-const DemoDialog = ({ name, description, logomarca, id }: any) => {
+const DemoDialog = ({
+  name,
+  description,
+  logomarca,
+  id,
+  onEnviarInformacao,
+}: any) => {
   const [formValues, setFormValues] = useState({
     nomePrograma: name,
     descricaoPrograma: description,
@@ -31,6 +37,7 @@ const DemoDialog = ({ name, description, logomarca, id }: any) => {
   });
   const [open, setOpen] = useState(Boolean);
   const [openToast, setOpenToast] = useState("");
+  const informacaoParaEnviar = "Veio do Filho";
 
   useEffect(() => {
     if (openToast.length > 0) {
@@ -47,6 +54,9 @@ const DemoDialog = ({ name, description, logomarca, id }: any) => {
       if (openToast === "success") {
         const msgToast = helpers.msgToast(openToast);
         helpers.showToast(msgToast, "bg-green-400");
+        (() => {
+          onEnviarInformacao(informacaoParaEnviar);
+        })();
         setOpenToast("");
       } else {
         const msgToast = helpers.msgToast(openToast);
@@ -54,7 +64,7 @@ const DemoDialog = ({ name, description, logomarca, id }: any) => {
         setOpenToast("");
       }
     }
-  }, [openToast]);
+  }, [onEnviarInformacao, openToast]);
 
   const handleConfirm = async (e: any) => {
     e.preventDefault();

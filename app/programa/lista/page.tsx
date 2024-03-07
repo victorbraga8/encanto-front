@@ -36,6 +36,12 @@ const ListarPrograma = () => {
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [informacaoRecebida, setInformacaoRecebida] = useState(null);
+
+  const handleReceberInformacao = (informacao: any) => {
+    setInformacaoRecebida(informacao);
+  };
+
   const handleConfirmDelete = async () => {
     try {
       await helpers.deleteProgramaFidelidade(selectedItemId);
@@ -100,6 +106,7 @@ const ListarPrograma = () => {
   };
 
   useEffect(() => {
+    console.log("use effect que renderiza inicial");
     const fetchData = async () => {
       try {
         const resposta = await helpers.getProgramas();
@@ -112,7 +119,8 @@ const ListarPrograma = () => {
     };
 
     fetchData();
-  }, []);
+    setInformacaoRecebida(null);
+  }, [informacaoRecebida]);
 
   const { toast } = useToast();
   return (
@@ -168,6 +176,7 @@ const ListarPrograma = () => {
                             description={row.description}
                             logomarca={row.logomarca}
                             id={row.id}
+                            onEnviarInformacao={handleReceberInformacao}
                           />
                           <Button
                             variant="default"
