@@ -34,6 +34,7 @@ const ListarPrograma = () => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [selectedName, setNameSelected] = useState(null);
   const [deleteStatus, setDeleteStatus] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleConfirmDelete = async () => {
     try {
@@ -97,8 +98,6 @@ const ListarPrograma = () => {
     setSelectedItemId(id);
     setConfirmationOpen(true);
   };
-
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
