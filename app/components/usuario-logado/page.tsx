@@ -10,26 +10,28 @@ import helpers from "@/lib/helpers";
 import { useEffect, useState } from "react";
 
 const UsuarioLogado = () => {
-  const [programas, setProgramas] = useState(null);
+  const [clientes, setClientes] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const resposta = await helpers.getProgramas();
-        // setProgramas(resposta);
-        // console.log(resposta);
+        const resposta = await helpers.getClientes();
+        setClientes(resposta);
+        // setLoading(false);
       } catch (erro: any) {
-        console.error("Erro ao obter programas:", erro.message);
+        console.error("Erro ao obter clientes:", erro.message);
+        // setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
+  console.log(clientes);
+
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
-        <h1>Home Page</h1>
         <div className="overflow-x-auto mt-4">
           <table className=" bg-white border border-gray-300">
             <thead>
@@ -44,8 +46,8 @@ const UsuarioLogado = () => {
               </tr>
             </thead>
             <tbody>
-              {programas &&
-                (programas as any[]).map((row: any, index: any) => (
+              {clientes &&
+                (clientes as any[]).map((row: any, index: any) => (
                   <tr
                     key={row.id}
                     className={index % 2 === 0 ? "bg-indigo-50" : "bg-white"}

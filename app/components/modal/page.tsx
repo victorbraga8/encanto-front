@@ -58,8 +58,11 @@ const DemoDialog = ({ name, description, logomarca, id }: any) => {
 
   const handleConfirm = async (e: any) => {
     e.preventDefault();
-    const updateRecord = await helpers.updateRecord(formValues, "..");
+    const updateRecord = await helpers.updateRecord(formValues);
     setOpenToast(updateRecord.msg);
+    setTimeout(() => {
+      setOpen(false);
+    }, 3000);
   };
 
   const handleInputChange = (e: any) => {

@@ -1,55 +1,145 @@
-// Componente ListaItens.js
-import { Cog, Users } from "lucide-react";
+"use client";
+import { ChevronDown, ChevronLeft, Cog, LogOutIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import OpcoesAdm from "./menu-itens/adm/page";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
-const OpcoesAdm = ({
-  collapsed,
-  adminCollapsed,
-  programasCollapsed,
-  onToggleAdmin,
-  onToggleProgramas,
-}: any) => {
+const Sidebar = () => {
+  const [sidebarWidth, setSidebarWidth] = useState("w-56");
+  const [collapsed, setCollapsed] = useState(false);
+  const [adminCollapsed, setAdminCollapsed] = useState(false);
+  const [programasCollapsed, setProgramasCollapsed] = useState(true);
+  const [documentosCollapsed, setDocumentosCollapsed] = useState(true);
+  const [clientesCollapsed, setclientesCollapsed] = useState(true);
+  const [experienciasCollapsed, setExperienciasCollapsed] = useState(true);
+
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+    setAdminCollapsed(false);
+
+    setSidebarWidth(collapsed ? "w-56" : "w-16");
+  };
+
+  const toggleAdminCollapsed = () => {
+    setAdminCollapsed((prevAdminCollapsed) => !prevAdminCollapsed);
+  };
+
+  const toggleDocumentosCollapsed = () => {
+    setDocumentosCollapsed((documentosCollapsed) => !documentosCollapsed);
+  };
+
+  const toggleProgramasCollapsed = () => {
+    setProgramasCollapsed((prevProgramasCollapsed) => !prevProgramasCollapsed);
+  };
+
+  const toggleClientesCollapsed = () => {
+    setclientesCollapsed((clientesCollapsed) => !clientesCollapsed);
+  };
+
+  const toggleExperienciasCollapsed = () => {
+    setExperienciasCollapsed((experienciasCollapsed) => !experienciasCollapsed);
+  };
+
+  const toggleAll = () => {
+    setAdminCollapsed(false);
+    setclientesCollapsed(true);
+    setProgramasCollapsed(true);
+    setDocumentosCollapsed(true);
+    setExperienciasCollapsed(true);
+  };
+  const { data } = useSession();
   return (
-    <ul>
-      <li
-        className={`py-5 px-5 text-center ${
-          !collapsed && adminCollapsed ? "bg-cyan-700" : "hover:bg-gray-700"
-        } cursor-pointer flex items-center flex-col`}
-        onClick={onToggleAdmin}
-      >
-        <span className="mr-2">
-          {collapsed ? <Cog size={20} /> : "Administração"}
-        </span>
-      </li>
-      {!collapsed && adminCollapsed && (
-        <ul>
-          <li
-            className={`pl-8 py-2 px-3 text-center ${
-              !programasCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
-            } cursor-pointer flex items-center`}
-            onClick={onToggleProgramas}
-          >
-            <Users size={16} className="mr-2" />
-            Programas
-          </li>
-          {!programasCollapsed && (
+    <>
+      {data?.user ? (
+        <aside
+          className={`bg-gray-800 text-white ${sidebarWidth} transition-width duration-300 ease-in-out flex flex-col absolute h-screen inset-y-0 top-0 z-40`}
+        >
+          <div className="flex items-center justify-between p-4">
+            <div className="flex items-center space-x-2">
+              <Image
+                src="/assets/profile-pic-new.jpg"
+                alt="Logo"
+                width={20}
+                height={20}
+                loading="eager"
+                className={`w-8 h-8 ${collapsed ? "hidden" : "block"}`}
+              />
+              <span
+                className={`font-semibold ${collapsed ? "hidden" : "block"}`}
+              >
+                Sistema Encanto
+              </span>
+            </div>
+            <button
+              onClick={toggleCollapse}
+              className="text-white focus:outline-none ml-6"
+            >
+              {collapsed ? (
+                <ChevronLeft size={20} />
+              ) : (
+                <ChevronDown size={20} />
+              )}
+            </button>
+          </div>
+          <nav className="flex-1 overflow-y-auto">
             <ul>
-              <Link href="/programa/novo">
-                <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                  Cadastrar
-                </li>
-              </Link>
-              <Link href="/programa/lista">
-                <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                  Listar
+              <Link href="/" onClick={toggleAll}>
+                <li
+                  className="py-5 px-5 text-center 
+                     hover:bg-gray-700 cursor-pointer flex items-center flex-col"
+                >
+                  <span className="mr-2">
+                    {collapsed ? <Cog size={20} /> : "Home"}
+                  </span>
                 </li>
               </Link>
             </ul>
-          )}
-        </ul>
-      )}
-    </ul>
+            <OpcoesAdm
+              collapsed={collapsed}
+              adminCollapsed={adminCollapsed}
+              programasCollapsed={programasCollapsed}
+              clientesCollapsed={clientesCollapsed}
+              documentosCollapsed={documentosCollapsed}
+              experienciasCollapsed={experienciasCollapsed}
+              onToggleAdmin={toggleAdminCollapsed}
+              onToggleProgramas={toggleProgramasCollapsed}
+              onToggleClientes={toggleClientesCollapsed}
+              onToggleDocumentos={toggleDocumentosCollapsed}
+              onToggleExperiencias={toggleExperienciasCollapsed}
+            />
+          </nav>
+          <div className="mt-auto">
+            <ul
+              className={`text-center flex items-center flex-col bg-gray-800 text-white ${
+                collapsed ? "w-16" : "w-56"
+              } transition-width duration-300 ease-in-out`}
+            >
+              <li
+                onClick={() => signOut()}
+                className="py-5 px-3.5 text-center cursor-pointer flex items-center hover:text-red-600"
+              >
+                <LogOutIcon size={20} className="mr-2" />
+                {collapsed ? "" : "Logout"}
+              </li>
+            </ul>
+            {!collapsed && (
+              <Image
+                className="mt-auto px-3 py-3"
+                alt="encantologo"
+                width={150}
+                height={150}
+                priority={true}
+                loading="eager"
+                src="/assets/encanto-footer.png"
+              />
+            )}
+          </div>
+        </aside>
+      ) : null}
+    </>
   );
 };
 
-export default OpcoesAdm;
+export default Sidebar;

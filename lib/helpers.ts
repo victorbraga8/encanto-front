@@ -82,6 +82,34 @@ class Helpers {
     const token = this.validaToken();
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
+
+    try {
+      const resposta = await fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/", // Substitua pela sua origem permitida
+        }),
+        credentials: "same-origin",
+        mode: "cors",
+        cache: "no-cache",
+      });
+      const dados = await resposta.json();
+      console.log("Dados recebidos:", dados);
+
+      return dados;
+      // Restante do código...
+    } catch (erro: any) {
+      console.error("Erro na requisição:", erro.message);
+      throw erro;
+    }
+  }
+
+  async getClientes() {
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/list/1/10";
     try {
       const resposta = await fetch(url, {
         method: "GET",
@@ -90,7 +118,6 @@ class Helpers {
           "Content-Type": "application/json",
           // Inclua headers adicionais conforme necessário para a sua aplicação
         },
-        mode: "cors", // Configuração CORS
       });
 
       if (!resposta.ok) {
@@ -100,7 +127,7 @@ class Helpers {
       }
 
       const dados = await resposta.json();
-      // console.log("Dados recebidos:", dados);
+      console.log("Dados recebidos:", dados);
 
       return dados;
     } catch (erro: any) {
@@ -186,19 +213,17 @@ class Helpers {
       return "Erro, tente atualizar novamente.";
     }
     if (msg == "success") {
-      return "Erro, tente atualizar novamente.";
+      return "Registro atualizado com sucesso.";
     } else {
       return "Erro, desconhecido.";
     }
   }
 
-  updateRecord = async (values: any, token: any) => {
+  updateRecord = async (values: any) => {
     console.log(values);
+    const token = this.validaToken();
     try {
       const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${values.id}`;
-
-      const token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJhcGk6Ly9jNjljNTg5Mi04NTAxLTQ2MjItOTU1Zi0yY2I2OTZkY2EwMTgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZWY3MjRjYi0zYzc3LTRiNDQtOTBiZC0xYTQ4ZTI2NWFkODYvIiwiaWF0IjoxNzA5Njc3MzQyLCJuYmYiOjE3MDk2NzczNDIsImV4cCI6MTcwOTY4MTI0MiwiYWlvIjoiRTJOZ1lFaStmcGhYVFBPNjBCYlpkTUZkeFR3ekFBPT0iLCJhcHBpZCI6ImM2OWM1ODkyLTg1MDEtNDYyMi05NTVmLTJjYjY5NmRjYTAxOCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4Ni8iLCJvaWQiOiI0NTFhYzkzZi0zMGRjLTRhMTAtYTdmZi0wMTY1NTExNzI3MTQiLCJyaCI6IjAuQWIwQXl5VDNmbmM4UkV1UXZScEk0bVd0aHBKWW5NWUJoU0pHbFY4c3RwYmNvQmpMQUFBLiIsInJvbGVzIjpbIldyaXRlIiwiUmVhZGVyIl0sInNpZCI6IjAzNmYzMzg0LTc3NGItNGFjOS1hMGI4LTA0MWM0OTNjZjJjMyIsInN1YiI6IjQ1MWFjOTNmLTMwZGMtNGExMC1hN2ZmLTAxNjU1MTE3MjcxNCIsInRpZCI6IjdlZjcyNGNiLTNjNzctNGI0NC05MGJkLTFhNDhlMjY1YWQ4NiIsInV0aSI6Im0wLVJla3VrRjA2aFhtVkYyYjZtQVEiLCJ2ZXIiOiIxLjAifQ.H2Cz5aEm9HhsYl04PxRKe31rN7qyCuImjlM7o1AN7T_IYq0Mpn-ubRwfbGZkxkBJYL1Ce8d3QDSEtCPGoEblhncemYPgu75IRiVoQvqNRVlur26MCDkk1LRhwxiVNSR6u2OUIeu_A5JwRZMI7-7OVrDb1kZ9uAJogIKcFhgcs8P7_gQmRxWVd3FQeahKQ43sPRI1y5jAEIEwZOGFGxJuxFHJkyg9hni2h7BlifbQ9gERw1ENeI9NPg8Vq-KnGi4lwxOqGE7OVJBQ8EcFcdd6FWnQAT4sNpV2Xw6gqgEFM1xlYU5lX00yXtFpnw7P3I_UqELRuOIiIfbUaXRsjztBHA";
 
       const response = await axios.put(
         url,
@@ -287,8 +312,8 @@ class Helpers {
     }
   };
 
-  getProgramaFidelidade = async (token: any) => {
-    // Incluir Etapa de verificador de validade do Token ou criar helper para isso
+  getProgramaFidelidade = async () => {
+    const token = this.validaToken();
 
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/1/10";
@@ -330,6 +355,144 @@ class Helpers {
       throw error;
     }
   };
+
+  async cadastraCliente(values: any) {
+    console.log(values);
+    console.log(values.email);
+    console.log(values.name);
+    console.log(values.cpf);
+    console.log(values.rg);
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
+
+    const temp = {
+      Nome: values.name,
+      Sobrenome: "Rodrigues",
+      Ocupacao: "Corporate Paradigm Assistant",
+      CPF: "14472780702",
+      RG: values.rg,
+      Celular: values.celuar,
+      Email: "values@email.com.bw",
+      PossuiWhatsApp: false,
+      NumeroCriancasParticipantes: 3,
+      AceitaReceberMensagem: true,
+      EstadoCivil: 4,
+      EndereçoPrincial: {
+        CEP: "89858115",
+        Logradouro: "Gutmann Junctions",
+        Numero: 811,
+        Complemento: "do",
+        Bairro: "cillum amet",
+        Cidade: {
+          Id: "3d389a51eee847b5bd85c3d790d21c35",
+        },
+      },
+      TipoServicos: [
+        {
+          TipoServico: {
+            Id: "57b7bd1ff4d940d2b264223af55e825a",
+          },
+        },
+      ],
+      ProgramasFidelidade: [
+        {
+          Numero: "30126DJ0",
+          Validade: "2023-08-21",
+          ProgramaFidelidade: {
+            Id: "420631bee7cd45c1940b72022e59237f",
+          },
+        },
+        {
+          Numero: "774985SS",
+          Validade: "2023-07-21",
+          ProgramaFidelidade: {
+            Id: "a84af8d01062422cae97039a021aa045",
+          },
+        },
+        {
+          Numero: "47131DGI",
+          Validade: "2024-02-13",
+          ProgramaFidelidade: {
+            Id: "8f2d3dce705f49d2b394108a97c72ea2",
+          },
+        },
+      ],
+      Documentos: [
+        {
+          Numero: "84143P2C",
+          PendenteEmissao: true,
+          DataEmissao: "1994-10-02",
+          DataValidade: "2023-12-25",
+          TipoDocumento: {
+            Id: "81b44b05-67fc-4a2d-a2bb-c0601d7dbc90",
+          },
+        },
+        {
+          Numero: "9123655I",
+          PendenteEmissao: false,
+          DataEmissao: "2017-02-04",
+          DataValidade: "2023-10-03",
+          TipoDocumento: {
+            Id: "4e01ff66-1568-4fee-bda6-c31567b004a7",
+          },
+        },
+      ],
+      Alergia: false,
+      AlergiaDetalhe: "",
+      RestricaoAlimentar: false,
+      RestricaoAlimentarDetalhe:
+        "pariatur ut excepteur veniam quis deserunt magna dolore exercitation aliquip duis elit ea amet et dolor in sint",
+      Sexo: 4,
+      Classificacao: 3,
+      Filhos: [
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 20,
+          Sexo: 4,
+        },
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 20,
+          Sexo: 1,
+        },
+        {
+          Nome: "Lara Rodrigues",
+          Idade: 49,
+          Sexo: 1,
+        },
+      ],
+    };
+
+    console.log(temp);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors" as RequestMode,
+      body: JSON.stringify(temp),
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erro HTTP! Status NOVO: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => console.log("Resposta NOVA:", data))
+      .catch((error) => console.error("Erro NOVO:", error.message));
+  }
+
+  async deleteDocumento(id: any) {}
+
+  async getDocumentos() {}
+
+  async deleteExperiencia(id: any) {}
+  async getExperiencias() {}
 }
 
 const helpers = new Helpers();
