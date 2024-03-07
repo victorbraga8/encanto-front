@@ -12,15 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Pencil } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import helpers from "@/lib/helpers";
-
-// type ProgramaProps = {
-//   name: string;
-//   description: string;
-//   logomarca: string;
-//   id: string;
-// };
 
 const DemoDialog = ({
   name,
@@ -29,15 +22,17 @@ const DemoDialog = ({
   id,
   onEnviarInformacao,
 }: any) => {
+  const [open, setOpen] = useState(Boolean);
+  const [openToast, setOpenToast] = useState("");
+  const [file, setFile] = useState<string | null>(null);
+  const informacaoParaEnviar = "Atualizado";
+
   const [formValues, setFormValues] = useState({
     nomePrograma: name,
     descricaoPrograma: description,
-    logomarca: logomarca,
+    logomarca: file || logomarca,
     id: id,
   });
-  const [open, setOpen] = useState(Boolean);
-  const [openToast, setOpenToast] = useState("");
-  const informacaoParaEnviar = "Veio do Filho";
 
   useEffect(() => {
     if (openToast.length > 0) {
@@ -89,6 +84,38 @@ const DemoDialog = ({
     handleInputChange("");
   }
 
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    if (selectedFile) {
+      const base64String = await convertToBase64(selectedFile);
+      setFile(base64String);
+
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        logomarca: base64String,
+      }));
+    }
+  };
+
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target && event.target.result) {
+          resolve(event.target.result.toString().split(",")[1] || "");
+        } else {
+          reject(new Error("Failed to read file."));
+        }
+      };
+
+      reader.onerror = (error) => reject(error);
+
+      reader.readAsDataURL(file);
+    });
+  };
+
   return (
     <>
       <Dialog open={open}>
@@ -134,20 +161,42 @@ const DemoDialog = ({
                   onChange={handleInputChange}
                   className="col-span-3"
                 />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="nomePrograma" className="text-right">
+                  Arquivo
+                </Label>
                 <Input
-                  type="hidden"
-                  name="logomarca"
-                  defaultValue={logomarca}
+                  className="col-span-3"
+                  type="file"
+                  name="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
                 />
-                <Input type="hidden" name="id" defaultValue={id} />
               </div>
             </div>
+
+            <Input
+              type="hidden"
+              name="logomarca"
+              defaultValue={file ? "" : logomarca}
+            />
+            <Input type="hidden" name="id" defaultValue={id} />
             <div>
               <DialogFooter id="dialogFooter" className="flex justify-between">
-                <Button type="submit" onClick={handleConfirm}>
+                <Button
+                  className="bg-green-700 hover:bg-green-400"
+                  type="submit"
+                  onClick={handleConfirm}
+                >
                   Confirmar
                 </Button>
-                <Button onClick={handleClose}>X</Button>
+                <Button
+                  className="bg-red-700 hover:bg-red-400"
+                  onClick={handleClose}
+                >
+                  X
+                </Button>
               </DialogFooter>
             </div>
           </form>

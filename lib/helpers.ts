@@ -219,7 +219,6 @@ class Helpers {
   }
 
   updateRecord = async (values: any) => {
-    console.log(values);
     const token = this.validaToken();
     try {
       const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/programa-fidelidade/${values.id}`;
