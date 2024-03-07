@@ -18,6 +18,7 @@ import helpers from "@/lib/helpers";
 const DemoDialog = ({
   name,
   description,
+  tipo,
   logomarca,
   id,
   onEnviarInformacao,
@@ -63,8 +64,15 @@ const DemoDialog = ({
 
   const handleConfirm = async (e: any) => {
     e.preventDefault();
-    const updateRecord = await helpers.updateRecord(formValues);
-    setOpenToast(updateRecord.msg);
+    if (tipo === "experiencia") {
+      const updateRecord = await helpers.updateExperiencia(formValues);
+      setOpenToast(updateRecord.msg);
+    } else {
+      const updateRecord = await helpers.updateRecord(formValues);
+      setOpenToast(updateRecord.msg);
+    }
+    // const updateRecord = await helpers.updateRecord(formValues);
+    // setOpenToast(updateRecord.msg);
     setTimeout(() => {
       setOpen(false);
     }, 3000);
@@ -162,18 +170,20 @@ const DemoDialog = ({
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="nomePrograma" className="text-right">
-                  Arquivo
-                </Label>
-                <Input
-                  className="col-span-3"
-                  type="file"
-                  name="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                />
-              </div>
+              {tipo !== "experiencia" && (
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="nomePrograma" className="text-right">
+                    Arquivo
+                  </Label>
+                  <Input
+                    className="col-span-3"
+                    type="file"
+                    name="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              )}
             </div>
 
             <Input

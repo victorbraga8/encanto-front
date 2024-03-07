@@ -553,8 +553,75 @@ class Helpers {
     }
   }
 
-  async deleteExperiencia(id: any) {}
-  async getExperiencias() {}
+  async deleteExperiencia(id: any) {
+    const token = this.validaToken();
+
+    const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/tipo-servico/${id}`;
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Lide com a resposta conforme necessário
+      console.log("Resposta da API:", response.data);
+
+      return response.data;
+    } catch (error) {
+      // Lide com os erros aqui
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  }
+
+  updateExperiencia = async (values: any) => {
+    console.log(values);
+    const token = this.validaToken();
+    try {
+      const url = `https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/tipo-servico/${values.id}`;
+      console.log(url);
+      const response = await axios.put(
+        url,
+        {
+          Name: values.nomePrograma,
+          Description: values.descricaoPrograma,
+          // Logomarca: values.logomarca,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status === 200) {
+        return { msg: "success" };
+      } else {
+        return { msg: "erro-client" };
+      }
+    } catch (error) {
+      return { msg: "erro-api" };
+    }
+  };
+
+  async getExperiencias() {
+    const token = this.validaToken();
+
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/tipo-servico/1/50";
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // Lide com a resposta conforme necessário
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      // Lide com os erros aqui
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  }
 }
 
 const helpers = new Helpers();
