@@ -24,10 +24,11 @@ const ProgramaNovo = () => {
     try {
       const resultadoCadastro = await helpers.cadastraPrograma(novoPrograma);
       setLoading(false);
-      helpers.showToast("Programa Cadastrado", "bg-green-400");
+      (() => helpers.showToast("Programa Cadastrado", "bg-green-400"))();
       console.log("Programa cadastrado com sucesso:", resultadoCadastro);
     } catch (error) {
       setLoading(false);
+      (() => helpers.showToast("Erro no cadastro", "bg-red-400"))();
       console.error("Erro ao cadastrar programa:", error);
     }
   };

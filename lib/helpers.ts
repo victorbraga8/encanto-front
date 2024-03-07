@@ -507,9 +507,51 @@ class Helpers {
     }
   }
 
-  async deleteDocumento(id: any) {}
+  async cadastraDocumento(values: any) {
+    console.log(values);
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/tipo-documento";
 
+    try {
+      const response = await axios.post(url, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  }
+
+  async deleteDocumento(id: any) {}
   async getDocumentos() {}
+
+  async cadastraExperiencia(values: any) {
+    const token = this.validaToken();
+    const url =
+      "https://api-management-encanto-experiencia.azure-api.net/api/cadastro/v1/tipo-servico";
+
+    try {
+      const response = await axios.post(url, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
+  }
 
   async deleteExperiencia(id: any) {}
   async getExperiencias() {}

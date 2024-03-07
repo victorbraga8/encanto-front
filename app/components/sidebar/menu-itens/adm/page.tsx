@@ -78,7 +78,7 @@ const OpcoesAdm = ({
               </ul>
             )}
           </ul>
-          <ul>
+          {/* <ul>
             <li
               className={`pl-8 py-2 px-3 text-center ${
                 !documentosCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
@@ -102,7 +102,7 @@ const OpcoesAdm = ({
                 </Link>
               </ul>
             )}
-          </ul>
+          </ul> */}
           <ul>
             <li
               className={`pl-8 py-2 px-3 text-center ${
