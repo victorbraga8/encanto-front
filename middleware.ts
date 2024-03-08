@@ -11,8 +11,7 @@ export async function middleware(request: NextRequest) {
   if (validadeCookie && tokenCookie) {
     validaExpiracaoToken = helpers.validaExpiracaoToken(validadeCookie.value);
   }
-  console.log(validaExpiracaoToken);
-  console.log(typeof validaExpiracaoToken);
+
   const horarios = helpers.formataHora();
 
   const horaAtual = horarios!!!.horaAtualFormatada;

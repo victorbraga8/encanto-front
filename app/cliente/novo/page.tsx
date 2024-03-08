@@ -65,6 +65,9 @@ const ClienteNovo = () => {
   const [programas, setProgramas] = useState<
     { value: string; label: string }[]
   >([]);
+  const [experiencias, setExperiencias] = useState<
+    { value: string; label: string }[]
+  >([]);
   const [estado, setEstados] = useState([]);
   const [outrosPassaportes, setOutrosPassaportes] = useState(true);
   const [selectedOption, setSelectedOption] = useState<{
@@ -109,6 +112,24 @@ const ClienteNovo = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const experiencias = await helpers.getExperiencias();
+        const listaExperiencias = experiencias.map((item: any) => ({
+          value: item.id,
+          label: item.name,
+        }));
+
+        setExperiencias(listaExperiencias);
+      } catch (error) {
+        console.error("Erro ao obter experiencias:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     dataNascimento: "",
@@ -131,15 +152,6 @@ const ClienteNovo = () => {
       ...prevData,
       [fieldName]: value,
     }));
-    // if (value === "nao") {
-    //   setValidadeVistoAmericano(false);
-    //   setValidadeVistoAmericano(false);
-    // } else {
-    //   if (fieldName === "validadeVistoAmericano") {
-    //     setValidadeVistoAmericano(value);
-    //   }
-    //   setValidadeVistoAmericano(true);
-    // }
   };
 
   const handleGeneroChange = (selectedOption: any) => {
@@ -177,8 +189,8 @@ const ClienteNovo = () => {
                 <Input
                   type="nome"
                   placeholder="Nome"
-                  name="name"
-                  onChange={(e) => handleChangeField("name", e.target.value)}
+                  name="nome"
+                  onChange={(e) => handleChangeField("nome", e.target.value)}
                 />
               </div>
             </div>
@@ -186,7 +198,7 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="email">Data de Nascimento:</Label>
+                <Label htmlFor="dataNascimento">Data de Nascimento:</Label>
                 <Input
                   type="date"
                   name="dataNascimento"
@@ -198,7 +210,7 @@ const ClienteNovo = () => {
             </div>
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="email">Sexo</Label>
+                <Label htmlFor="genero">Sexo</Label>
                 <Select
                   name="genero"
                   defaultValue={formData.genero}
@@ -377,13 +389,13 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="email">CEP:</Label>
-                <Input type="text" />
+                <Label htmlFor="cep">CEP:</Label>
+                <Input type="text" name="cep" />
               </div>
             </div>
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="email">Estado</Label>
+                <Label htmlFor="estado">Estado</Label>
                 <Select
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
@@ -395,7 +407,7 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <div className="flex-grow">
-                <Label htmlFor="email">Endereço:</Label>
+                <Label htmlFor="endereco">Endereço:</Label>
                 <Input type="text" placeholder="Endereço:" />
               </div>
             </div>
@@ -403,142 +415,23 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="rg">Nº:</Label>
-                <Input type="text" />
+                <Label htmlFor="numero">Nº:</Label>
+                <Input type="text" name="numero" />
               </div>
             </div>
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="cpf">Complemento:</Label>
-                <Input type="text" />
+                <Label htmlFor="complemento">Complemento:</Label>
+                <Input type="text" name="complemento" />
               </div>
             </div>
           </div>
+
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
-                <Label htmlFor="celular">Filhos:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Restrição Alimentar:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-full">
-              <div className="flex-grow">
-                <Label htmlFor="email">Restrição Alimentar:</Label>
-                <Input
-                  type="text"
-                  placeholder="Descreva a Restrição Alimentar"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Vacina Febre Amarela:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="dataValidadePassaporte">Alergias:</Label>
-                <Input type="text" />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">PCD, PNE, PPD:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="dataValidadePassaporte">
-                  Informe a Condição:
-                </Label>
-                <Input type="text" />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="celular">Programa de Fidelidade:</Label>
-                <RadioGroup defaultValue="comfortable">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="default" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="comfortable" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="email">Tipo de Programa</Label>
-                <Select
-                  defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  options={programas}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="profissoa">Profissão:</Label>
-                <Input type="text" />
+                <Label htmlFor="profissao">Profissão:</Label>
+                <Input type="text" name="profissao" />
               </div>
             </div>
             <div className="w-1/2">
@@ -547,6 +440,35 @@ const ClienteNovo = () => {
                 <Select
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
+                  options={experiencias}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row space-x-4 justify-start mb-6">
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="programaFidelidade">
+                  Programa de Fidelidade:
+                </Label>
+                <RadioGroup defaultValue="nao">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="sim" id="r1" />
+                    <Label htmlFor="sim">Sim</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="nao" id="r2" />
+                    <Label htmlFor="nao">Não</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="tipoPrograma">Tipo de Programa</Label>
+                <Select
+                  defaultValue={selectedOption}
+                  onChange={() => setSelectedOption}
                   options={programas}
                 />
               </div>
@@ -554,14 +476,95 @@ const ClienteNovo = () => {
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
-              <Label htmlFor="observacoes">Observações:</Label>
-              <Input type="text" />
+              <Label htmlFor="numeroPrograma">Número do Programa:</Label>
+              <Input type="text" name="numeroPrograma" />
+            </div>
+          </div>
+          <div className="flex flex-row space-x-4 justify-start mb-6">
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="vacinaFebreAmarela">
+                  Vacina Febre Amarela:
+                </Label>
+                <RadioGroup defaultValue="sim">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="sim" id="r1" />
+                    <Label htmlFor="sim">Sim</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="nao" id="r2" />
+                    <Label htmlFor="nao">Não</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="alergias">Alergias:</Label>
+                <Input type="text" name="alergias" />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row space-x-4 justify-start mb-6">
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="pcd">PCD, PNE, PPD:</Label>
+                <RadioGroup defaultValue="nao">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="sim" id="r1" />
+                    <Label htmlFor="sim">Sim</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="nao" id="r2" />
+                    <Label htmlFor="nao">Não</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="condicao">Informe a Condição:</Label>
+                <Input type="text" name="condicao" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
+          <div className="flex flex-row space-x-4 justify-start mb-6">
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="restricaoAlimentar">Restrição Alimentar:</Label>
+                <RadioGroup defaultValue="nao">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="sim" id="r1" />
+                    <Label htmlFor="sim">Sim</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="nao" id="r2" />
+                    <Label htmlFor="nao">Não</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+            <div className="w-1/2">
+              <div className="">
+                <Label htmlFor="descritivoRestricao">
+                  Descritivo da Restrição:
+                </Label>
+                <Input type="text" name="descritivoRestricao" />
+              </div>
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
-              <Label htmlFor="email">Arquivos:</Label>
-              <Input type="file" />
+              <Label htmlFor="observacoes">Observações:</Label>
+              <Input type="text" name="observacoes" />
+            </div>
+          </div>
+          <div className="flex flex-row space-x-4 justify-start mb-6">
+            <div className="w-full">
+              <Label htmlFor="arquivos">Arquivos:</Label>
+              <Input type="file" name="arquivos" />
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6 mt-auto">
