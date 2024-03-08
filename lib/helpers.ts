@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "./utils";
-import { url } from "inspector";
 
 class Helpers {
   handblePathHeader(path: string) {
@@ -355,12 +354,13 @@ class Helpers {
   };
 
   async cadastraCliente(values: any) {
+    const token = this.validaToken();
     console.log(values);
     console.log(values.email);
     console.log(values.name);
     console.log(values.cpf);
     console.log(values.rg);
-    const token = this.validaToken();
+
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
 
@@ -368,10 +368,11 @@ class Helpers {
       Nome: values.name,
       Sobrenome: "Rodrigues",
       Ocupacao: "Corporate Paradigm Assistant",
-      CPF: "14472780702",
+      CPF: values.cpf,
+      DataNascimento: values.dataNascimento,
       RG: values.rg,
-      Celular: values.celuar,
-      Email: "values@email.com.bw",
+      Celular: values.celular,
+      Email: values.email,
       PossuiWhatsApp: false,
       NumeroCriancasParticipantes: 3,
       AceitaReceberMensagem: true,
@@ -462,27 +463,44 @@ class Helpers {
       ],
     };
 
-    console.log(temp);
+    // Converte o objeto para uma string formatada
+    const jsonString = JSON.stringify(temp, null, 2);
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      mode: "cors" as RequestMode,
-      body: JSON.stringify(temp),
-    };
+    // Cria um Blob a partir da string JSON
+    const blob = new Blob([jsonString], { type: "text/plain" });
 
-    fetch(url, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Erro HTTP! Status NOVO: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => console.log("Resposta NOVA:", data))
-      .catch((error) => console.error("Erro NOVO:", error.message));
+    // Cria um URL do Blob
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Cria um link temporário para fazer o download
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = "output.txt";
+    a.textContent = "Download do arquivo";
+
+    // Adiciona o link temporário ao DOM
+    document.body.appendChild(a);
+
+    // Dispara o clique no link para iniciar o download
+    a.click();
+
+    // Remove o link temporário do DOM após o download
+    document.body.removeChild(a);
+
+    try {
+      const response = await axios.post(url, temp, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Resposta da API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
   }
 
   async cadastraPrograma(values: any) {

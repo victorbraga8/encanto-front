@@ -161,7 +161,7 @@ const ClienteNovo = () => {
   const handleSubmit = (e: React.FormEvent) => {
     const cadastraCliente = helpers.cadastraCliente(formData);
     e.preventDefault();
-    console.log("Dados do formulário:", formData);
+    // console.log("Dados do formulário:", formData);
   };
 
   return (
@@ -341,47 +341,47 @@ const ClienteNovo = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-row space-x-4 justify-start mb-6">
-                <div className="w-1/2">
-                  <div className="">
-                    <Label htmlFor="vistoAmericano">Visto Americano:</Label>
-                    <RadioGroup defaultValue="nao" name="vistoAmericano">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value="sim"
-                          id="r1"
-                          onClick={() => handleRadioChangeVisto("nao")}
-                        />
-                        <Label htmlFor="sim">Sim</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value="nao"
-                          id="r2"
-                          onClick={() => handleRadioChangeVisto("sim")}
-                        />
-                        <Label htmlFor="nao">Não</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
+            </div>
+            <div className="flex flex-row space-x-4 justify-start mb-6">
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="vistoAmericano">Visto Americano:</Label>
+                  <RadioGroup defaultValue="nao" name="vistoAmericano">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="sim"
+                        id="r1"
+                        onClick={() => handleRadioChangeVisto("nao")}
+                      />
+                      <Label htmlFor="sim">Sim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="nao"
+                        id="r2"
+                        onClick={() => handleRadioChangeVisto("sim")}
+                      />
+                      <Label htmlFor="nao">Não</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
-                <div className="w-1/2">
-                  <div className="">
-                    <Label htmlFor="validadeVistoAmericano">
-                      Validade Visto:
-                    </Label>
-                    <Input
-                      disabled={validadeVistoAmericano}
-                      type="date"
-                      name="validadeVistoAmericano"
-                      onChange={(e) =>
-                        handleChangeField(
-                          "validadeVistoAmericano",
-                          e.target.value
-                        )
-                      }
-                    />
-                  </div>
+              </div>
+              <div className="w-1/2">
+                <div className="">
+                  <Label htmlFor="validadeVistoAmericano">
+                    Validade Visto:
+                  </Label>
+                  <Input
+                    disabled={validadeVistoAmericano}
+                    type="date"
+                    name="validadeVistoAmericano"
+                    onChange={(e) =>
+                      handleChangeField(
+                        "validadeVistoAmericano",
+                        e.target.value
+                      )
+                    }
+                  />
                 </div>
               </div>
             </div>
