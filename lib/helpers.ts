@@ -355,11 +355,6 @@ class Helpers {
 
   async cadastraCliente(values: any) {
     const token = this.validaToken();
-    console.log(values);
-    console.log(values.email);
-    console.log(values.name);
-    console.log(values.cpf);
-    console.log(values.rg);
 
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
@@ -463,28 +458,15 @@ class Helpers {
       ],
     };
 
-    // Converte o objeto para uma string formatada
-    const jsonString = JSON.stringify(temp, null, 2);
-
-    // Cria um Blob a partir da string JSON
+    const jsonString = JSON.stringify(values, null, 2);
     const blob = new Blob([jsonString], { type: "text/plain" });
-
-    // Cria um URL do Blob
     const blobUrl = URL.createObjectURL(blob);
-
-    // Cria um link temporário para fazer o download
     const a = document.createElement("a");
     a.href = blobUrl;
     a.download = "output.txt";
     a.textContent = "Download do arquivo";
-
-    // Adiciona o link temporário ao DOM
     document.body.appendChild(a);
-
-    // Dispara o clique no link para iniciar o download
     a.click();
-
-    // Remove o link temporário do DOM após o download
     document.body.removeChild(a);
 
     try {
