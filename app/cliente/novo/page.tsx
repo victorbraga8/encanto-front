@@ -72,7 +72,7 @@ const ClienteNovo = () => {
     label: string;
   } | null>(null);
 
-  const [validadeVistoAmericano, setValidadeVistoAmericano] = useState(false);
+  const [validadeVistoAmericano, setValidadeVistoAmericano] = useState(true);
 
   const handleRadioChange = (value: any) => {
     if (value === "sim") {
