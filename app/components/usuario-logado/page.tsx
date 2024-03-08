@@ -40,6 +40,13 @@ const UsuarioLogado = () => {
       ) : (
         <>
           <div className="lg:pl-[268px] max-w-fit pt-10">
+            <div className="mb-6">
+              <Link href="/cliente/novo">
+                <Button className="bg-green-600 hover:bg-green-400">
+                  Cadastrar Cliente
+                </Button>
+              </Link>
+            </div>
             <div className="overflow-x-auto mt-4">
               <table className="bg-white border border-gray-300">
                 <thead>{/* ... (header code remains unchanged) */}</thead>
@@ -78,13 +85,6 @@ const UsuarioLogado = () => {
                     ))}
                 </tbody>
               </table>
-            </div>
-            <div className="mt-6">
-              <Link href="/cliente/novo">
-                <Button className="bg-green-600 hover:bg-green-400">
-                  Cadastrar Cliente
-                </Button>
-              </Link>
             </div>
           </div>
         </>

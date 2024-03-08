@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import Select from "react-select";
 import helpers from "@/lib/helpers";
+import Link from "next/link";
 
 const options: { value: string; label: string }[] = [
   { value: "us", label: "Americano" },
@@ -145,6 +146,23 @@ const ClienteNovo = () => {
     vistoAmericano: "",
     validadeVistoAmericano: "",
     estadoCivil: "",
+    cep: "",
+    estado: null,
+    endereco: "",
+    numero: "",
+    complemento: "",
+    profissao: "",
+    experiencia: null,
+    programaFidelidade: null,
+    numeroPrograma: "",
+    vacinaFebreAmarela: "",
+    alergias: "",
+    pcd: "",
+    condicao: "",
+    restricaoAlimentar: "",
+    descritivoRestricao: "",
+    observacoes: "",
+    arquivos: "",
   });
 
   const handleChangeField = (fieldName: any, value: any) => {
@@ -179,17 +197,17 @@ const ClienteNovo = () => {
     <>
       <div className="flex flex-row justify-between lg:pl-[268px] max-w-fit pt-10">
         <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
-          <Button type="submit" onClick={handleSubmit}>
+          {/* <Button type="submit" onClick={handleSubmit}>
             Confirmar
-          </Button>
+          </Button> */}
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <div className="flex-grow">
                 <Label htmlFor="name">Nome</Label>
                 <Input
-                  type="nome"
+                  type="text"
                   placeholder="Nome"
-                  name="nome"
+                  name="name"
                   onChange={(e) => handleChangeField("nome", e.target.value)}
                 />
               </div>
@@ -306,7 +324,7 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
+          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="outrosPassaportes">Outros Passaportes:</Label>
@@ -345,7 +363,7 @@ const ClienteNovo = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
@@ -390,7 +408,11 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="cep">CEP:</Label>
-                <Input type="text" name="cep" />
+                <Input
+                  type="text"
+                  name="cep"
+                  onChange={(e) => handleChangeField("cep", e.target.value)}
+                />
               </div>
             </div>
             <div className="w-1/2">
@@ -408,7 +430,14 @@ const ClienteNovo = () => {
             <div className="w-full">
               <div className="flex-grow">
                 <Label htmlFor="endereco">Endereço:</Label>
-                <Input type="text" placeholder="Endereço:" />
+                <Input
+                  type="text"
+                  placeholder="Endereço:"
+                  name="endereco"
+                  onChange={(e) =>
+                    handleChangeField("endereco", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>
@@ -416,13 +445,23 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="numero">Nº:</Label>
-                <Input type="text" name="numero" />
+                <Input
+                  type="text"
+                  name="numero"
+                  onChange={(e) => handleChangeField("numero", e.target.value)}
+                />
               </div>
             </div>
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="complemento">Complemento:</Label>
-                <Input type="text" name="complemento" />
+                <Input
+                  type="text"
+                  name="complemento"
+                  onChange={(e) =>
+                    handleChangeField("complemento", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>
@@ -431,7 +470,13 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="profissao">Profissão:</Label>
-                <Input type="text" name="profissao" />
+                <Input
+                  type="text"
+                  name="profissao"
+                  onChange={(e) =>
+                    handleChangeField("profissao", e.target.value)
+                  }
+                />
               </div>
             </div>
             <div className="w-1/2">
@@ -477,7 +522,13 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <Label htmlFor="numeroPrograma">Número do Programa:</Label>
-              <Input type="text" name="numeroPrograma" />
+              <Input
+                type="text"
+                name="numeroPrograma"
+                onChange={(e) =>
+                  handleChangeField("numeroPrograma", e.target.value)
+                }
+              />
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
@@ -501,7 +552,13 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="alergias">Alergias:</Label>
-                <Input type="text" name="alergias" />
+                <Input
+                  type="text"
+                  name="alergias"
+                  onChange={(e) =>
+                    handleChangeField("alergias", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>
@@ -524,7 +581,13 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="condicao">Informe a Condição:</Label>
-                <Input type="text" name="condicao" />
+                <Input
+                  type="text"
+                  name="condicao"
+                  onChange={(e) =>
+                    handleChangeField("condicao", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>
@@ -551,14 +614,26 @@ const ClienteNovo = () => {
                 <Label htmlFor="descritivoRestricao">
                   Descritivo da Restrição:
                 </Label>
-                <Input type="text" name="descritivoRestricao" />
+                <Input
+                  type="text"
+                  name="descritivoRestricao"
+                  onChange={(e) =>
+                    handleChangeField("descritivoRestricao", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <Label htmlFor="observacoes">Observações:</Label>
-              <Input type="text" name="observacoes" />
+              <Input
+                type="text"
+                name="observacoes"
+                onChange={(e) =>
+                  handleChangeField("observacoes", e.target.value)
+                }
+              />
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
@@ -570,16 +645,21 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6 mt-auto">
             <div className="w-1/2">
               <div className="">
-                <Button className="bg-green-700 hover:bg-green-500">
+                <Button
+                  onClick={handleSubmit}
+                  className="bg-green-700 hover:bg-green-500"
+                >
                   Confirmar
                 </Button>
               </div>
             </div>
             <div className="w-1/2 mt-auto text-end">
               <div className="mt-auto">
-                <Button className="bg-red-700 hover:bg-red-500">
-                  Cancelar
-                </Button>
+                <Link href="/">
+                  <Button className="bg-red-700 hover:bg-red-500">
+                    Cancelar
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

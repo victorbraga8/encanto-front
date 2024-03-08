@@ -98,7 +98,7 @@ const ExperienciaNova = () => {
                     />
                   </div>
                 </div>
-                <div className="w-1/2">
+                {/* <div className="w-1/2">
                   <div className="">
                     <label htmlFor="imagemExperiencia">
                       Imagem Experiencia:
@@ -110,7 +110,7 @@ const ExperienciaNova = () => {
                       onChange={handleFileChange}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <Button type="submit">Enviar</Button>

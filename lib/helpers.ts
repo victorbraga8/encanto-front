@@ -355,29 +355,29 @@ class Helpers {
 
   async cadastraCliente(values: any) {
     const token = this.validaToken();
-
+    console.log(values);
     const url =
       "https://api-management-encanto-experiencia.azure-api.net/api/cliente/v1/InserirCliente";
 
     const temp = {
-      Nome: values.name,
-      Sobrenome: "Rodrigues",
-      Ocupacao: "Corporate Paradigm Assistant",
+      Nome: values.nome,
+      Sobrenome: "Ex",
+      Ocupacao: values.profissao,
       CPF: values.cpf,
       DataNascimento: values.dataNascimento,
       RG: values.rg,
       Celular: values.celular,
       Email: values.email,
-      PossuiWhatsApp: false,
+      PossuiWhatsApp: true,
       NumeroCriancasParticipantes: 3,
       AceitaReceberMensagem: true,
       EstadoCivil: 4,
       EndereçoPrincial: {
-        CEP: "89858115",
-        Logradouro: "Gutmann Junctions",
-        Numero: 811,
-        Complemento: "do",
-        Bairro: "cillum amet",
+        CEP: values.cep,
+        Logradouro: values.endereco,
+        Numero: values.numero,
+        Complemento: values.complemento,
+        Bairro: " ",
         Cidade: {
           Id: "3d389a51eee847b5bd85c3d790d21c35",
         },
@@ -385,13 +385,13 @@ class Helpers {
       TipoServicos: [
         {
           TipoServico: {
-            Id: "57b7bd1ff4d940d2b264223af55e825a",
+            Id: values.experiencia,
           },
         },
       ],
       ProgramasFidelidade: [
         {
-          Numero: "30126DJ0",
+          Numero: values.numeroPrograma,
           Validade: "2023-08-21",
           ProgramaFidelidade: {
             Id: "420631bee7cd45c1940b72022e59237f",
@@ -458,16 +458,16 @@ class Helpers {
       ],
     };
 
-    const jsonString = JSON.stringify(values, null, 2);
-    const blob = new Blob([jsonString], { type: "text/plain" });
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = "output.txt";
-    a.textContent = "Download do arquivo";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // const jsonString = JSON.stringify(temp, null, 2);
+    // const blob = new Blob([jsonString], { type: "text/plain" });
+    // const blobUrl = URL.createObjectURL(blob);
+    // const a = document.createElement("a");
+    // a.href = blobUrl;
+    // a.download = "output.txt";
+    // a.textContent = "Download do arquivo";
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
 
     try {
       const response = await axios.post(url, temp, {
@@ -478,8 +478,13 @@ class Helpers {
       });
 
       console.log("Resposta da API:", response.data);
+      this.showToast("Cliente cadastrado com sucesso", "bg-green-400");
       return response.data;
     } catch (error) {
+      this.showToast(
+        "Erro no envio, verifique os dados inseridos.",
+        "bg-red-400"
+      );
       console.error("Erro na requisição:", error);
       throw error;
     }
