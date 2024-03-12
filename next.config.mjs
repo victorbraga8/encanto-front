@@ -2,9 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    AZURE_AD_CLIENT_ID: "2965b143-82d0-4c53-9667-263b0fc5a202",
-    AZURE_AD_CLIENT_SECRET: "ubo8Q~SSmDT7IEEYoQ0l7cXg9~H1uC0k~BcsFbYN",
-    AZURE_AD_TENANT_ID: "7ef724cb-3c77-4b44-90bd-1a48e265ad86",
+    AZURE_AD_CLIENT_ID: "c0156952-5c89-4a77-b881-800ecbd1454d",
+    AZURE_AD_CLIENT_SECRET: "5-I8Q~h~9Y97q4iv5X_HU-UKHgO2uciZy3jcKdBa",
+    AZURE_AD_TENANT_ID: "e21e0d76-cf85-4728-a5d8-c94ec48156ed",
     NEXT_AUTH_SECRET: "secret",
   },
 };
