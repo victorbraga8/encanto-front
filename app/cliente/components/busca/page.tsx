@@ -51,7 +51,7 @@ const Busca: React.FC<Props> = ({ clientes, setFilteredClientes }) => {
           onClick={clearSearch}
           variant="default"
           size="default"
-          className="bg-amber-600 hover:bg-amber-400 px-4 py-2 ml-3"
+          className="bg-amber-600 hover:bg-amber-400 px-4 py-2"
         >
           Limpar
         </Button>

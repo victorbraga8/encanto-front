@@ -30,17 +30,17 @@ const ClienteLista = () => {
 
   return (
     <>
-      <div className="lg:pl-[268px] max-w-fit pt-10">
-        <div className="flex items-center mb-4">
-          {/* Passando a propriedade 'clientes' para o componente Busca */}
+      <div className="lg:pl-[268px] pt-10">
+        <div className="flex items-center mb-4 gap-5 position-fixed">
           <Busca
             clientes={clientes}
             setFilteredClientes={setFilteredClientes}
           />
+          <Button className="">Cadastrar Cliente</Button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
           {filteredClientes.length > 0 ? (
-            <table className="bg-white border border-gray-300">
+            <table className="bg-white border border-gray-300 min-w-[800px]">
               <thead>
                 <tr className="text-left">
                   <th className="py-2 px-4 border-b">ID</th>
