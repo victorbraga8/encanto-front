@@ -10,6 +10,8 @@ import {
 } from "@radix-ui/react-tooltip";
 import clienteFunctions from "../cliente/functions";
 import Busca from "./components/busca/page";
+import Loading from "../components/loading/page";
+import Link from "next/link";
 
 const ClienteLista = () => {
   const [clientes, setClientes] = useState<any[]>([]);
@@ -21,6 +23,7 @@ const ClienteLista = () => {
       try {
         const resposta = await clienteFunctions.getClientes();
         setClientes(resposta);
+        setLoading(false);
       } catch (erro: any) {
         console.error("Erro ao obter clientes:", erro.message);
       }
@@ -33,23 +36,7 @@ const ClienteLista = () => {
     <>
       {loading ? (
         <>
-          <div className="loader lg:pl-[268px] max-w-fit flex flex-col items-center pt-10 gap-2 overflow-hidden">
-            <div className="flex space-x-1">
-              <div
-                className="w-4 h-4 bg-red-500 rounded-full animate-bounce duration-500"
-                style={{ animationDelay: "0s" }}
-              ></div>
-              <div
-                className="w-4 h-4 bg-yellow-500 rounded-full animate-bounce duration-500"
-                style={{ animationDelay: "0.1s" }}
-              ></div>
-              <div
-                className="w-4 h-4 bg-green-500 rounded-full animate-bounce duration-500"
-                style={{ animationDelay: "0.2s" }}
-              ></div>
-            </div>
-            <div>Carregando...</div>
-          </div>
+          <Loading />
         </>
       ) : (
         <div className="lg:pl-[268px] pt-10">
@@ -58,10 +45,12 @@ const ClienteLista = () => {
               clientes={clientes}
               setFilteredClientes={setFilteredClientes}
             />
-            <Button className="bg-sky-600 hover:bg-sky-400 transition-colors">
-              <SquareUserRound className="mr-1" />
-              Cadastrar Cliente
-            </Button>
+            <Link href="cliente/novo">
+              <Button className="bg-sky-600 hover:bg-sky-400 transition-colors">
+                <SquareUserRound className="mr-1" />
+                Cadastrar Cliente
+              </Button>
+            </Link>
           </div>
           <div className="overflow-x-auto">
             {filteredClientes.length > 0 ? (

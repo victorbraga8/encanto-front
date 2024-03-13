@@ -8,6 +8,9 @@ class Helpers {
     if (path == "/") {
       return "Home";
     }
+    if (!partes[1]) {
+      partes[1] = "gestão";
+    }
     const completePath = partes[0] + " / " + partes[1];
     return completePath;
   }

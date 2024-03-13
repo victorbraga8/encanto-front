@@ -655,7 +655,7 @@ const ClienteNovo = () => {
             </div>
             <div className="w-1/2 mt-auto text-end">
               <div className="mt-auto">
-                <Link href="/">
+                <Link href="/cliente">
                   <Button className="bg-red-700 hover:bg-red-500">
                     Cancelar
                   </Button>

@@ -54,15 +54,17 @@ const OpcoesAdm = ({
             )}
           </ul>
           <ul>
-            <li
-              className={`pl-8 py-2 px-3 text-center ${
-                !clientesCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
-              } cursor-pointer flex items-center`}
-              onClick={onToggleClientes}
-            >
-              <Users size={16} className="mr-2" />
-              <Link href="/cliente">Clientes</Link>
-            </li>
+            <Link href="/cliente">
+              <li
+                className={`pl-8 py-2 px-3 text-center ${
+                  !clientesCollapsed ? "bg-emerald-500" : "hover:bg-gray-700"
+                } cursor-pointer flex items-center`}
+                onClick={onToggleClientes}
+              >
+                <Users size={16} className="mr-2" />
+                Clientes
+              </li>
+            </Link>
           </ul>
           {/* <ul>
             <li
