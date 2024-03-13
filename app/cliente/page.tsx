@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, SquareUserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   TooltipProvider,
@@ -36,7 +36,10 @@ const ClienteLista = () => {
             clientes={clientes}
             setFilteredClientes={setFilteredClientes}
           />
-          <Button className="">Cadastrar Cliente</Button>
+          <Button className="bg-sky-600 hover:bg-sky-400 transition-colors">
+            <SquareUserRound className="mr-1" />
+            Cadastrar Cliente
+          </Button>
         </div>
         <div className="overflow-x-auto ">
           {filteredClientes.length > 0 ? (
@@ -83,7 +86,11 @@ const ClienteLista = () => {
               </tbody>
             </table>
           ) : (
-            <p>Sem resultados</p>
+            <>
+              <div className="min-w-[800px]">
+                <p>Sem resultados</p>
+              </div>
+            </>
           )}
         </div>
       </div>

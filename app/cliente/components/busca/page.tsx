@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Eraser } from "lucide-react";
 
 interface Cliente {
   nome: string;
@@ -53,6 +54,7 @@ const Busca: React.FC<Props> = ({ clientes, setFilteredClientes }) => {
           size="default"
           className="bg-amber-600 hover:bg-amber-400 px-4 py-2"
         >
+          <Eraser className="mr-1" />
           Limpar
         </Button>
       )}
