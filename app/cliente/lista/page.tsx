@@ -7,6 +7,7 @@ import {
   TooltipContent,
 } from "@radix-ui/react-tooltip";
 import helpers from "@/lib/helpers";
+import clienteFunctions from "../functions";
 import { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 
@@ -16,7 +17,7 @@ const ClienteLista = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resposta = await helpers.getClientes();
+        const resposta = await clienteFunctions.getClientes();
         setClientes(resposta);
         // setLoading(false);
       } catch (erro: any) {

@@ -10,6 +10,7 @@ import { Pencil } from "lucide-react";
 import helpers from "@/lib/helpers";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import clienteFunctions from "@/app/cliente/functions";
 
 const UsuarioLogado = () => {
   const [clientes, setClientes] = useState(null);
@@ -18,7 +19,7 @@ const UsuarioLogado = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resposta = await helpers.getClientes();
+        const resposta = await clienteFunctions.getClientes();
         setClientes(resposta);
         setLoading(false);
       } catch (erro: any) {
