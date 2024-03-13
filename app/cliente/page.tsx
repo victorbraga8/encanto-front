@@ -9,11 +9,10 @@ import {
   TooltipContent,
 } from "@radix-ui/react-tooltip";
 import clienteFunctions from "../cliente/functions";
-import { Input } from "@/components/ui/input";
+import Busca from "./../components/busca/page";
 
 const ClienteLista = () => {
   const [clientes, setClientes] = useState<any[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [filteredClientes, setFilteredClientes] = useState<any[]>([]);
 
   useEffect(() => {
@@ -29,48 +28,15 @@ const ClienteLista = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (clientes.length > 0) {
-      const filtered = clientes.filter((cliente) => {
-        const nome = cliente.nome.toLowerCase();
-        const celular = cliente.celular.toLowerCase();
-        const email = cliente.email.toLowerCase();
-        const lowerSearchTerm = searchTerm.toLowerCase();
-        return (
-          nome.includes(lowerSearchTerm) ||
-          celular.includes(lowerSearchTerm) ||
-          email.includes(lowerSearchTerm)
-        );
-      });
-      setFilteredClientes(filtered);
-    }
-  }, [searchTerm, clientes]);
-
-  const clearSearch = () => {
-    setSearchTerm("");
-  };
-
   return (
     <>
       <div className="lg:pl-[268px] max-w-fit pt-10">
         <div className="flex items-center mb-4">
-          <Input
-            type="text"
-            placeholder="Buscar..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-gray-300 px-4 py-2 "
+          {/* Passando a propriedade 'clientes' para o componente Busca */}
+          <Busca
+            clientes={clientes}
+            setFilteredClientes={setFilteredClientes}
           />
-          {searchTerm && (
-            <Button
-              onClick={clearSearch}
-              variant="default"
-              size="default"
-              className="bg-amber-600 hover:bg-amber-400 px-4 py-2 ml-3"
-            >
-              Limpar
-            </Button>
-          )}
         </div>
         <div className="overflow-x-auto">
           {filteredClientes.length > 0 ? (
