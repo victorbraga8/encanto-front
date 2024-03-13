@@ -61,22 +61,8 @@ const OpcoesAdm = ({
               onClick={onToggleClientes}
             >
               <Users size={16} className="mr-2" />
-              Clientes
+              <Link href="/cliente">Clientes</Link>
             </li>
-            {!clientesCollapsed && (
-              <ul>
-                <Link href="/cliente/novo">
-                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                    Cadastrar
-                  </li>
-                </Link>
-                <Link href="/cliente/lista">
-                  <li className="pl-16 py-2 px-3 text-center hover:bg-emerald-700 cursor-pointer flex items-center">
-                    Listar
-                  </li>
-                </Link>
-              </ul>
-            )}
           </ul>
           {/* <ul>
             <li
