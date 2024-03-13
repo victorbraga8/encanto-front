@@ -9,7 +9,7 @@ import {
   TooltipContent,
 } from "@radix-ui/react-tooltip";
 import clienteFunctions from "../cliente/functions";
-import Busca from "./../components/busca/page";
+import Busca from "./components/busca/page";
 
 const ClienteLista = () => {
   const [clientes, setClientes] = useState<any[]>([]);
