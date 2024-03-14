@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
 import clienteFunctions from "@/app/cliente/functions";
+import InputMask from "react-input-mask";
 
 import Select from "react-select";
 import helpers from "@/lib/helpers";
@@ -254,6 +255,7 @@ const ClienteNovo = () => {
               <div className="">
                 <Label htmlFor="genero">Sexo</Label>
                 <Select
+                  placeholder="Selecione"
                   name="genero"
                   defaultValue={formData.genero}
                   onChange={handleGeneroChange}
@@ -266,8 +268,11 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="rg">RG:</Label>
-                <Input
-                  type="text"
+                <InputMask
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  mask="99.999.999-9"
+                  maskPlaceholder=""
+                  id="rg"
                   name="rg"
                   onChange={(e) => handleChangeField("rg", e.target.value)}
                 />
@@ -276,8 +281,11 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="cpf">CPF:</Label>
-                <Input
-                  type="text"
+                <InputMask
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  mask="999.999.999-99"
+                  maskPlaceholder=""
+                  id="cpf"
                   name="cpf"
                   onChange={(e) => handleChangeField("cpf", e.target.value)}
                 />
@@ -288,8 +296,11 @@ const ClienteNovo = () => {
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="celular">Celular:</Label>
-                <Input
-                  type="text"
+                <InputMask
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  mask="(99) 99999-9999"
+                  maskPlaceholder=""
+                  id="celular"
                   name="celular"
                   onChange={(e) => handleChangeField("celular", e.target.value)}
                 />
@@ -299,6 +310,7 @@ const ClienteNovo = () => {
               <div className="">
                 <Label htmlFor="estadoCivil">Estado Civil:</Label>
                 <Select
+                  placeholder="Selecione"
                   name="estadoCivil"
                   defaultValue={formData.estadoCivil}
                   onChange={handleEstadoCivilChange}
@@ -443,6 +455,7 @@ const ClienteNovo = () => {
               <div className="">
                 <Label htmlFor="estado">Estado</Label>
                 <Select
+                  placeholder="Selecione"
                   defaultValue={selectedOption}
                   onChange={() => setSelectedOption}
                   options={optionsEstados}
@@ -489,10 +502,9 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-
           <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
+            <div className="w-full">
+              <div className="flex-grow">
                 <Label htmlFor="profissao">Profissão:</Label>
                 <Input
                   type="text"
@@ -502,57 +514,6 @@ const ClienteNovo = () => {
                   }
                 />
               </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="experiencia">Experiência</Label>
-                <Select
-                  defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  options={experiencias}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="programaFidelidade">
-                  Programa de Fidelidade:
-                </Label>
-                <RadioGroup defaultValue="nao" onChange={() => handbleDisabled}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="sim" id="r1" />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="nao" id="r2" />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="tipoPrograma">Tipo de Programa</Label>
-                <Select
-                  defaultValue={selectedOption}
-                  onChange={() => setSelectedOption}
-                  options={programas}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-full">
-              <Label htmlFor="numeroPrograma">Número do Programa:</Label>
-              <Input
-                type="text"
-                name="numeroPrograma"
-                onChange={(e) =>
-                  handleChangeField("numeroPrograma", e.target.value)
-                }
-              />
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6">
@@ -624,8 +585,6 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
@@ -666,15 +625,23 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
-              <Label htmlFor="observacoes">Observações:</Label>
-              <Input
-                type="text"
+              <label
+                htmlFor="observacoes"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Observações:
+              </label>
+              <textarea
+                id="observacoes"
                 name="observacoes"
                 onChange={(e) =>
                   handleChangeField("observacoes", e.target.value)
                 }
+                className="block w-full min-h-[200px] p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
             </div>
           </div>
