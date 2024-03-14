@@ -1,17 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Pencil, SquareUserRound } from "lucide-react";
+import { SquareUserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@radix-ui/react-tooltip";
+
 import clienteFunctions from "../cliente/functions";
 import Busca from "./components/busca/page";
 import Loading from "../components/loading/page";
 import Link from "next/link";
+import BtnAcoes from "../components/btn-acoes/page";
 
 const ClienteLista = () => {
   const [clientes, setClientes] = useState<any[]>([]);
@@ -75,22 +71,7 @@ const ClienteLista = () => {
                       <td className="py-2 px-4 border-b">{row.celular}</td>
                       <td className="py-2 px-4 border-b">{row.email}</td>
                       <td className="py-2 px-4 border-b">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="default"
-                                size="icon"
-                                className="mr-2 bg-green-600 hover:bg-green-400"
-                              >
-                                <Pencil />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent className="bg-cyan-600 text-white py-2 px-3 mb-3 rounded-full">
-                              <p>Editar Usuário</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                        <BtnAcoes />
                       </td>
                     </tr>
                   ))}

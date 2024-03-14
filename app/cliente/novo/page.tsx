@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
+import clienteFunctions from "@/app/cliente/functions";
 
 import Select from "react-select";
 import helpers from "@/lib/helpers";
@@ -189,8 +190,31 @@ const ClienteNovo = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    const cadastraCliente = helpers.cadastraCliente(formData);
+    const cadastraCliente = clienteFunctions.cadastraCliente(formData);
     e.preventDefault();
+  };
+
+  const [handbleDisabled, setHandleDisabled] = useState(true);
+  const [disabledCondicao, setdisableCondicao] = useState(true);
+  const [disabledRestricaoAlimentar, setdisableRestricaoAlimentar] =
+    useState(true);
+
+  const handleDisabled = (e: any) => {
+    if (e.target.value == "sim") {
+      if (e.target.id == "condicaoSim") {
+        setdisableCondicao(false);
+      }
+      if (e.target.id == "restricaoSim") {
+        setdisableRestricaoAlimentar(false);
+      }
+    } else {
+      if (e.target.id == "condicaoNao") {
+        setdisableCondicao(true);
+      }
+      if (e.target.id == "restricaoNao") {
+        setdisableRestricaoAlimentar(true);
+      }
+    }
   };
 
   return (
@@ -496,7 +520,7 @@ const ClienteNovo = () => {
                 <Label htmlFor="programaFidelidade">
                   Programa de Fidelidade:
                 </Label>
-                <RadioGroup defaultValue="nao">
+                <RadioGroup defaultValue="nao" onChange={() => handbleDisabled}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="sim" id="r1" />
                     <Label htmlFor="sim">Sim</Label>
@@ -568,11 +592,19 @@ const ClienteNovo = () => {
                 <Label htmlFor="pcd">PCD, PNE, PPD:</Label>
                 <RadioGroup defaultValue="nao">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="sim" id="r1" />
+                    <RadioGroupItem
+                      value="sim"
+                      id="condicaoSim"
+                      onClick={(e) => handleDisabled(e)}
+                    />
                     <Label htmlFor="sim">Sim</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="nao" id="r2" />
+                    <RadioGroupItem
+                      value="nao"
+                      id="condicaoNao"
+                      onClick={(e) => handleDisabled(e)}
+                    />
                     <Label htmlFor="nao">Não</Label>
                   </div>
                 </RadioGroup>
@@ -582,6 +614,7 @@ const ClienteNovo = () => {
               <div className="">
                 <Label htmlFor="condicao">Informe a Condição:</Label>
                 <Input
+                  disabled={disabledCondicao}
                   type="text"
                   name="condicao"
                   onChange={(e) =>
@@ -599,11 +632,19 @@ const ClienteNovo = () => {
                 <Label htmlFor="restricaoAlimentar">Restrição Alimentar:</Label>
                 <RadioGroup defaultValue="nao">
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="sim" id="r1" />
+                    <RadioGroupItem
+                      value="sim"
+                      id="restricaoSim"
+                      onClick={(e) => handleDisabled(e)}
+                    />
                     <Label htmlFor="sim">Sim</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="nao" id="r2" />
+                    <RadioGroupItem
+                      value="nao"
+                      id="restricaoNao"
+                      onClick={(e) => handleDisabled(e)}
+                    />
                     <Label htmlFor="nao">Não</Label>
                   </div>
                 </RadioGroup>
@@ -615,6 +656,7 @@ const ClienteNovo = () => {
                   Descritivo da Restrição:
                 </Label>
                 <Input
+                  disabled={disabledRestricaoAlimentar}
                   type="text"
                   name="descritivoRestricao"
                   onChange={(e) =>
@@ -639,7 +681,7 @@ const ClienteNovo = () => {
           <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-full">
               <Label htmlFor="arquivos">Arquivos:</Label>
-              <Input type="file" name="arquivos" />
+              <Input type="file" name="arquivos" multiple />
             </div>
           </div>
           <div className="flex flex-row space-x-4 justify-start mb-6 mt-auto">
