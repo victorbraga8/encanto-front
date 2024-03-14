@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import helpers from "@/lib/helpers";
 import { LucideMessageSquarePlus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "react-select";
 
@@ -29,7 +30,22 @@ const optionsTipoDocumento: { value: string; label: string }[] = [
   { value: "ssn", label: "Seguro Social" },
 ];
 
-const ModalDocumentos = () => {
+interface ModalDocumentosProps {
+  documento: any[]; // ou o tipo apropriado para seus documentos
+  adicionarDocumento: (documento: any) => void; // ou o tipo apropriado para a função
+  removerDocumento: (indexToRemove: number) => void; // ou o tipo apropriado para a função
+  documentoCapturado: any[]; // Adicione esta propriedade
+}
+
+const ModalDocumentos: React.FC<ModalDocumentosProps> = ({
+  documentoCapturado,
+}) => {
+  const [programas, setProgramas] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  const [documentosCapturados, setDocumentosCapturados] = useState([]);
+
   const [documentos, setDocumentos] = useState([
     {
       nome: "",
@@ -39,6 +55,23 @@ const ModalDocumentos = () => {
       isNew: false, // Para distinguir entre linhas existentes e novas
     },
   ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const programasFidelidade = await helpers.getProgramaFidelidade();
+        const listaProgramas = programasFidelidade.map((item: any) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        setProgramas(listaProgramas);
+      } catch (error) {
+        console.error("Erro ao obter os programas de fidelidade:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleAddDocumento = () => {
     setDocumentos((prevDocumentos) => [
@@ -57,6 +90,10 @@ const ModalDocumentos = () => {
     setDocumentos((prevDocumentos) =>
       prevDocumentos.filter((_, index) => index !== indexToRemove)
     );
+  };
+
+  const adicionarDocumentoCliente = (documentos: any) => {
+    setDocumentosCapturados(documentos);
   };
 
   return (
@@ -170,7 +207,20 @@ const ModalDocumentos = () => {
             </div>
           ))}
           <DialogFooter>
-            <Button className="bg-sky-600 hover:bg-sky-400" type="submit">
+            <Button
+              className="bg-sky-600 hover:bg-sky-400"
+              type="submit"
+              onClick={() => {
+                const documentosCapturados = documentos.map((documento) => ({
+                  nome: documento.nome,
+                  numero: documento.numero,
+                  tipoDocumento: documento.tipoDocumento,
+                  validade: documento.validade,
+                }));
+                adicionarDocumentoCliente(documentosCapturados);
+                console.log("Documentos capturados:", documentosCapturados);
+              }}
+            >
               Confirmar
             </Button>
           </DialogFooter>

@@ -14,13 +14,6 @@ import Link from "next/link";
 import { DialogTrigger } from "@/components/ui/dialog";
 import ModalDocumentos from "../components/modal/page";
 
-const options: { value: string; label: string }[] = [
-  { value: "us", label: "Americano" },
-  { value: "it", label: "Italiano" },
-  { value: "cn", label: "Canadense" },
-  { value: "al", label: "Alemão" },
-];
-
 const optionsEstados = [
   { value: "AC", label: "Acre" },
   { value: "AL", label: "Alagoas" },
@@ -63,77 +56,31 @@ const optionsGenero: { value: string; label: string }[] = [
   { value: "2", label: "Feminino" },
 ];
 
+interface Documento {
+  nome: string;
+  numero: string;
+  tipoDocumento: string;
+  validade: string;
+  // Adicione outros campos, se necessário
+}
+
 const ClienteNovo = () => {
-  const handleChange = (selectedOptions: any) => {
-    console.log(selectedOptions);
-  };
-  const [programas, setProgramas] = useState<
-    { value: string; label: string }[]
-  >([]);
-  const [experiencias, setExperiencias] = useState<
-    { value: string; label: string }[]
-  >([]);
-  const [estado, setEstados] = useState([]);
-  const [outrosPassaportes, setOutrosPassaportes] = useState(true);
   const [selectedOption, setSelectedOption] = useState<{
     value: string;
     label: string;
   } | null>(null);
 
-  const [validadeVistoAmericano, setValidadeVistoAmericano] = useState(true);
+  const [documentosCliente, setDocumentosCliente] = useState<Documento[]>([]);
 
-  const handleRadioChange = (value: any) => {
-    if (value === "sim") {
-      setOutrosPassaportes(false);
-      setSelectedOption(value === "sim" ? { value: "1", label: "Sim" } : null);
-    } else {
-      setOutrosPassaportes(true);
-      setSelectedOption(value === "não" ? { value: "2", label: "Não" } : null);
-    }
+  const adicionarDocumentoCliente = (documento: Documento) => {
+    setDocumentosCliente([...documentosCliente, documento]);
   };
 
-  const handleRadioChangeVisto = (value: any) => {
-    if (value === "sim") {
-      setValidadeVistoAmericano(true);
-    } else {
-      setValidadeVistoAmericano(false);
-    }
+  const removerDocumentoCliente = (indexToRemove: number) => {
+    setDocumentosCliente(
+      documentosCliente.filter((_, index) => index !== indexToRemove)
+    );
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const programasFidelidade = await helpers.getProgramaFidelidade();
-        const listaProgramas = programasFidelidade.map((item: any) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        setProgramas(listaProgramas);
-      } catch (error) {
-        console.error("Erro ao obter os programas de fidelidade:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const experiencias = await helpers.getExperiencias();
-        const listaExperiencias = experiencias.map((item: any) => ({
-          value: item.id,
-          label: item.name,
-        }));
-
-        setExperiencias(listaExperiencias);
-      } catch (error) {
-        console.error("Erro ao obter experiencias:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -184,20 +131,6 @@ const ClienteNovo = () => {
     handleChangeField("estadoCivil", selectedOption);
   };
 
-  const handleNacionalidadePassaporteChange = (selectedOption: any) => {
-    handleChangeField("nacionalidadePassaporte", selectedOption);
-  };
-
-  const handleProgramaFidelidadeChange = (selectedOption: any) => {
-    handleChangeField("programaFidelidade", selectedOption);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    const cadastraCliente = clienteFunctions.cadastraCliente(formData);
-    e.preventDefault();
-  };
-
-  const [handbleDisabled, setHandleDisabled] = useState(true);
   const [disabledCondicao, setdisableCondicao] = useState(true);
   const [disabledRestricaoAlimentar, setdisableRestricaoAlimentar] =
     useState(true);
@@ -218,6 +151,11 @@ const ClienteNovo = () => {
         setdisableRestricaoAlimentar(true);
       }
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    const cadastraCliente = clienteFunctions.cadastraCliente(formData);
+    e.preventDefault();
   };
 
   return (
@@ -335,113 +273,7 @@ const ClienteNovo = () => {
             </div>
           </div>
           <hr />
-          <ModalDocumentos />
-          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="passaporte">Passaporte:</Label>
-                <Input
-                  type="text"
-                  name="passaporte"
-                  onChange={(e) =>
-                    handleChangeField("passaporte", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="dataValidadePassaporte">
-                  Validade Passaporte:
-                </Label>
-                <Input
-                  type="date"
-                  name="dataValidadePassaporte"
-                  onChange={(e) =>
-                    handleChangeField("dataValidadePassaporte", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          </div> */}
-          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="outrosPassaportes">Outros Passaportes:</Label>
-                <RadioGroup defaultValue="nao">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="sim"
-                      id="r1"
-                      onClick={() => handleRadioChange("sim")}
-                    />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="nao"
-                      id="r2"
-                      onClick={() => handleRadioChange("não")}
-                    />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="nacionalidadePassaporte">
-                  Nacionalidade Passaporte:
-                </Label>
-                <Select
-                  name="nacionalidadePassaporte"
-                  isMulti
-                  defaultValue={formData.nacionalidadePassaporte}
-                  onChange={handleNacionalidadePassaporteChange}
-                  isDisabled={outrosPassaportes}
-                  options={options as any}
-                />
-              </div>
-            </div>
-          </div> */}
-          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="vistoAmericano">Visto Americano:</Label>
-                <RadioGroup defaultValue="nao" name="vistoAmericano">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="sim"
-                      id="r1"
-                      onClick={() => handleRadioChangeVisto("nao")}
-                    />
-                    <Label htmlFor="sim">Sim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="nao"
-                      id="r2"
-                      onClick={() => handleRadioChangeVisto("sim")}
-                    />
-                    <Label htmlFor="nao">Não</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-            <div className="w-1/2">
-              <div className="">
-                <Label htmlFor="validadeVistoAmericano">Validade Visto:</Label>
-                <Input
-                  disabled={validadeVistoAmericano}
-                  type="date"
-                  name="validadeVistoAmericano"
-                  onChange={(e) =>
-                    handleChangeField("validadeVistoAmericano", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-          </div> */}
+          <ModalDocumentos documento={documentosCliente} />
         </div>
         <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
