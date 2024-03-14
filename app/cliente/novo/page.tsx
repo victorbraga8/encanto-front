@@ -11,6 +11,8 @@ import InputMask from "react-input-mask";
 import Select from "react-select";
 import helpers from "@/lib/helpers";
 import Link from "next/link";
+import { DialogTrigger } from "@/components/ui/dialog";
+import ModalDocumentos from "../components/modal/page";
 
 const options: { value: string; label: string }[] = [
   { value: "us", label: "Americano" },
@@ -332,7 +334,9 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row space-x-4 justify-start mb-6">
+          <hr />
+          <ModalDocumentos />
+          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="passaporte">Passaporte:</Label>
@@ -359,7 +363,7 @@ const ClienteNovo = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           {/* <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
@@ -400,7 +404,7 @@ const ClienteNovo = () => {
               </div>
             </div>
           </div> */}
-          <div className="flex flex-row space-x-4 justify-start mb-6">
+          {/* <div className="flex flex-row space-x-4 justify-start mb-6">
             <div className="w-1/2">
               <div className="">
                 <Label htmlFor="vistoAmericano">Visto Americano:</Label>
@@ -437,7 +441,7 @@ const ClienteNovo = () => {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="container flex flex-col border-r-2 border-solid border-cyan-500">
           <div className="flex flex-row space-x-4 justify-start mb-6">
